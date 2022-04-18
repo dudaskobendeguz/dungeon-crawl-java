@@ -1,0 +1,91 @@
+@startuml
+
+abstract Application
+
+class Main {
+- map: GameMap
+- canvas: Canvas
+- context: GraphicsContext
+- healthLabel: Label
+- onKeyPressed()
+- refresh()
++ start()
+}
+
+abstract Actor {
+- cell: Cell
+- health: int
++ move(x: int, y: int)
+}
+
+class Player {
+
+}
+
+class Skeleton {
+
+}
+
+interface Drawable {
++ {abstract} getTileName(): String
+}
+
+class Cell {
+- type: CellType
+- actor: Actor
+- gameMap: GameMap
+- x, y: int
++ getNeighbor(x: int, y: int): Cell
+}
+
+class GameMap {
+- w, h: int
+- cells: Cell[][]
+- player: Player
+}
+
+class MapLoader {
++ loadMap(): GameMap
+}
+
+enum CellType {
+EMPTY
+FLOOR
+WALL
+- tileName: String
+}
+
+class Tiles {
+{static} - tileMap: Map<String, Tile>
+{static} - tileSet: Image
+{static} + tileWidth: int
+{static} + drawTile()
+}
+
+class Tile {
+- x, y, w, h: int
+}
+
+
+Application <|-- Main
+Main -- GameMap
+Main -- Tiles
+Main -- MapLoader
+
+
+Drawable <|.. Actor
+Drawable <|.. Cell
+Actor <|-- Player
+Actor <|-- Skeleton
+
+Actor o-- Cell
+Cell -- CellType
+Cell "1  " *-- "1  " Actor
+Cell o-- GameMap
+
+GameMap "1" *-- "0..*" Cell
+GameMap "1  " *-- "1  " Player
+
+Tiles "1  " *-- "0..*" Tile
+
+@enduml
