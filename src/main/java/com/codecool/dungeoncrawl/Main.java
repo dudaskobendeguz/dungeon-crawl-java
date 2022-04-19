@@ -3,6 +3,8 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
@@ -19,6 +21,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
@@ -111,6 +116,9 @@ public class Main extends Application {
                 map.getPlayer().move(1, 0);
                 refresh();
                 break;
+            case SPACE:
+                refresh();
+                break;
         }
         setItemPickButton();
     }
@@ -119,7 +127,29 @@ public class Main extends Application {
         itemButton.setDisable(map.getPlayer().getCell().getItem() == null);
     }
 
+    private void makeActorsMove() {
+        List<Actor> actors = getActors();
+        for (Actor actor : actors) {
+            actor.move(0, 1);
+        }
+    }
+
+    private List<Actor> getActors() {
+        List<Actor> actors = new ArrayList<>();
+        for (int x = 0; x < map.getWidth(); x++) {
+            for (int y = 0; y < map.getHeight(); y++) {
+                Cell cell = map.getCell(x, y);
+                Actor actor = cell.getActor();
+                if (actor != null && !(actor instanceof Player)) {
+                    actors.add(actor);
+                }
+            }
+        }
+        return actors;
+    }
+
     private void refresh() {
+        makeActorsMove();
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
