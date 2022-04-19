@@ -1,10 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.items.Consumable;
-import com.codecool.dungeoncrawl.logic.items.ConsumableType;
-import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.Weapon;
+import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +26,19 @@ public class Player extends Actor {
                 }
             }
             return consumableCounter;
+        }
+
+        public int countKeys(KeyType keyType) {
+            int keyCounter = 0;
+            for (Item item : items) {
+                if (item instanceof Key) {
+                    Key key = (Key) item;
+                    if (key.getKeyType().equals(keyType)) {
+                        keyCounter++;
+                    }
+                }
+            }
+            return keyCounter;
         }
     }
 
