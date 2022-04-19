@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -31,29 +32,69 @@ public class MapLoader {
             String[] lineChars = line.split(delimiter);
             for (int x = 0; x < lineChars.length; x++) {
                 Cell cell = map.getCell(x, y);
-                switch (lineChars[x]) {
-                    case "-1":
+                switch (Integer.parseInt(lineChars[x])) {
+                    case -1:
                         cell.setType(CellType.EMPTY);
                         break;
-                    case "0":
+                    case 0:
                         cell.setType(CellType.EMPTY);
                         break;
-                    case "586":
+                    case 586:
                         cell.setType(CellType.WALL);
                         break;
-                    case "32":
+                    case 32:
                         cell.setType(CellType.TREE);
                         break;
-                    case "4":
+                    case 4:
                         cell.setType(CellType.FLOOR);
                         break;
-                    case "93":
+                    case 93:
                         cell.setType(CellType.FLOOR);
                         new Skeleton(cell);
                         break;
-                    case "27":
+                    case 27:
                         cell.setType(CellType.FLOOR);
                         map.setPlayer(new Player(cell));
+                        break;
+                    case 896:
+                        cell.setType(CellType.FLOOR);
+                        cell.setItem(new Weapon(cell, WeaponType.KNIFE));
+                        break;
+                    case 960:
+                        cell.setType(CellType.FLOOR);
+                        cell.setItem(new Weapon(cell, WeaponType.SWORD));
+                        break;
+                    case 970:
+                        cell.setType(CellType.FLOOR);
+                        cell.setItem(new Weapon(cell, WeaponType.AXE));
+                        break;
+                    case 933:
+                        cell.setType(CellType.FLOOR);
+                        cell.setItem(new Weapon(cell, WeaponType.HAMMER));
+                        break;
+                    case 913:
+                        cell.setType(CellType.FLOOR);
+                        cell.setItem(new Consumable(cell, ConsumableType.MEAT));
+                        break;
+                    case 911:
+                        cell.setType(CellType.FLOOR);
+                        cell.setItem(new Consumable(cell, ConsumableType.BREAD));
+                        break;
+                    case 943:
+                        cell.setType(CellType.FLOOR);
+                        cell.setItem(new Consumable(cell, ConsumableType.APPLE));
+                        break;
+                    case 754:
+                        cell.setType(CellType.FLOOR);
+                        cell.setItem(new Key(cell, KeyType.LEVEL_KEY));
+                        break;
+                    case 753:
+                        cell.setType(CellType.FLOOR);
+                        cell.setItem(new Key(cell, KeyType.DOOR_KEY));
+                        break;
+                    case 752:
+                        cell.setType(CellType.FLOOR);
+                        cell.setItem(new Key(cell, KeyType.CHEST_KEY));
                         break;
                     default:
                         throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
