@@ -4,6 +4,7 @@
 
 /target
 /.idea
+/src/main/resources/tiles
 
 # Log file
 *.log
