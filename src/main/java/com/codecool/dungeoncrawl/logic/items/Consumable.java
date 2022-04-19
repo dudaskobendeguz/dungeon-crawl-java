@@ -18,4 +18,8 @@ public class Consumable extends Item {
     public int getHealthModifier() {
         return consumableType.getHealthModifier();
     }
+
+    public ConsumableType getConsumableType() {
+        return consumableType;
+    }
 }
