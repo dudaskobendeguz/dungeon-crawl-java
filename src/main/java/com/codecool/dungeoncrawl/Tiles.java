@@ -44,7 +44,7 @@ public class Tiles {
         tileMap.put(KeyType.LEVEL_KEY.getTileName(), new Tile(18, 23));
 
         tileMap.put(WeaponType.KNIFE.getTileName(), new Tile(0, 28));
-        tileMap.put(WeaponType.SWORD.getTileName(), new Tile(18, 30));
+        tileMap.put(WeaponType.SWORD.getTileName(), new Tile(0, 30));
         tileMap.put(WeaponType.AXE.getTileName(), new Tile(10, 30));
         tileMap.put(WeaponType.HAMMER.getTileName(), new Tile(5, 29));
     }
