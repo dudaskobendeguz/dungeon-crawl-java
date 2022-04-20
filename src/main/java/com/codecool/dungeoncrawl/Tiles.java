@@ -27,7 +27,7 @@ public class Tiles {
     }
 
     static {
-        tileMap.put("player", new Tile(27, 0));
+        tileMap.put("player", new Tile(25, 0));
         tileMap.put("skeleton", new Tile(29, 6));
 
         tileMap.put(CellType.EMPTY.getTileName(), new Tile(0, 0));
