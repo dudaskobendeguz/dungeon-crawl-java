@@ -17,6 +17,22 @@ public class Player extends Actor {
         return weapon;
     }
 
+    public void tryToPickUpItem() {
+        if (isItemOnPlayersCell()) {
+            pickUpItem();
+        }
+    }
+
+    private boolean isItemOnPlayersCell() {
+        return getCell().getItem() != null;
+    }
+
+    private void pickUpItem() {
+        Item item = getCell().getItem();
+        setItem(item);
+        getCell().setItem(null);
+    }
+
     private static class Inventory {
         private static final List<Item> items = new ArrayList<>();
 
