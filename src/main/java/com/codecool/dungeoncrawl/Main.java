@@ -25,10 +25,11 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class Main extends Application {
+    private final static int MAP_SIZE = 15;
     GameMap map = MapLoader.loadMap();
     Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
+            MAP_SIZE * Tiles.TILE_WIDTH,
+            MAP_SIZE * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     GridPane ui = new GridPane();
     Label healthLabel = new Label();
@@ -141,10 +142,13 @@ public class Main extends Application {
 
     private void refresh() {
         context.setFill(Color.BLACK);
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
+        context.fillRect(0, 0, MAP_SIZE, MAP_SIZE);
+        Cell playerCell = map.getPlayer().getCell();
+        int playerX = playerCell.getX();
+        int playerY = playerCell.getY();
+        for (int x = 0; x < MAP_SIZE; x++) {
+            for (int y = 0; y < MAP_SIZE; y++) {
+                Cell cell = map.getCell(playerX - (MAP_SIZE / 2) + x, playerY - (MAP_SIZE / 2) + y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
                 } else if (cell.getItem() != null) {
