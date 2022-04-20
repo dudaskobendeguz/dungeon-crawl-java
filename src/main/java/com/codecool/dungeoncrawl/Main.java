@@ -113,7 +113,6 @@ public class Main extends Application {
                 break;
             case RIGHT:
                 moveActors(1, 0);
-                map.getPlayer().move(1, 0);
                 refresh();
                 break;
         }
