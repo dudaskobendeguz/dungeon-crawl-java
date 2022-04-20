@@ -60,17 +60,6 @@ public class Cell implements Drawable {
         return item;
     }
 
-    public List<Cell> getNonDiagonalNeighbors() {
-        List<Cell> cells = new ArrayList<>();
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                if (Math.abs(x) != Math.abs(y)) {
-                    cells.add(getNeighbor(x, y));
-                }
-            }
-        }
-        return cells;
-    }
 
     @Override
     public String getTileName() {

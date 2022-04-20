@@ -18,7 +18,7 @@ public abstract class Actor implements Drawable {
     }
 
     protected boolean isValidStep(Cell cell) {
-        return cell != null && cell.getType() == CellType.FLOOR && cell.getActor() == null;
+        return cell != null && cell.getType().isStepable() && cell.getActor() == null;
     }
 
     public boolean isAboutToDie() {
