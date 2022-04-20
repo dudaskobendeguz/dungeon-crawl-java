@@ -110,7 +110,11 @@ public class Main extends Application {
                 refresh();
                 break;
         }
+        if (map.getPlayer().isAboutToDie()) {
+            System.exit(0);
+        }
     }
+
 
     public void moveActors(int dx, int dy) {
         map.getPlayer().move(dx, dy);
