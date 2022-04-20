@@ -14,6 +14,6 @@ public class Skeleton extends Monster {
 
     @Override
     public void move() {
-
+        // Skeleton doesn't move
     }
 }

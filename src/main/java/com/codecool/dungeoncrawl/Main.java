@@ -3,7 +3,6 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
@@ -23,7 +22,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends Application {
@@ -138,9 +136,8 @@ public class Main extends Application {
 
     public void moveMonsters() {
         List<Monster> monsters = map.getMonsters();
-        for (Monster monster : monsters) {
-            monster.move();
-        }
+        monsters.removeIf(monster -> monster.getCell() == null);
+        monsters.forEach(Monster::move);
     }
 
     private void refresh() {
