@@ -45,6 +45,12 @@ public class MapLoader {
                     case 326:
                         cell.setType(CellType.SIMPLE_DOOR_CLOSED);
                         break;
+                    case 288:
+                        cell.setType(CellType.LEVEL_DOOR_CLOSED);
+                        break;
+                    case 200:
+                        cell.setType(CellType.CHEST_CLOSED);
+                        break;
                     case 32:
                         cell.setType(CellType.TREE);
                         break;
