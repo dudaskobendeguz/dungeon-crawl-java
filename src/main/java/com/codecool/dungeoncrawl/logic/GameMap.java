@@ -33,6 +33,10 @@ public class GameMap {
         return (x >= 0 && x < cells.length && y >= 0 && y < cells[x].length) ? cells[x][y] : null;
     }
 
+    public void setChest(int x, int y) {
+        cells[x][y] = new Chest(this, x,y, CellType.CHEST_CLOSED);
+    }
+
     public void setPlayer(Player player) {
         this.player = player;
     }

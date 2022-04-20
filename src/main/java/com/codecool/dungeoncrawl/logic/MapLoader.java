@@ -11,6 +11,7 @@ public class MapLoader {
     public static GameMap loadMap() {
         String delimiter = ",";
         InputStream is = MapLoader.class.getResourceAsStream("/custom_map/level_1.csv");
+        assert is != null;
         Scanner scanner = new Scanner(is);
         scanner.useDelimiter(delimiter);
         String firstLine = scanner.nextLine();
@@ -23,6 +24,7 @@ public class MapLoader {
         }
 
         is = MapLoader.class.getResourceAsStream("/custom_map/level_1.csv");
+        assert is != null;
         scanner = new Scanner(is);
         scanner.useDelimiter(",");
 
@@ -49,7 +51,7 @@ public class MapLoader {
                         cell.setType(CellType.LEVEL_DOOR_CLOSED);
                         break;
                     case 200:
-                        cell.setType(CellType.CHEST_CLOSED);
+                        map.setChest(x,y);
                         break;
                     case 32:
                         cell.setType(CellType.TREE);
