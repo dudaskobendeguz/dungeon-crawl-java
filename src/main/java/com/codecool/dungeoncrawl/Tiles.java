@@ -34,6 +34,8 @@ public class Tiles {
         tileMap.put(CellType.WALL.getTileName(), new Tile(10, 17));
         tileMap.put(CellType.FLOOR.getTileName(), new Tile(3, 0));
         tileMap.put(CellType.TREE.getTileName(), new Tile(0, 1));
+        tileMap.put(CellType.DOOR_OPENED.getTileName(), new Tile(6, 10));
+        tileMap.put(CellType.DOOR_CLOSED.getTileName(), new Tile(8, 10));
 
         tileMap.put(ConsumableType.APPLE.getTileName(), new Tile(15, 29));
         tileMap.put(ConsumableType.BREAD.getTileName(), new Tile(15, 28));
