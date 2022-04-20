@@ -5,9 +5,9 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
-    protected Cell cell;
-    protected int health;
-    protected int damage;
+    private Cell cell;
+    private int health;
+    private int damage;
 
     public Actor(Cell cell, int health, int damage) {
         this.cell = cell;
@@ -18,6 +18,10 @@ public abstract class Actor implements Drawable {
 
     protected boolean isValidStep(Cell cell) {
         return cell != null && cell.getType() == CellType.FLOOR && cell.getActor() == null;
+    }
+
+    public boolean isAboutToDie() {
+        return health <= 0;
     }
 
     public int getHealth() {
@@ -38,5 +42,9 @@ public abstract class Actor implements Drawable {
 
     public int getDamage() {
         return damage;
+    }
+
+    public void takeDamage(int damage) {
+        health -= damage;
     }
 }

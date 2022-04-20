@@ -52,11 +52,21 @@ public class Player extends Actor {
     }
 
     public void move(int dx, int dy) {
+        Cell cell = getCell();
         Cell nextCell = cell.getNeighbor(dx, dy);
         if (isValidStep(nextCell)) {
             cell.setActor(null);
             nextCell.setActor(this);
             cell = nextCell;
+        }
+    }
+
+    public void attackMonster(Monster monster) {
+        monster.takeDamage(getDamage());
+        if (monster.isAboutToDie()) {
+            monster.die();
+        } else {
+            takeDamage(monster.getDamage());
         }
     }
 

@@ -8,4 +8,8 @@ public abstract class Monster extends Actor {
     }
 
     public abstract void move();
+
+    public void die() {
+
+    }
 }
