@@ -44,10 +44,6 @@ public class Cell implements Drawable {
         return gameMap.getCell(x + dx, y + dy);
     }
 
-    public Item getItem() {
-        return item;
-    }
-
     public List<Cell> getNonDiagonalNeighbors() {
         List<Cell> cells = new ArrayList<>();
         for (int x = -1; x <= 1; x++) {
@@ -59,6 +55,11 @@ public class Cell implements Drawable {
         }
         return cells;
     }
+
+    public Item getItem() {
+        return item;
+    }
+
 
     @Override
     public String getTileName() {

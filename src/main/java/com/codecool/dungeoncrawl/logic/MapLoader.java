@@ -42,6 +42,9 @@ public class MapLoader {
                     case 586:
                         cell.setType(CellType.WALL);
                         break;
+                    case 326:
+                        cell.setType(CellType.SIMPLE_DOOR_CLOSED);
+                        break;
                     case 32:
                         cell.setType(CellType.TREE);
                         break;
@@ -53,7 +56,7 @@ public class MapLoader {
                         Skeleton skeleton = new Skeleton(cell);
                         map.addMonster(skeleton);
                         break;
-                    case 27:
+                    case 25:
                         cell.setType(CellType.FLOOR);
                         map.setPlayer(new Player(cell));
                         break;
@@ -91,14 +94,14 @@ public class MapLoader {
                         break;
                     case 753:
                         cell.setType(CellType.FLOOR);
-                        cell.setItem(new Key(cell, KeyType.DOOR_KEY));
+                        cell.setItem(new Key(cell, KeyType.SIMPLE_DOOR_KEY));
                         break;
                     case 752:
                         cell.setType(CellType.FLOOR);
                         cell.setItem(new Key(cell, KeyType.CHEST_KEY));
                         break;
                     default:
-                        throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
+                        throw new RuntimeException("Unrecognized character: '" + lineChars[x] + "'");
                 }
             }
         }
