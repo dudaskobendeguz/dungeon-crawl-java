@@ -3,13 +3,18 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.items.ConsumableType;
+import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.KeyType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -21,7 +26,13 @@ public class Main extends Application {
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
+    GridPane ui = new GridPane();
     Label healthLabel = new Label();
+    Label damageLabel = new Label();
+    Label itemsLabel = new Label();
+    Label weaponLabel = new Label();
+    Button itemButton = new Button("Pick item");
+    private int uiRowIndex = 0;
 
     public static void main(String[] args) {
         launch(args);
@@ -29,12 +40,24 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(healthLabel, 1, 0);
+        ui.add(new Label("Health: "), 0, uiRowIndex);
+        addUiLabel(healthLabel, 1);
+        ui.add(new Label("Damage: "),0, uiRowIndex);
+        addUiLabel(damageLabel, 1);
+        ui.add(new Label("Weapon: "),0,uiRowIndex);
+        addUiLabel(weaponLabel, 1);
+
+        ui.add(itemButton, 0, uiRowIndex++);
+        itemButton.setFocusTraversable(false);
+
+        itemButton.setDisable(true);
+        itemButton.setOnMouseClicked(this::onMouseClicked);
+        addUiLabel(new Label("Inventory"), 0);
+        addUiLabel(itemsLabel, 0);
+
 
         BorderPane borderPane = new BorderPane();
 
@@ -48,6 +71,26 @@ public class Main extends Application {
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+    }
+
+    private void onMouseClicked(MouseEvent mouseEvent) {
+        switch (mouseEvent.getButton()) {
+            case PRIMARY: {
+                pickUpItem();
+                removeItemFromCell();
+                setItemPickButton();
+                refresh();
+            }
+        }
+    }
+
+    private void removeItemFromCell() {
+        map.getPlayer().getCell().setItem(null);
+    }
+
+    private void pickUpItem() {
+        Item item = map.getPlayer().getCell().getItem();
+        map.getPlayer().setItem(item);
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -65,10 +108,15 @@ public class Main extends Application {
                 refresh();
                 break;
             case RIGHT:
-                map.getPlayer().move(1,0);
+                map.getPlayer().move(1, 0);
                 refresh();
                 break;
         }
+        setItemPickButton();
+    }
+
+    private void setItemPickButton() {
+        itemButton.setDisable(map.getPlayer().getCell().getItem() == null);
     }
 
     private void refresh() {
@@ -79,11 +127,49 @@ public class Main extends Application {
                 Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
+                } else if (cell.getItem() != null) {
+                    Tiles.drawTile(context, cell.getItem(), x, y);
                 } else {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+        damageLabel.setText("" + map.getPlayer().getWeaponDamage());
+        weaponLabel.setText(map.getPlayer().getWeapon().toString());
+        drawItems();
+    }
+
+    private void drawItems() {
+        getConsumablesString();
+        getKeysString();
+        itemsLabel.setText(String.format("%s%n%s", getConsumablesString(), getKeysString()));
+    }
+
+    private String getKeysString() {
+        StringBuilder keysString = new StringBuilder("Keys: \n");
+        for (KeyType keyType : KeyType.values()) {
+            int numberOfKeys = map.getPlayer().countKeys(keyType);
+            if (numberOfKeys > 0) {
+                keysString.append(String.format("%s : %s%n", keyType.toString(), numberOfKeys));
+            }
+        }
+        return keysString.toString();
+    }
+
+    private String getConsumablesString() {
+        StringBuilder consumables = new StringBuilder("Foods: \n");
+        for (ConsumableType consumableType : ConsumableType.values()) {
+            int numberOfConsumable = map.getPlayer().countConsumables(consumableType);
+            if (numberOfConsumable > 0) {
+                consumables.append(String.format("%s : %s%n", consumableType.toString(), numberOfConsumable));
+            }
+        }
+        return consumables.toString();
+    }
+
+
+    private void addUiLabel(Label label, int colIndex) {
+        ui.add(label, colIndex, uiRowIndex++);
     }
 }
