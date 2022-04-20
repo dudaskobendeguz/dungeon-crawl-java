@@ -14,11 +14,14 @@ public abstract class Monster extends Actor {
     protected void moveTowardsPlayer(int playerX, int playerY) {
         int x = getX();
         int y = getY();
+
         if (x > playerX) {
             stepOne(cell.getNeighbor(-1, 0));
         } else if (x < playerX) {
             stepOne(cell.getNeighbor(1, 0));
-        } else if (y > playerY) {
+        }
+
+        if (y > playerY) {
             stepOne(cell.getNeighbor(0, -1));
         } else if (y < playerY) {
             stepOne(cell.getNeighbor(0, 1));

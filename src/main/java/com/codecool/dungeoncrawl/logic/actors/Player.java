@@ -103,7 +103,6 @@ public class Player extends Actor {
         if (isValidStep(nextCell)) {
             stepOne(nextCell);
         }
-        tryToAttack();
     }
 
     private List<Monster> getNeighborMonsters() {

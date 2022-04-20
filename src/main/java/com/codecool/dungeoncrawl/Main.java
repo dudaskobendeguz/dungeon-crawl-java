@@ -123,6 +123,7 @@ public class Main extends Application {
         }
         map.getPlayer().tryToPickUpItem();
         moveMonsters();
+        map.getPlayer().tryToAttack();
     }
 
     private void switchLevel() {
