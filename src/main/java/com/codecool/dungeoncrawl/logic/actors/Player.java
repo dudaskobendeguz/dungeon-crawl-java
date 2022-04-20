@@ -51,6 +51,15 @@ public class Player extends Actor {
         super(cell, 10, 5);
     }
 
+    public void move(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        if (isValidStep(nextCell)) {
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
+        }
+    }
+
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }

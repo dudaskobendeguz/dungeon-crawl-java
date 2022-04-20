@@ -2,7 +2,7 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Skeleton extends Actor {
+public class Skeleton extends Monster {
     public Skeleton(Cell cell) {
         super(cell, 10, 2);
     }
@@ -10,5 +10,10 @@ public class Skeleton extends Actor {
     @Override
     public String getTileName() {
         return "skeleton";
+    }
+
+    @Override
+    public void move() {
+
     }
 }

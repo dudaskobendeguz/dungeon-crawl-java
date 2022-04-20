@@ -127,29 +127,7 @@ public class Main extends Application {
         itemButton.setDisable(map.getPlayer().getCell().getItem() == null);
     }
 
-    private void makeActorsMove() {
-        List<Actor> actors = getActors();
-        for (Actor actor : actors) {
-            actor.move(0, 1);
-        }
-    }
-
-    private List<Actor> getActors() {
-        List<Actor> actors = new ArrayList<>();
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
-                Actor actor = cell.getActor();
-                if (actor != null && !(actor instanceof Player)) {
-                    actors.add(actor);
-                }
-            }
-        }
-        return actors;
-    }
-
     private void refresh() {
-        makeActorsMove();
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
