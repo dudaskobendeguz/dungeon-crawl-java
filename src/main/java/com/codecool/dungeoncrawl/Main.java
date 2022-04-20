@@ -139,8 +139,11 @@ public class Main extends Application {
 
     public void moveMonsters() {
         List<Monster> monsters = map.getMonsters();
+        Cell playerCell = map.getPlayer().getCell();
+        int playerX = playerCell.getX();
+        int playerY = playerCell.getY();
         monsters.removeIf(monster -> monster.getCell() == null);
-        monsters.forEach(Monster::move);
+        monsters.forEach(monster -> monster.move(playerX, playerY));
     }
 
     private void refresh() {

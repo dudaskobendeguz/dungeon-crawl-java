@@ -13,7 +13,7 @@ public class Skeleton extends Monster {
     }
 
     @Override
-    public void move() {
+    public void move(int playerX, int playerY) {
         // Skeleton doesn't move
     }
 }
