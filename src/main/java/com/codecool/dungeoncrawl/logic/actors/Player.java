@@ -2,11 +2,9 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.Chest;
 import com.codecool.dungeoncrawl.logic.actor.Actor;
 import com.codecool.dungeoncrawl.logic.items.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,23 +127,27 @@ public class Player extends Actor {
         for (Cell neighbourCell : nonDiagonalNeighbors) {
             CellType cellType = neighbourCell.getType();
             if (cellType.isOpenable()) {
-                Key key = keyForDoor(cellType, keys);
+                Key key = keyForOpenableCell(cellType, keys);
                 if (key != null) {
-                    openDoor(neighbourCell, key);
+                    unlockOpenableCell(neighbourCell, key);
                     Inventory.removeItem(key);
                 }
             }
         }
     }
 
-    private void openDoor(Cell neighbourCell, Key key) {
-        neighbourCell.setType(key.getOpenedDoor());
+    private void unlockOpenableCell(Cell cell, Key key) {
+        if(cell instanceof Chest && cell.getType().equals(CellType.CHEST_CLOSED)) {
+            Chest chest = (Chest) cell;
+            chest.dropConsumable();
+        }
+        cell.setType(key.getOpenedDoor());
     }
 
 
-    private Key keyForDoor(CellType cellType, List<Key> keys) {
+    private Key keyForOpenableCell(CellType cellType, List<Key> keys) {
         for (Key key : keys) {
-            if (key.getClosedDoorType().equals(cellType)) {
+            if (key.getClosedCellType().equals(cellType)) {
                 return key;
             }
         }
