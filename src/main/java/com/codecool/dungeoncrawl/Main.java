@@ -3,13 +3,16 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -22,6 +25,7 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Button itemButton = new Button("Pick item");
 
     public static void main(String[] args) {
         launch(args);
@@ -35,6 +39,9 @@ public class Main extends Application {
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
+        ui.add(itemButton, 0,1);
+        itemButton.setDisable(true);
+
 
         BorderPane borderPane = new BorderPane();
 
@@ -45,10 +52,20 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
+        scene.setOnMousePressed(this::onMouseClicked);
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
+
+    private void onMouseClicked(MouseEvent mouseEvent) {
+        switch (mouseEvent.getButton()) {
+            case PRIMARY: {
+            }
+        }
+    }
+
+
 
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
@@ -69,6 +86,11 @@ public class Main extends Application {
                 refresh();
                 break;
         }
+        setItemPickButton();
+    }
+
+    private void setItemPickButton() {
+        itemButton.setDisable(map.getPlayer().getCell().getItem() == null);
     }
 
     private void refresh() {
