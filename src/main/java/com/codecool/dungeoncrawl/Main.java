@@ -3,7 +3,9 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.KeyType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -41,6 +43,7 @@ public class Main extends Application {
         ui.add(healthLabel, 1, 0);
         ui.add(itemButton, 0,1);
         itemButton.setDisable(true);
+        itemButton.setOnMouseClicked(this::onMouseClicked);
 
 
         BorderPane borderPane = new BorderPane();
@@ -52,7 +55,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
-        scene.setOnMousePressed(this::onMouseClicked);
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
@@ -61,11 +63,22 @@ public class Main extends Application {
     private void onMouseClicked(MouseEvent mouseEvent) {
         switch (mouseEvent.getButton()) {
             case PRIMARY: {
+                System.out.println(mouseEvent.getTarget());
+                pickUpItem();
+                removeItemFromCell();
+                setItemPickButton();
             }
         }
     }
 
+    private void removeItemFromCell() {
+        map.getPlayer().getCell().setItem(null);
+    }
 
+    private void pickUpItem() {
+        Item item = map.getPlayer().getCell().getItem();
+        map.getPlayer().setItem(item);
+    }
 
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {

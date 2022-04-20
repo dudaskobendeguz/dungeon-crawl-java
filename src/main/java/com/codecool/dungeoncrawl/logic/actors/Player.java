@@ -9,13 +9,13 @@ import java.util.List;
 public class Player extends Actor {
     private Weapon weapon;
     private static class Inventory {
-        private final List<Item> items = new ArrayList<>();
+        private static final List<Item> items = new ArrayList<>();
 
-        public void setItem(Item item) {
+        public static void setItem(Item item) {
             items.add(item);
         }
 
-        public int countConsumables(ConsumableType consumableType) {
+        public static int countConsumables(ConsumableType consumableType) {
             int consumableCounter = 0;
             for (Item item : items) {
                 if (item instanceof Consumable) {
@@ -28,7 +28,7 @@ public class Player extends Actor {
             return consumableCounter;
         }
 
-        public int countKeys(KeyType keyType) {
+        public static int countKeys(KeyType keyType) {
             int keyCounter = 0;
             for (Item item : items) {
                 if (item instanceof Key) {
@@ -48,6 +48,26 @@ public class Player extends Actor {
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public void setItem(Item item) {
+        if (item instanceof Weapon) {
+            setWeapon((Weapon) item);
+        } else {
+            Inventory.setItem(item);
+        }
+    }
+
+    public String getWeapon() {
+        return weapon.getTileName();
+    }
+
+    public int countKeys(KeyType keyType) {
+        return Inventory.countKeys(keyType);
+    }
+
+    public int countConsumables(ConsumableType consumableType) {
+        return Inventory.countConsumables(consumableType);
     }
 
     public String getTileName() {
