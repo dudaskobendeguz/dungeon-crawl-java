@@ -1,7 +1,7 @@
 package com.codecool.dungeoncrawl.logic.items;
 
 public enum KeyType {
-    DOOR_KEY("Door key", "door_key"),
+    SIMPLE_DOOR_KEY("Door key", "simple_door_key"),
     CHEST_KEY("Chest key", "chest_key"),
     LEVEL_KEY("Level key", "level_key");
 

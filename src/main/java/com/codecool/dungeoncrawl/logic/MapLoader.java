@@ -43,7 +43,7 @@ public class MapLoader {
                         cell.setType(CellType.WALL);
                         break;
                     case 326:
-                        cell.setType(CellType.DOOR_OPENED);
+                        cell.setType(CellType.SIMPLE_DOOR_OPENED);
                         break;
                     case 32:
                         cell.setType(CellType.TREE);
@@ -94,7 +94,7 @@ public class MapLoader {
                         break;
                     case 753:
                         cell.setType(CellType.FLOOR);
-                        cell.setItem(new Key(cell, KeyType.DOOR_KEY));
+                        cell.setItem(new Key(cell, KeyType.SIMPLE_DOOR_KEY));
                         break;
                     case 752:
                         cell.setType(CellType.FLOOR);
