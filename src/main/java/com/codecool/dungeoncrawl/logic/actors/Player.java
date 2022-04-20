@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Actor {
-    private Weapon weapon;
+    private Weapon weapon = new Weapon(null, WeaponType.FIST);
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
     private static class Inventory {
         private static final List<Item> items = new ArrayList<>();
 
@@ -58,8 +63,8 @@ public class Player extends Actor {
         }
     }
 
-    public String getWeapon() {
-        return weapon.getTileName();
+    public int getWeaponDamage() {
+        return weapon.getDamage();
     }
 
     public int countKeys(KeyType keyType) {
