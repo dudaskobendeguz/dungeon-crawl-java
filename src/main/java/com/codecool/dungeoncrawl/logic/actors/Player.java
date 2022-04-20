@@ -128,7 +128,7 @@ public class Player extends Actor {
         List<Key> keys = Inventory.getKeys();
         for (Cell neighbourCell : nonDiagonalNeighbors) {
             CellType cellType = neighbourCell.getType();
-            if (isClosedDoor(cellType)) {
+            if (cellType.isOpenable()) {
                 Key key = keyForDoor(cellType, keys);
                 if (key != null) {
                     openDoor(neighbourCell, key);
@@ -150,10 +150,6 @@ public class Player extends Actor {
             }
         }
         return null;
-    }
-
-    private boolean isClosedDoor(CellType cellType) {
-        return cellType.equals(CellType.SIMPLE_DOOR_CLOSED);
     }
 
     public int getWeaponDamage() {
