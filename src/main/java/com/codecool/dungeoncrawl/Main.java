@@ -156,7 +156,7 @@ public class Main extends Application {
             for (int y = 0; y < MAP_SIZE; y++) {
                 Cell cell = map.getCell(playerX - (MAP_SIZE / 2) + x, playerY - (MAP_SIZE / 2) + y);
                 if (cell == null) {
-                    Tiles.drawTile(context, new Cell(map, x,y, CellType.EMPTY), x, y);
+                    Tiles.drawTile(context, new Cell(), x, y);
                 } else if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
                 } else if (cell.getItem() != null) {

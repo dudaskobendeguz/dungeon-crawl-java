@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic.actor;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
+import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
 
 public abstract class Actor implements Drawable {
@@ -57,5 +58,13 @@ public abstract class Actor implements Drawable {
 
     public void takeDamage(int damage) {
         health -= damage;
+    }
+
+    protected void stepOne(Cell nextCell) {
+        if (GameMap.isValidStep(nextCell)) {
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
+        }
     }
 }
