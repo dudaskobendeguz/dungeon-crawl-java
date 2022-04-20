@@ -3,6 +3,8 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Monster;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
@@ -19,6 +21,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
@@ -96,19 +100,19 @@ public class Main extends Application {
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
-                map.getPlayer().move(0, -1);
+                moveActors(0, -1);
                 refresh();
                 break;
             case DOWN:
-                map.getPlayer().move(0, 1);
+                moveActors(0, 1);
                 refresh();
                 break;
             case LEFT:
-                map.getPlayer().move(-1, 0);
+                moveActors(-1, 0);
                 refresh();
                 break;
             case RIGHT:
-                map.getPlayer().move(1, 0);
+                moveActors(1, 0);
                 refresh();
                 break;
         }
@@ -117,6 +121,18 @@ public class Main extends Application {
 
     private void setItemPickButton() {
         itemButton.setDisable(map.getPlayer().getCell().getItem() == null);
+    }
+
+    public void moveActors(int dx, int dy) {
+        map.getPlayer().move(dx, dy);
+        moveMonsters();
+    }
+
+
+    public void moveMonsters() {
+        List<Monster> monsters = map.getMonsters();
+        monsters.removeIf(monster -> monster.getCell() == null);
+        monsters.forEach(Monster::move);
     }
 
     private void refresh() {

@@ -50,7 +50,8 @@ public class MapLoader {
                         break;
                     case 93:
                         cell.setType(CellType.FLOOR);
-                        new Skeleton(cell);
+                        Skeleton skeleton = new Skeleton(cell);
+                        map.addMonster(skeleton);
                         break;
                     case 27:
                         cell.setType(CellType.FLOOR);

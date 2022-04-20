@@ -1,12 +1,17 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.actor.Actor;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player extends Actor {
+
     private Weapon weapon = new Weapon(null, WeaponType.FIST);
 
     public Weapon getWeapon() {
@@ -48,7 +53,47 @@ public class Player extends Actor {
     }
 
     public Player(Cell cell) {
-        super(cell);
+        super(cell, 10, 5);
+    }
+
+    public void move(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        if (isValidStep(nextCell)) {
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
+        }
+        tryToAttack();
+    }
+
+    private List<Monster> getNeighborMonsters() {
+        List<Monster> monsters = new ArrayList<>();
+        List<Cell> cells = cell.getNonDiagonalNeighbors();
+        for (Cell cell : cells) {
+            if (cell != null) {
+                Actor actor = cell.getActor();
+                if (actor != null && actor.isMonster()) {
+                    monsters.add((Monster) actor);
+                }
+            }
+        }
+        return monsters;
+    }
+
+    public void tryToAttack() {
+        List<Monster> monsters = getNeighborMonsters();
+        for (Monster monster : monsters) {
+            attackMonster(monster);
+        }
+    }
+
+    public void attackMonster(Monster monster) {
+        monster.takeDamage(damage);
+        if (monster.isAboutToDie()) {
+            monster.die();
+        } else {
+            takeDamage(monster.getDamage());
+        }
     }
 
     public void setWeapon(Weapon weapon) {

@@ -1,7 +1,10 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actor.Actor;
 import com.codecool.dungeoncrawl.logic.items.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cell implements Drawable {
     private CellType type;
@@ -43,6 +46,18 @@ public class Cell implements Drawable {
 
     public Item getItem() {
         return item;
+    }
+
+    public List<Cell> getNonDiagonalNeighbors() {
+        List<Cell> cells = new ArrayList<>();
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if (Math.abs(x) != Math.abs(y)) {
+                    cells.add(getNeighbor(x, y));
+                }
+            }
+        }
+        return cells;
     }
 
     @Override
