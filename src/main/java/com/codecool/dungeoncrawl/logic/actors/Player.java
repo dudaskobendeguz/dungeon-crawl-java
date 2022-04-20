@@ -48,7 +48,7 @@ public class Player extends Actor {
     }
 
     public Player(Cell cell) {
-        super(cell);
+        super(cell, 10, 5);
     }
 
     public void setWeapon(Weapon weapon) {
