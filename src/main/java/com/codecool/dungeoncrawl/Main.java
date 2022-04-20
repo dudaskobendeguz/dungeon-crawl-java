@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Monster;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.Item;
@@ -101,22 +102,24 @@ public class Main extends Application {
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
-                map.getPlayer().move(0, -1);
+                moveActors(0, -1);
                 refresh();
                 break;
             case DOWN:
-                map.getPlayer().move(0, 1);
+                moveActors(0, 1);
                 refresh();
                 break;
             case LEFT:
-                map.getPlayer().move(-1, 0);
+                moveActors(-1, 0);
                 refresh();
                 break;
             case RIGHT:
+                moveActors(1, 0);
                 map.getPlayer().move(1, 0);
                 refresh();
                 break;
             case SPACE:
+                moveMonsters();
                 refresh();
                 break;
         }
@@ -125,6 +128,19 @@ public class Main extends Application {
 
     private void setItemPickButton() {
         itemButton.setDisable(map.getPlayer().getCell().getItem() == null);
+    }
+
+    public void moveActors(int dx, int dy) {
+        map.getPlayer().move(dx, dy);
+        moveMonsters();
+    }
+
+
+    public void moveMonsters() {
+        List<Monster> monsters = map.getMonsters();
+        for (Monster monster : monsters) {
+            monster.move();
+        }
     }
 
     private void refresh() {
