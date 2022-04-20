@@ -19,14 +19,22 @@ public class Chest extends Cell{
     public void dropConsumable() {
         List<Cell> nonDiagonalNeighbors = getNonDiagonalNeighbors();
         for (Cell nonDiagonalNeighbor : nonDiagonalNeighbors) {
-            if (GameMap.isValidStep(nonDiagonalNeighbor) && random.nextBoolean()) {
-                if (random.nextBoolean()) {
+            if (GameMap.isValidStep(nonDiagonalNeighbor) && isPlaceItem()) {
+                if (isKey()) {
                     nonDiagonalNeighbor.setItem(new Key(nonDiagonalNeighbor, KeyType.CHEST_KEY));
                 } else {
                     nonDiagonalNeighbor.setItem(new Consumable(nonDiagonalNeighbor, getRandomItem()));
                 }
             }
         }
+    }
+
+    private boolean isKey() {
+        return random.nextInt(100) < 20;
+    }
+
+    private boolean isPlaceItem() {
+        return random.nextBoolean();
     }
 
     private ConsumableType getRandomItem() {
