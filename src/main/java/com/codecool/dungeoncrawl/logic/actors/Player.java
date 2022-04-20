@@ -6,6 +6,9 @@ import com.codecool.dungeoncrawl.logic.items.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player extends Actor {
     private Weapon weapon = new Weapon(null, WeaponType.FIST);
 
@@ -59,6 +62,20 @@ public class Player extends Actor {
             nextCell.setActor(this);
             cell = nextCell;
         }
+    }
+
+    private List<Monster> getNeighborMonsters() {
+        List<Monster> monsters = new ArrayList<>();
+        List<Cell> cells = getCell().getNonDiagonalNeighbors();
+        for (Cell cell : cells) {
+            if (cell != null) {
+                Actor actor = cell.getActor();
+                if (actor != null && actor.isMonster()) {
+                    monsters.add((Monster) actor);
+                }
+            }
+        }
+        return monsters;
     }
 
     public void attackMonster(Monster monster) {

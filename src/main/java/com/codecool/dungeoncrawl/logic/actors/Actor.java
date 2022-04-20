@@ -24,6 +24,10 @@ public abstract class Actor implements Drawable {
         return health <= 0;
     }
 
+    public boolean isMonster() {
+        return this instanceof Monster;
+    }
+
     public int getHealth() {
         return health;
     }
