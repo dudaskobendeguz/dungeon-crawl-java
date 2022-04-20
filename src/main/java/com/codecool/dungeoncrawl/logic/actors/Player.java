@@ -91,7 +91,7 @@ public class Player extends Actor {
     }
 
     public Player(Cell cell) {
-        super(cell, 10, 5);
+        super(cell, 10, 1);
     }
 
     public Player() {
