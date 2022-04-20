@@ -34,16 +34,16 @@ public class Tiles {
         tileMap.put(CellType.WALL.getTileName(), new Tile(10, 17));
         tileMap.put(CellType.FLOOR.getTileName(), new Tile(3, 0));
         tileMap.put(CellType.TREE.getTileName(), new Tile(0, 1));
-        tileMap.put(CellType.SIMPLE_DOOR_OPENED.getTileName(), new Tile(6, 10));
-        tileMap.put(CellType.SIMPLE_DOOR_CLOSED.getTileName(), new Tile(8, 10));
+        tileMap.put(CellType.SIMPLE_DOOR_OPENED.getTileName(), new Tile(6, 9));
+        tileMap.put(CellType.SIMPLE_DOOR_CLOSED.getTileName(), new Tile(3, 9));
 
         tileMap.put(ConsumableType.APPLE.getTileName(), new Tile(15, 29));
         tileMap.put(ConsumableType.BREAD.getTileName(), new Tile(15, 28));
         tileMap.put(ConsumableType.MEAT.getTileName(), new Tile(17, 28));
 
         tileMap.put(KeyType.CHEST_KEY.getTileName(), new Tile(16, 23));
-        tileMap.put(KeyType.SIMPLE_DOOR_KEY.getTileName(), new Tile(17, 23));
-        tileMap.put(KeyType.LEVEL_KEY.getTileName(), new Tile(18, 23));
+        tileMap.put(KeyType.SIMPLE_DOOR_KEY.getTileName(), new Tile(18, 23));
+        tileMap.put(KeyType.LEVEL_KEY.getTileName(), new Tile(17 , 23));
 
         tileMap.put(WeaponType.KNIFE.getTileName(), new Tile(0, 28));
         tileMap.put(WeaponType.SWORD.getTileName(), new Tile(0, 30));

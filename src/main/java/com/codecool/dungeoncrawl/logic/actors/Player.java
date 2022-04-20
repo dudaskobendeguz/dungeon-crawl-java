@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.actor.Actor;
 import com.codecool.dungeoncrawl.logic.items.*;
 
@@ -49,6 +50,20 @@ public class Player extends Actor {
                 }
             }
             return keyCounter;
+        }
+
+        public static List<Key> getKeys() {
+            List<Key> keys = new ArrayList<>();
+            for (Item item : items) {
+                if (item instanceof Key) {
+                    keys.add((Key) item);
+                }
+            }
+            return keys;
+        }
+
+        public static void removeItem(Item removableItem) {
+            items.remove(removableItem);
         }
     }
 
@@ -106,6 +121,39 @@ public class Player extends Actor {
         } else {
             Inventory.setItem(item);
         }
+    }
+
+    public void tryToUseKey() {
+        List<Cell> nonDiagonalNeighbors = getCell().getNonDiagonalNeighbors();
+        List<Key> keys = Inventory.getKeys();
+        for (Cell neighbourCell : nonDiagonalNeighbors) {
+            CellType cellType = neighbourCell.getType();
+            if (isClosedDoor(cellType)) {
+                Key key = keyForDoor(cellType, keys);
+                if (key != null) {
+                    openDoor(neighbourCell, key);
+                    Inventory.removeItem(key);
+                }
+            }
+        }
+    }
+
+    private void openDoor(Cell neighbourCell, Key key) {
+        neighbourCell.setType(key.getOpenedDoor());
+    }
+
+
+    private Key keyForDoor(CellType cellType, List<Key> keys) {
+        for (Key key : keys) {
+            if (key.getClosedDoorType().equals(cellType)) {
+                return key;
+            }
+        }
+        return null;
+    }
+
+    private boolean isClosedDoor(CellType cellType) {
+        return cellType.equals(CellType.SIMPLE_DOOR_CLOSED);
     }
 
     public int getWeaponDamage() {

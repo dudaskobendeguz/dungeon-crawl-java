@@ -115,6 +115,10 @@ public class Main extends Application {
                 moveActors(1, 0);
                 refresh();
                 break;
+            case E:
+                map.getPlayer().tryToUseKey();
+                refresh();
+                break;
         }
         setItemPickButton();
     }
