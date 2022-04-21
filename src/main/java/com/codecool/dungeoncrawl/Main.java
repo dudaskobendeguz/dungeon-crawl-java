@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
@@ -24,14 +23,16 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class Main extends Application {
+    private static String playerName = "Player_1";
     private final static int MAP_SIZE = 15;
     private Levels currentLevel = Levels.LEVEL_1;
-    GameMap map = MapLoader.loadMap(currentLevel.getMapFilePath(), new Player());
+    GameMap map = MapLoader.loadMap(currentLevel.getMapFilePath(), new Player(playerName));
     Canvas canvas = new Canvas(
             MAP_SIZE * Tiles.TILE_WIDTH,
             MAP_SIZE * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     GridPane ui = new GridPane();
+    Label playerNameLabel = new Label();
     Label healthLabel = new Label();
     Label damageLabel = new Label();
     Label itemsLabel = new Label();
@@ -55,13 +56,17 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        playerName = args[0];
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ui.setPrefWidth(200);
+        ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
+
+        ui.add(new Label("Player Name : "), 0, uiRowIndex);
+        addUiLabel(playerNameLabel, 1);
 
         ui.add(new Label("Health: "), 0, uiRowIndex);
         addUiLabel(healthLabel, 1);
@@ -176,10 +181,18 @@ public class Main extends Application {
                 }
             }
         }
-        healthLabel.setText("" + map.getPlayer().getHealth());
+        playerNameLabel.setText(map.getPlayer().getName());
+        healthLabel.setText(String.format("%s %s", map.getPlayer().getHealth(), displayHealthBar()));
         damageLabel.setText("" + map.getPlayer().getWeaponDamage());
         weaponLabel.setText(map.getPlayer().getWeapon().toString());
         drawItems();
+    }
+
+    private String displayHealthBar() {
+        double currentHealth = map.getPlayer().getHealth();
+        double maxHealth = map.getPlayer().getMaxHealth();
+        double hp = ( currentHealth / maxHealth) * 10;
+        return "♥".repeat(Math.max(0, (int) hp));
     }
 
     private void drawItems() {
@@ -193,7 +206,7 @@ public class Main extends Application {
         for (KeyType keyType : KeyType.values()) {
             int numberOfKeys = map.getPlayer().countKeys(keyType);
             if (numberOfKeys > 0) {
-                keysString.append(String.format("%s : %s%n", keyType.toString(), numberOfKeys));
+                keysString.append(String.format("%s :   %s%n", keyType.toString(), numberOfKeys));
             }
         }
         return keysString.toString();
@@ -204,7 +217,7 @@ public class Main extends Application {
         for (ConsumableType consumableType : ConsumableType.values()) {
             int numberOfConsumable = map.getPlayer().countConsumables(consumableType);
             if (numberOfConsumable > 0) {
-                consumables.append(String.format("%s : %s%n", consumableType.toString(), numberOfConsumable));
+                consumables.append(String.format("%s :  %s%n", consumableType.toString(), numberOfConsumable));
             }
         }
         return consumables.toString();
