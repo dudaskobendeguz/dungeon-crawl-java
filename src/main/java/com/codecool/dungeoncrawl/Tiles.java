@@ -42,6 +42,7 @@ public class Tiles {
         tileMap.put(MonsterType.SLIME.getTileName(), new Tile(27, 8));
         tileMap.put(MonsterType.ROBOT.getTileName(), new Tile(26, 3));
         tileMap.put(MonsterType.TIME_MAGE.getTileName(), new Tile(24, 2));
+        tileMap.put(MonsterType.FIREBALL.getTileName(), new Tile(15, 10));
 
         // Cell Skins
         tileMap.put(CellType.EMPTY.getTileName(), new Tile(0, 0));

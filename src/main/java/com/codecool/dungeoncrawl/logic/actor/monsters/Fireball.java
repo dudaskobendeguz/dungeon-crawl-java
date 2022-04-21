@@ -18,7 +18,7 @@ public class Fireball extends Monster implements Movable {
 
     @Override
     public String getTileName() {
-        return WeaponType.MAGIC.getTileName();
+        return MonsterType.FIREBALL.getTileName();
     }
 
     @Override
