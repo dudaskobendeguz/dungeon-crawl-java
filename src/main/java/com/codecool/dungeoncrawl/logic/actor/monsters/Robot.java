@@ -18,10 +18,12 @@ public class Robot extends Monster implements Movable {
 
     @Override
     public void move(int playerX, int playerY) {
-        Cell nextCell = cell.getNeighbor(direction);
-        if (!GameMap.isValidStep(nextCell)) {
-            direction = (direction.equals(Direction.RIGHT)) ? Direction.LEFT : Direction.RIGHT;
+        if (cell != null) {
+            Cell nextCell = cell.getNeighbor(direction);
+            if (!GameMap.isValidStep(nextCell)) {
+                direction = (direction.equals(Direction.RIGHT)) ? Direction.LEFT : Direction.RIGHT;
+            }
+            stepOne(nextCell);
         }
-        stepOne(nextCell);
     }
 }
