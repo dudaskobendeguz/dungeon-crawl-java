@@ -174,7 +174,9 @@ public class Player extends Actor {
 
     public void setItem(Item item) {
         if (item instanceof Weapon) {
-            setWeapon((Weapon) item);
+            Weapon weapon = (Weapon) item;
+            setWeapon(weapon);
+            damage = weapon.getDamage();
         } else {
             inventory.setItem(item);
         }
