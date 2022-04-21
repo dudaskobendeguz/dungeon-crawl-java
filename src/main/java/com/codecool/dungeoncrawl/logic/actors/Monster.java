@@ -7,7 +7,9 @@ import java.util.Random;
 
 public abstract class Monster extends Actor {
     private final boolean isTurnBased;
-    
+    protected Random random = new Random();
+
+
     public Monster(Cell cell, int health, int damage) {
         super(cell, health, damage);
         this.isTurnBased = true;
@@ -40,7 +42,6 @@ public abstract class Monster extends Actor {
     }
 
     protected void moveRandomly() {
-        Random random = new Random();
         int maxRandom = 3;
         int randomNumber = random.nextInt(maxRandom + 1);
         switch (randomNumber) {
