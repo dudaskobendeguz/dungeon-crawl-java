@@ -205,11 +205,11 @@ public class MapLoader {
                         cell.setType(CellType.FLOOR_1);
                         cell.setItem(new Consumable(cell, ConsumableType.APPLE));
                         break;
-                    case 754:
+                    case 753:
                         cell.setType(CellType.FLOOR_1);
                         cell.setItem(new Key(cell, KeyType.LEVEL_KEY));
                         break;
-                    case 753:
+                    case 754:
                         cell.setType(CellType.FLOOR_1);
                         cell.setItem(new Key(cell, KeyType.SIMPLE_DOOR_KEY));
                         break;
