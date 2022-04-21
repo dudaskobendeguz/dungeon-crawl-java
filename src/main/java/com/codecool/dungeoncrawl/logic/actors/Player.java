@@ -44,6 +44,23 @@ public class Player extends Actor {
         this.cell = cell;
     }
 
+    public void tryToUseInventory(ConsumableType consumableType) {
+        if (inventory.countConsumables(consumableType) > 0) {
+            eatConsumableFromInventory(consumableType);
+        }
+    }
+
+    private void eatConsumableFromInventory(ConsumableType consumableType) {
+        Consumable consumable = inventory.takeFood(consumableType);
+        if (consumable != null) {
+            if (getMaxHealth() < getHealth() + consumable.getHealthModifier()) {
+                health = getMaxHealth();
+            } else {
+                health += consumable.getHealthModifier();
+            }
+        }
+    }
+
     private static class Inventory {
         private final List<Item> items = new ArrayList<>();
 
@@ -89,6 +106,17 @@ public class Player extends Actor {
 
         public void removeItem(Item removableItem) {
             items.remove(removableItem);
+        }
+
+        public Consumable takeFood(ConsumableType consumableType) {
+            for (Item item : items) {
+                if (item instanceof Consumable && item.getTileName().equals(consumableType.getTileName())) {
+                    Consumable food = (Consumable) item;
+                    items.remove(item);
+                    return food;
+                }
+            }
+            return null;
         }
     }
 
@@ -146,7 +174,9 @@ public class Player extends Actor {
 
     public void setItem(Item item) {
         if (item instanceof Weapon) {
-            setWeapon((Weapon) item);
+            Weapon weapon = (Weapon) item;
+            setWeapon(weapon);
+            damage = weapon.getDamage();
         } else {
             inventory.setItem(item);
         }
