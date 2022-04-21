@@ -48,8 +48,8 @@ public class Tiles {
         tileMap.put(CellType.BONES.getTileName(), new Tile(0, 15));
         tileMap.put(CellType.CANDLES.getTileName(), new Tile(5, 15));
         tileMap.put(CellType.HOUSE_1.getTileName(), new Tile(4, 20));
-        tileMap.put(CellType.HOUSE_2.getTileName(), new Tile(7, 20));
-        tileMap.put(CellType.HOUSE_3.getTileName(), new Tile(1, 21));
+        tileMap.put(CellType.LEVEL_SWITCH_HOUSE.getTileName(), new Tile(7, 20));
+        tileMap.put(CellType.HOUSE_2.getTileName(), new Tile(1, 21));
 
         tileMap.put(CellType.TREE_1.getTileName(), new Tile(0, 1));
         tileMap.put(CellType.TREE_2.getTileName(), new Tile(1, 1));
@@ -81,8 +81,8 @@ public class Tiles {
 
         tileMap.put(CellType.SIMPLE_DOOR_OPENED.getTileName(), new Tile(6, 9));
         tileMap.put(CellType.SIMPLE_DOOR_CLOSED.getTileName(), new Tile(3, 9));
-        tileMap.put(CellType.LEVEL_DOOR_CLOSED.getTileName(), new Tile(0, 9));
-        tileMap.put(CellType.LEVEL_DOOR_OPENED.getTileName(), new Tile(1, 9));
+        tileMap.put(CellType.LEVEL_SWITCH_DOOR_CLOSED.getTileName(), new Tile(0, 9));
+        tileMap.put(CellType.LEVEL_SWITCH_DOOR_OPENED.getTileName(), new Tile(1, 9));
         tileMap.put(CellType.CHEST_CLOSED.getTileName(), new Tile(8, 6));
         tileMap.put(CellType.CHEST_OPENED.getTileName(), new Tile(9, 6));
 

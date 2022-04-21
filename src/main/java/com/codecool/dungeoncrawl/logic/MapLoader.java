@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class MapLoader {
     private static final String delimiter = ",";
-    public static GameMap loadMap(String filePath) {
+    public static GameMap loadMap(String filePath, Player player) {
         Scanner scanner = loadMapFile(filePath);
         String firstLine = scanner.nextLine();
         String[] firstLineChars = firstLine.split(delimiter);
@@ -50,10 +50,10 @@ public class MapLoader {
                         cell.setType(CellType.HOUSE_1);
                         break;
                     case 647:
-                        cell.setType(CellType.HOUSE_2);
+                        cell.setType(CellType.LEVEL_SWITCH_HOUSE);
                         break;
                     case 673:
-                        cell.setType(CellType.HOUSE_3);
+                        cell.setType(CellType.HOUSE_2);
                         break;
                     case 448:
                         cell.setType(CellType.GRAVE_2);
@@ -62,7 +62,7 @@ public class MapLoader {
                         cell.setType(CellType.SIMPLE_DOOR_CLOSED);
                         break;
                     case 288:
-                        cell.setType(CellType.LEVEL_DOOR_CLOSED);
+                        cell.setType(CellType.LEVEL_SWITCH_DOOR_CLOSED);
                         break;
                     case 200:
                         map.setChest(x,y);
@@ -152,7 +152,9 @@ public class MapLoader {
                         break;
                     case 25:
                         cell.setType(CellType.FLOOR_1);
-                        map.setPlayer(new Player(cell));
+                        player.setCell(cell);
+                        cell.setActor(player);
+                        map.setPlayer(player);
                         break;
                     case 1:
                         cell.setType(CellType.FLOOR_2);

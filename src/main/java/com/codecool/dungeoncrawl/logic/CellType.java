@@ -36,32 +36,43 @@ public enum CellType {
     BONES("bones", true),
     CANDLES("candles"),
     HOUSE_1("house_1"),
-    HOUSE_2("house_2", true),
-    HOUSE_3("house_3"),
-    SIMPLE_DOOR_OPENED("simple_door_opened", true),
-    SIMPLE_DOOR_CLOSED("simple_door_closed", false, true),
-    LEVEL_DOOR_OPENED("level_door_opened", true),
-    LEVEL_DOOR_CLOSED("level_door_closed", false, true),
+    LEVEL_SWITCH_HOUSE("level_switch_house", true, false, true),
+    HOUSE_2("house_2"),
+    SIMPLE_DOOR_OPENED("simple_door_opened", true, true),
+    SIMPLE_DOOR_CLOSED("simple_door_closed", true, false),
+    LEVEL_SWITCH_DOOR_OPENED("level_switch_door_opened", true, false, true),
+    LEVEL_SWITCH_DOOR_CLOSED("level_switch_door_closed", false, true),
     CHEST_OPENED("chest_opened", true),
     CHEST_CLOSED("chest_closed", false, true);
 
+    private final boolean isLevelSwitcher;
     private final String tileName;
     private final boolean isStepable;
     private final boolean isOpenable;
 
+    CellType(String tileName, boolean isStepable, boolean isOpenable, boolean isLevelSwitcher) {
+        this.isLevelSwitcher = isLevelSwitcher;
+        this.tileName = tileName;
+        this.isStepable = isStepable;
+        this.isOpenable = isOpenable;
+    }
+
     CellType(String tileName, boolean isStepable, boolean isOpenable) {
+        this.isLevelSwitcher = false;
         this.tileName = tileName;
         this.isStepable = isStepable;
         this.isOpenable = isOpenable;
     }
 
     CellType(String tileName) {
+        this.isLevelSwitcher = false;
         this.tileName = tileName;
         this.isStepable = false;
         this.isOpenable = false;
     }
 
     CellType(String tileName, boolean isStepable) {
+        this.isLevelSwitcher = false;
         this.tileName = tileName;
         this.isStepable = isStepable;
         this.isOpenable = false;
@@ -73,6 +84,10 @@ public enum CellType {
 
     public boolean isStepable() {
         return isStepable;
+    }
+
+    public boolean isLevelSwitcher() {
+        return isLevelSwitcher;
     }
 
     public boolean isOpenable() {

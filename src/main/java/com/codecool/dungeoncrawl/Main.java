@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 import javafx.application.Application;
@@ -23,7 +24,8 @@ import java.util.List;
 
 public class Main extends Application {
     private final static int MAP_SIZE = 15;
-    GameMap map = MapLoader.loadMap(Levels.LEVEL_2.getMapFilePath());
+    private Levels currentLevel = Levels.LEVEL_1;
+    GameMap map = MapLoader.loadMap(currentLevel.getMapFilePath(), new Player());
     Canvas canvas = new Canvas(
             MAP_SIZE * Tiles.TILE_WIDTH,
             MAP_SIZE * Tiles.TILE_WIDTH);
@@ -112,8 +114,22 @@ public class Main extends Application {
 
     public void moveActors(int dx, int dy) {
         map.getPlayer().move(dx, dy);
+        if (map.getPlayer().isTryingToSwitchLevel()) {
+            switchLevel();
+        }
         map.getPlayer().tryToPickUpItem();
         moveMonsters();
+    }
+
+    private void switchLevel() {
+        switch (currentLevel) {
+            case LEVEL_1: {
+                currentLevel = Levels.LEVEL_2;
+                break;
+            }
+        }
+        map = MapLoader.loadMap(currentLevel.getMapFilePath(), map.getPlayer());
+        refresh();
     }
 
 

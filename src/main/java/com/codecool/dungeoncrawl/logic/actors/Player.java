@@ -12,6 +12,7 @@ import java.util.List;
 public class Player extends Actor {
 
     private Weapon weapon = new Weapon(null, WeaponType.FIST);
+    private final Inventory inventory = new Inventory();
 
     public Weapon getWeapon() {
         return weapon;
@@ -33,14 +34,22 @@ public class Player extends Actor {
         getCell().setItem(null);
     }
 
-    private static class Inventory {
-        private static final List<Item> items = new ArrayList<>();
+    public boolean isTryingToSwitchLevel() {
+        return cell.getType().isLevelSwitcher();
+    }
 
-        public static void setItem(Item item) {
+    public void setCell(Cell cell) {
+        this.cell = cell;
+    }
+
+    private static class Inventory {
+        private final List<Item> items = new ArrayList<>();
+
+        public void setItem(Item item) {
             items.add(item);
         }
 
-        public static int countConsumables(ConsumableType consumableType) {
+        public int countConsumables(ConsumableType consumableType) {
             int consumableCounter = 0;
             for (Item item : items) {
                 if (item instanceof Consumable) {
@@ -53,7 +62,7 @@ public class Player extends Actor {
             return consumableCounter;
         }
 
-        public static int countKeys(KeyType keyType) {
+        public int countKeys(KeyType keyType) {
             int keyCounter = 0;
             for (Item item : items) {
                 if (item instanceof Key) {
@@ -66,7 +75,7 @@ public class Player extends Actor {
             return keyCounter;
         }
 
-        public static List<Key> getKeys() {
+        public List<Key> getKeys() {
             List<Key> keys = new ArrayList<>();
             for (Item item : items) {
                 if (item instanceof Key) {
@@ -76,13 +85,17 @@ public class Player extends Actor {
             return keys;
         }
 
-        public static void removeItem(Item removableItem) {
+        public void removeItem(Item removableItem) {
             items.remove(removableItem);
         }
     }
 
     public Player(Cell cell) {
         super(cell, 10, 5);
+    }
+
+    public Player() {
+        super(10, 5);
     }
 
     public void move(int dx, int dy) {
@@ -133,20 +146,20 @@ public class Player extends Actor {
         if (item instanceof Weapon) {
             setWeapon((Weapon) item);
         } else {
-            Inventory.setItem(item);
+            inventory.setItem(item);
         }
     }
 
     public void tryToUseKey() {
         List<Cell> nonDiagonalNeighbors = getCell().getNonDiagonalNeighbors();
-        List<Key> keys = Inventory.getKeys();
+        List<Key> keys = inventory.getKeys();
         for (Cell neighbourCell : nonDiagonalNeighbors) {
             CellType cellType = neighbourCell.getType();
             if (cellType.isOpenable()) {
                 Key key = keyForOpenableCell(cellType, keys);
                 if (key != null) {
                     unlockOpenableCell(neighbourCell, key);
-                    Inventory.removeItem(key);
+                    inventory.removeItem(key);
                 }
             }
         }
@@ -175,11 +188,11 @@ public class Player extends Actor {
     }
 
     public int countKeys(KeyType keyType) {
-        return Inventory.countKeys(keyType);
+        return inventory.countKeys(keyType);
     }
 
     public int countConsumables(ConsumableType consumableType) {
-        return Inventory.countConsumables(consumableType);
+        return inventory.countConsumables(consumableType);
     }
 
     public String getTileName() {

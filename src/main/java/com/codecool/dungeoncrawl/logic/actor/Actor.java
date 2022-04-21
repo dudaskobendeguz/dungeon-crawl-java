@@ -17,6 +17,12 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
+    public Actor(int health, int damage) {
+        this.cell = null;
+        this.health = health;
+        this.damage = damage;
+    }
+
     protected boolean isValidStep(Cell cell) {
         return cell != null && cell.getType().isStepable() && cell.getActor() == null; //TODO REMOVE THIS
     }
