@@ -1,7 +1,6 @@
-package com.codecool.dungeoncrawl.logic.actors;
+package com.codecool.dungeoncrawl.logic.actor.monsters;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.GameMap;
 
 public class Chicken extends Monster implements Movable {
 
@@ -21,7 +20,8 @@ public class Chicken extends Monster implements Movable {
     public void move(int playerX, int playerY) {
         setTimer();
         if (moveTimer == 0) {
-            moveTowardsPlayer(playerX, playerY);
+            stepOne(MoveUtil.moveTowardsPlayer(cell, playerX, playerY));
+            //moveTowardsPlayer(playerX, playerY);
         }
     }
 

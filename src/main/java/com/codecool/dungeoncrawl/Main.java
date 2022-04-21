@@ -1,12 +1,12 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.logic.actors.Monster;
-import com.codecool.dungeoncrawl.logic.actors.Movable;
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Robot;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Movable;
+import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 import javafx.application.Application;
@@ -126,19 +126,19 @@ public class Main extends Application {
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
-                moveActors(0, -1);
+                moveActors(Direction.UP);
                 refresh();
                 break;
             case DOWN:
-                moveActors(0, 1);
+                moveActors(Direction.DOWN);
                 refresh();
                 break;
             case LEFT:
-                moveActors(-1, 0);
+                moveActors(Direction.LEFT);
                 refresh();
                 break;
             case RIGHT:
-                moveActors(1, 0);
+                moveActors(Direction.RIGHT);
                 refresh();
                 break;
             case E:
@@ -164,8 +164,8 @@ public class Main extends Application {
     }
 
 
-    public void moveActors(int dx, int dy) {
-        map.getPlayer().move(dx, dy);
+    public void moveActors(Direction direction) {
+        map.getPlayer().move(direction);
         if (map.getPlayer().isTryingToSwitchLevel()) {
             switchLevel();
         }
@@ -229,7 +229,7 @@ public class Main extends Application {
         }
         playerNameLabel.setText(map.getPlayer().getName());
         healthLabel.setText(String.format("%s %s", map.getPlayer().getHealth(), displayHealthBar()));
-        damageLabel.setText("" + map.getPlayer().getWeaponDamage());
+        damageLabel.setText("" + map.getPlayer().getDamage());
         weaponLabel.setText(map.getPlayer().getWeapon().toString());
         drawItems();
     }

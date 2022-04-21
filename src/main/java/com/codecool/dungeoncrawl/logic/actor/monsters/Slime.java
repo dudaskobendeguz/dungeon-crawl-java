@@ -1,6 +1,8 @@
-package com.codecool.dungeoncrawl.logic.actors;
+package com.codecool.dungeoncrawl.logic.actor.monsters;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.items.Key;
+import com.codecool.dungeoncrawl.logic.items.KeyType;
 
 public class Slime extends Monster implements Movable {
 
@@ -20,7 +22,7 @@ public class Slime extends Monster implements Movable {
     public void move(int playerX, int playerY) {
         setTimer();
         if (moveTimer == 0) {
-            moveRandomly();
+            stepOne(MoveUtil.moveRandomly(cell));
         }
     }
 
@@ -28,5 +30,11 @@ public class Slime extends Monster implements Movable {
         if (++moveTimer >= MOVE_TIMER_CEILING) {
             moveTimer = 0;
         }
+    }
+
+    @Override
+    public void die() {
+        cell.setItem(new Key(cell, KeyType.CHEST_KEY));
+        super.die();
     }
 }

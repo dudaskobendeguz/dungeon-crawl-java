@@ -1,10 +1,9 @@
 package com.codecool.dungeoncrawl.logic.actor;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
 import com.codecool.dungeoncrawl.logic.GameMap;
-import com.codecool.dungeoncrawl.logic.actors.Monster;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 
 public abstract class Actor implements Drawable {
     protected Cell cell;

@@ -1,65 +1,16 @@
-package com.codecool.dungeoncrawl.logic.actors;
-
+package com.codecool.dungeoncrawl.logic.actor.player;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Chest;
+import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.actor.Actor;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Actor {
-
-    private String name = null;
-    private final int maxHealth;
-    private Weapon weapon = new Weapon(null, WeaponType.FIST);
-    private final Inventory inventory = new Inventory();
-
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    public void tryToPickUpItem() {
-        if (isItemOnPlayersCell()) {
-            pickUpItem();
-        }
-    }
-
-    private boolean isItemOnPlayersCell() {
-        return getCell().getItem() != null;
-    }
-
-    private void pickUpItem() {
-        Item item = getCell().getItem();
-        setItem(item);
-        getCell().setItem(null);
-    }
-
-    public boolean isTryingToSwitchLevel() {
-        return cell.getType().isLevelSwitcher();
-    }
-
-    public void setCell(Cell cell) {
-        this.cell = cell;
-    }
-
-    public void tryToUseInventory(ConsumableType consumableType) {
-        if (inventory.countConsumables(consumableType) > 0) {
-            eatConsumableFromInventory(consumableType);
-        }
-    }
-
-    private void eatConsumableFromInventory(ConsumableType consumableType) {
-        Consumable consumable = inventory.takeFood(consumableType);
-        if (consumable != null) {
-            if (getMaxHealth() < getHealth() + consumable.getHealthModifier()) {
-                health = getMaxHealth();
-            } else {
-                health += consumable.getHealthModifier();
-            }
-        }
-    }
 
     private static class Inventory {
         private final List<Item> items = new ArrayList<>();
@@ -120,6 +71,13 @@ public class Player extends Actor {
         }
     }
 
+
+    private String name = null;
+    private final int maxHealth;
+    private Weapon weapon = new Weapon(null, WeaponType.FIST);
+    private final Inventory inventory = new Inventory();
+
+
     public Player(Cell cell) {
         super(cell, 10, 1);
         this.maxHealth = 10;
@@ -131,8 +89,48 @@ public class Player extends Actor {
         name = playerName;
     }
 
-    public void move(int dx, int dy) {
-        Cell nextCell = cell.getNeighbor(dx, dy);
+
+    public void tryToPickUpItem() {
+        if (isItemOnPlayersCell()) {
+            pickUpItem();
+        }
+    }
+
+    private boolean isItemOnPlayersCell() {
+        return getCell().getItem() != null;
+    }
+
+    private void pickUpItem() {
+        Item item = getCell().getItem();
+        setItem(item);
+        getCell().setItem(null);
+    }
+
+    public boolean isTryingToSwitchLevel() {
+        return cell.getType().isLevelSwitcher();
+    }
+
+    public void tryToUseInventory(ConsumableType consumableType) {
+        if (inventory.countConsumables(consumableType) > 0) {
+            eatConsumableFromInventory(consumableType);
+        }
+    }
+
+    private void eatConsumableFromInventory(ConsumableType consumableType) {
+        Consumable consumable = inventory.takeFood(consumableType);
+        if (consumable != null) {
+            if (getMaxHealth() < getHealth() + consumable.getHealthModifier()) {
+                health = getMaxHealth();
+            } else {
+                health += consumable.getHealthModifier();
+            }
+        }
+    }
+
+
+
+    public void move(Direction direction) {
+        Cell nextCell = cell.getNeighbor(direction);
         if (isValidStep(nextCell)) {
             stepOne(nextCell);
         }
@@ -165,20 +163,6 @@ public class Player extends Actor {
             monster.die();
         } else {
             takeDamage(monster.getDamage());
-        }
-    }
-
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
-
-    public void setItem(Item item) {
-        if (item instanceof Weapon) {
-            Weapon weapon = (Weapon) item;
-            setWeapon(weapon);
-            damage = weapon.getDamage();
-        } else {
-            inventory.setItem(item);
         }
     }
 
@@ -215,14 +199,6 @@ public class Player extends Actor {
         return null;
     }
 
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public int getWeaponDamage() {
-        return weapon.getDamage();
-    }
-
     public int countKeys(KeyType keyType) {
         return inventory.countKeys(keyType);
     }
@@ -231,11 +207,37 @@ public class Player extends Actor {
         return inventory.countConsumables(consumableType);
     }
 
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
     public String getTileName() {
         return weapon.getPlayerSkin();
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    public void setItem(Item item) {
+        if (item instanceof Weapon) {
+            Weapon weapon = (Weapon) item;
+            setWeapon(weapon);
+            damage = weapon.getDamage();
+        } else {
+            inventory.setItem(item);
+        }
     }
 }

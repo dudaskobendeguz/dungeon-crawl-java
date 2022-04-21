@@ -1,6 +1,10 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.*;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Chicken;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Robot;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Skeleton;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Slime;
+import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.io.InputStream;

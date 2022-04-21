@@ -1,7 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.Monster;
-import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
+import com.codecool.dungeoncrawl.logic.actor.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
