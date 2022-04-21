@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Movable;
+import com.codecool.dungeoncrawl.logic.actor.monsters.TimeMage;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
@@ -22,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,7 +31,7 @@ import java.util.TimerTask;
 public class Main extends Application {
     private static String playerName = "Player_1";
     private final static int MAP_SIZE = 15;
-    private Levels currentLevel = Levels.TEST_LEVEL;
+    private Levels currentLevel = Levels.LEVEL_1;
     GameMap map = MapLoader.loadMap(currentLevel.getMapFilePath(), new Player(playerName));
     Canvas canvas = new Canvas(
             MAP_SIZE * Tiles.TILE_WIDTH,
@@ -200,12 +202,19 @@ public class Main extends Application {
         Cell playerCell = map.getPlayer().getCell();
         int playerX = playerCell.getX();
         int playerY = playerCell.getY();
+        List<Monster> teleportedMonsters = new ArrayList<>();
         for (Monster monster : monsters) {
             if (monster instanceof Movable) {
                 if (isTurnBased && monster.isTurnBased() || !isTurnBased && !monster.isTurnBased()) {
                     ((Movable) monster).move(playerX, playerY);
+                    if (monster instanceof TimeMage) {
+                        teleportedMonsters = ((TimeMage) monster).attack();
+                    }
                 }
             }
+        }
+        if (teleportedMonsters.size() > 0) {
+            teleportedMonsters.forEach(teleportedMonster -> map.addMonster(teleportedMonster));
         }
     }
 

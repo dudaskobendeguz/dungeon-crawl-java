@@ -60,6 +60,10 @@ public class Cell implements Drawable {
         return item;
     }
 
+    public boolean isStepable() {
+        return type.isStepable();
+    }
+
 
     @Override
     public String getTileName() {
