@@ -4,6 +4,7 @@ public enum CellType {
     EMPTY("empty"),
     FLOOR_1("floor_1", true),
     FLOOR_2("floor_2", true),
+    TIME_MAGE_FLOOR("time_mage_floor"),
     BRICK_FLOOR("brick_floor", true),
     TREE_1("tree_1"),
     TREE_2("tree_2"),

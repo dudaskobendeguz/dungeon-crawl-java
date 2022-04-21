@@ -37,15 +37,17 @@ public class Tiles {
 
         // Monster Skins
         tileMap.put(MonsterType.SKELETON.getTileName(), new Tile(29, 6));
-        tileMap.put("chicken", new Tile(26 ,7));
-        tileMap.put("slime", new Tile(27, 8));
-        tileMap.put("robot", new Tile(26, 3));
+        tileMap.put(MonsterType.CHICKEN.getTileName(), new Tile(26 ,7));
+        tileMap.put(MonsterType.SLIME.getTileName(), new Tile(27, 8));
+        tileMap.put(MonsterType.ROBOT.getTileName(), new Tile(26, 3));
+        tileMap.put(MonsterType.TIME_MAGE.getTileName(), new Tile(24, 2));
 
         // Cell Skins
         tileMap.put(CellType.EMPTY.getTileName(), new Tile(0, 0));
         tileMap.put(CellType.WALL.getTileName(), new Tile(10, 17));
         tileMap.put(CellType.FLOOR_1.getTileName(), new Tile(3, 0));
         tileMap.put(CellType.FLOOR_2.getTileName(), new Tile(1, 0));
+        tileMap.put(CellType.TIME_MAGE_FLOOR.getTileName(), new Tile(12, 18));
         tileMap.put(CellType.BRICK_FLOOR.getTileName(), new Tile(16, 0));
         tileMap.put(CellType.GRAVE_1.getTileName(), new Tile(1, 14));
         tileMap.put(CellType.GRAVE_2.getTileName(), new Tile(0, 14));
