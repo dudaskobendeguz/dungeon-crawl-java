@@ -47,8 +47,8 @@ public class Tiles {
         tileMap.put(CellType.WALL.getTileName(), new Tile(10, 17));
         tileMap.put(CellType.FLOOR_1.getTileName(), new Tile(3, 0));
         tileMap.put(CellType.FLOOR_2.getTileName(), new Tile(1, 0));
+        tileMap.put(CellType.TIME_MAGE_FLOOR.getTileName(), new Tile(12, 18));
         tileMap.put(CellType.BRICK_FLOOR.getTileName(), new Tile(16, 0));
-        tileMap.put(CellType.FLOOR_TIME_FLOOR.getTileName(), new Tile(12, 18));
         tileMap.put(CellType.GRAVE_1.getTileName(), new Tile(1, 14));
         tileMap.put(CellType.GRAVE_2.getTileName(), new Tile(0, 14));
         tileMap.put(CellType.BONES.getTileName(), new Tile(0, 15));

@@ -5,6 +5,8 @@ import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MapLoader {
@@ -24,6 +26,7 @@ public class MapLoader {
         scanner = loadMapFile(filePath);
 
         GameMap map = new GameMap(width, height, CellType.EMPTY);
+        List<Cell> timeCells = new ArrayList<>();
         for (int y = 0; y < height; y++) {
             String line = scanner.nextLine();
             String[] lineChars = line.split(delimiter);
@@ -172,7 +175,8 @@ public class MapLoader {
                         map.addMonster(robot);
                         break;
                     case 88:
-                        cell.setType(CellType.FLOOR_TIME_FLOOR);
+                        cell.setType(CellType.TIME_MAGE_FLOOR);
+                        timeCells.add(cell);
                         TimeMage timeMage = new TimeMage(cell);
                         map.addMonster(timeMage);
                         break;
@@ -186,7 +190,8 @@ public class MapLoader {
                         cell.setType(CellType.FLOOR_2);
                         break;
                     case 588:
-                        cell.setType(CellType.FLOOR_TIME_FLOOR);
+                        cell.setType(CellType.TIME_MAGE_FLOOR);
+                        timeCells.add(cell);
                         break;
                     case 896:
                         cell.setType(CellType.FLOOR_1);
@@ -230,6 +235,13 @@ public class MapLoader {
                         break;
                     default:
                         throw new RuntimeException("Unrecognized character: '" + lineChars[x] + "'");
+                }
+            }
+        }
+        if (timeCells.size() > 0) {
+            for (Monster monster : map.getMonsters()) {
+                if (monster instanceof TimeMage) {
+                    ((TimeMage) monster).setTimeCells(timeCells);
                 }
             }
         }
