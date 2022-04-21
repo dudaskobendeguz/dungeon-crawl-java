@@ -155,12 +155,12 @@ public class MapLoader {
                         map.addMonster(chicken);
                         break;
                     case 283:
-                        cell.setType(CellType.FLOOR);
+                        cell.setType(CellType.FLOOR_1);
                         Slime slime = new Slime(cell);
                         map.addMonster(slime);
                         break;
                     case 122:
-                        cell.setType(CellType.FLOOR);
+                        cell.setType(CellType.FLOOR_1);
                         Robot robot = new Robot(cell);
                         map.addMonster(robot);
                         break;
