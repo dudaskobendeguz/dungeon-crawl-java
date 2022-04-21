@@ -34,6 +34,7 @@ public class Tiles {
         tileMap.put(WeaponType.SWORD.getPlayerSkin(), new Tile(27, 0));
         tileMap.put(WeaponType.AXE.getPlayerSkin(), new Tile(26, 0));
         tileMap.put(WeaponType.HAMMER.getPlayerSkin(), new Tile(28, 1));
+        tileMap.put(WeaponType.MAGIC.getPlayerSkin(), new Tile(24, 3));
 
         // Monster Skins
         tileMap.put(MonsterType.SKELETON.getTileName(), new Tile(29, 6));
