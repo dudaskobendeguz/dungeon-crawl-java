@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameMap {
-    private int width;
-    private int height;
-    private Cell[][] cells;
+    private final int width;
+    private final int height;
+    private final Cell[][] cells;
 
     private Player player;
-    private List<Monster> monsters = new ArrayList<>();
+    private final List<Monster> monsters = new ArrayList<>();
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -25,8 +25,16 @@ public class GameMap {
         }
     }
 
+    public static boolean isValidStep(Cell cell) {
+        return cell != null && cell.getType().isStepable() && cell.getActor() == null;
+    }
+
     public Cell getCell(int x, int y) {
         return (x >= 0 && x < cells.length && y >= 0 && y < cells[x].length) ? cells[x][y] : null;
+    }
+
+    public void setChest(int x, int y) {
+        cells[x][y] = new Chest(this, x,y, CellType.CHEST_CLOSED);
     }
 
     public void setPlayer(Player player) {

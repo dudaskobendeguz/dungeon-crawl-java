@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
+import com.codecool.dungeoncrawl.logic.actors.MonsterType;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;
@@ -27,24 +28,38 @@ public class Tiles {
     }
 
     static {
-        tileMap.put("player", new Tile(25, 0));
-        tileMap.put("skeleton", new Tile(29, 6));
+        // Player Skins
+        tileMap.put(WeaponType.FIST.getPlayerSkin(), new Tile(25, 0));
+        tileMap.put(WeaponType.KNIFE.getPlayerSkin(), new Tile(23, 0));
+        tileMap.put(WeaponType.SWORD.getPlayerSkin(), new Tile(27, 0));
+        tileMap.put(WeaponType.AXE.getPlayerSkin(), new Tile(26, 0));
+        tileMap.put(WeaponType.HAMMER.getPlayerSkin(), new Tile(28, 1));
 
+        // Monster Skins
+        tileMap.put(MonsterType.SKELETON.getTileName(), new Tile(29, 6));
+
+        // Cell Skins
         tileMap.put(CellType.EMPTY.getTileName(), new Tile(0, 0));
         tileMap.put(CellType.WALL.getTileName(), new Tile(10, 17));
         tileMap.put(CellType.FLOOR.getTileName(), new Tile(3, 0));
         tileMap.put(CellType.TREE.getTileName(), new Tile(0, 1));
         tileMap.put(CellType.SIMPLE_DOOR_OPENED.getTileName(), new Tile(6, 9));
         tileMap.put(CellType.SIMPLE_DOOR_CLOSED.getTileName(), new Tile(3, 9));
+        tileMap.put(CellType.LEVEL_DOOR_CLOSED.getTileName(), new Tile(0, 9));
+        tileMap.put(CellType.LEVEL_DOOR_OPENED.getTileName(), new Tile(1, 9));
+        tileMap.put(CellType.CHEST_CLOSED.getTileName(), new Tile(8, 6));
+        tileMap.put(CellType.CHEST_OPENED.getTileName(), new Tile(9, 6));
 
+        // Item skins
+        //      Consumable skins
         tileMap.put(ConsumableType.APPLE.getTileName(), new Tile(15, 29));
         tileMap.put(ConsumableType.BREAD.getTileName(), new Tile(15, 28));
         tileMap.put(ConsumableType.MEAT.getTileName(), new Tile(17, 28));
-
+        //      Key skins
         tileMap.put(KeyType.CHEST_KEY.getTileName(), new Tile(16, 23));
         tileMap.put(KeyType.SIMPLE_DOOR_KEY.getTileName(), new Tile(18, 23));
         tileMap.put(KeyType.LEVEL_KEY.getTileName(), new Tile(17 , 23));
-
+        //      Weapon skins
         tileMap.put(WeaponType.KNIFE.getTileName(), new Tile(0, 28));
         tileMap.put(WeaponType.SWORD.getTileName(), new Tile(0, 30));
         tileMap.put(WeaponType.AXE.getTileName(), new Tile(10, 30));

@@ -10,13 +10,13 @@ public enum KeyType {
 
     CHEST_KEY("Chest key",
             "chest_key",
-            CellType.SIMPLE_DOOR_CLOSED,
-            CellType.SIMPLE_DOOR_OPENED),
+            CellType.CHEST_CLOSED,
+            CellType.CHEST_OPENED),
 
     LEVEL_KEY("Level key",
             "level_key",
-            CellType.SIMPLE_DOOR_CLOSED,
-            CellType.SIMPLE_DOOR_OPENED);
+            CellType.LEVEL_DOOR_CLOSED,
+            CellType.LEVEL_DOOR_OPENED);
 
     private final String name;
     private final String tileName;

@@ -20,7 +20,7 @@ public class Key extends Item {
         return keyType;
     }
 
-    public CellType getClosedDoorType() {
+    public CellType getClosedCellType() {
         return keyType.getClosedDoorType();
     }
 

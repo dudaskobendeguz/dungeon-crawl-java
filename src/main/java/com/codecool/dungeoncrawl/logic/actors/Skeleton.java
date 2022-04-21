@@ -9,7 +9,7 @@ public class Skeleton extends Monster {
 
     @Override
     public String getTileName() {
-        return "skeleton";
+        return MonsterType.SKELETON.getTileName();
     }
 
     @Override

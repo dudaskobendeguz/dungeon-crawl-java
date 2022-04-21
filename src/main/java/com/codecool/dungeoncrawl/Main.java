@@ -36,7 +36,6 @@ public class Main extends Application {
     Label damageLabel = new Label();
     Label itemsLabel = new Label();
     Label weaponLabel = new Label();
-    Button itemButton = new Button("Pick item");
     private int uiRowIndex = 0;
 
     public static void main(String[] args) {
@@ -55,11 +54,6 @@ public class Main extends Application {
         ui.add(new Label("Weapon: "),0,uiRowIndex);
         addUiLabel(weaponLabel, 1);
 
-        ui.add(itemButton, 0, uiRowIndex++);
-        itemButton.setFocusTraversable(false);
-
-        itemButton.setDisable(true);
-        itemButton.setOnMouseClicked(this::onMouseClicked);
         addUiLabel(new Label("Inventory"), 0);
         addUiLabel(itemsLabel, 0);
 
@@ -76,26 +70,6 @@ public class Main extends Application {
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
-    }
-
-    private void onMouseClicked(MouseEvent mouseEvent) {
-        switch (mouseEvent.getButton()) {
-            case PRIMARY: {
-                pickUpItem();
-                removeItemFromCell();
-                setItemPickButton();
-                refresh();
-            }
-        }
-    }
-
-    private void removeItemFromCell() {
-        map.getPlayer().getCell().setItem(null);
-    }
-
-    private void pickUpItem() {
-        Item item = map.getPlayer().getCell().getItem();
-        map.getPlayer().setItem(item);
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -121,15 +95,11 @@ public class Main extends Application {
                 refresh();
                 break;
         }
-        setItemPickButton();
-    }
-
-    private void setItemPickButton() {
-        itemButton.setDisable(map.getPlayer().getCell().getItem() == null);
     }
 
     public void moveActors(int dx, int dy) {
         map.getPlayer().move(dx, dy);
+        map.getPlayer().tryToPickUpItem();
         moveMonsters();
     }
 
