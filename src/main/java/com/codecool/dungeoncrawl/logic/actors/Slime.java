@@ -13,7 +13,7 @@ public class Slime extends Monster implements Movable {
 
     @Override
     public String getTileName() {
-        return "slime";
+        return MonsterType.SLIME.getTileName();
     }
 
     @Override
