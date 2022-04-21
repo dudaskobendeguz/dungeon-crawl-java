@@ -53,7 +53,8 @@ public class Main extends Application {
         LEVEL_2("/custom_map/level_2.csv"),
         LEVEL_3("/custom_map/level_3.csv"),
         LEVEL_4("/custom_map/level_4.csv"),
-        LEVEL_5("/custom_map/level_5.csv");
+        LEVEL_5("/custom_map/level_5.csv"),
+        LEVEL_6("/custom_map/level_6.csv");
 
         private final String mapFilePath;
 
@@ -205,6 +206,9 @@ public class Main extends Application {
                 break;
             } case LEVEL_4: {
                 currentLevel = Levels.LEVEL_5;
+                break;
+            } case LEVEL_5: {
+                currentLevel = Levels.LEVEL_6;
                 break;
             }
         }
