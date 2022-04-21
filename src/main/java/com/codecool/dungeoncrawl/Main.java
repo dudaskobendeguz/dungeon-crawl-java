@@ -10,6 +10,7 @@ import com.codecool.dungeoncrawl.logic.actors.Robot;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -117,9 +118,9 @@ public class Main extends Application {
             public void run() {
                 moveMonsters(false);
                 map.getPlayer().tryToAttack();
-                refresh();
+                Platform.runLater(() -> refresh());
             }
-        }, 1000, 300);
+        }, 1000, 100);
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
