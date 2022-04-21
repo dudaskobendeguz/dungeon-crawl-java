@@ -15,8 +15,8 @@ public enum KeyType {
 
     LEVEL_KEY("Level key",
             "level_key",
-            CellType.LEVEL_DOOR_CLOSED,
-            CellType.LEVEL_DOOR_OPENED);
+            CellType.LEVEL_SWITCH_DOOR_CLOSED,
+            CellType.LEVEL_SWITCH_DOOR_OPENED);
 
     private final String name;
     private final String tileName;
