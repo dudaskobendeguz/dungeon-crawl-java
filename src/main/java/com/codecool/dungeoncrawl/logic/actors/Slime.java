@@ -22,7 +22,7 @@ public class Slime extends Monster implements Movable {
     public void move(int playerX, int playerY) {
         setTimer();
         if (moveTimer == 0) {
-            moveRandomly();
+            stepOne(MoveUtil.moveRandomly(cell));
         }
     }
 
