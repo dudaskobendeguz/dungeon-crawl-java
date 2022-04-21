@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Robot extends Monster implements Movable {
     public Robot(Cell cell) {
-        super(cell, 10, 10);
+        super(cell, 10, 10, true);
     }
 
     @Override
@@ -14,6 +14,6 @@ public class Robot extends Monster implements Movable {
 
     @Override
     public void move(int playerX, int playerY) {
-
+        moveRandomly();
     }
 }
