@@ -8,7 +8,7 @@ public class Robot extends Monster implements Movable {
     Direction direction = Direction.RIGHT;
 
     public Robot(Cell cell) {
-        super(cell, 1, 10, false);
+        super(cell, 10, 2, false);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class Robot extends Monster implements Movable {
     public void move(int playerX, int playerY) {
         Cell nextCell = cell.getNeighbor(direction);
         if (!GameMap.isValidStep(nextCell)) {
-            direction = (direction.equals(Direction.RIGHT)) ? Direction.DOWN : Direction.RIGHT;
+            direction = (direction.equals(Direction.RIGHT)) ? Direction.LEFT : Direction.RIGHT;
         }
         stepOne(nextCell);
     }

@@ -48,7 +48,8 @@ public class Main extends Application {
         TEST_LEVEL("/custom_map/test_level.csv"),
         LEVEL_1("/custom_map/level_1.csv"),
         LEVEL_2("/custom_map/level_2.csv"),
-        LEVEL_3("/custom_map/level_3.csv");
+        LEVEL_3("/custom_map/level_3.csv"),
+        LEVEL_4("/custom_map/level_4.csv");
 
         private final String mapFilePath;
 
@@ -180,9 +181,13 @@ public class Main extends Application {
             case LEVEL_1: {
                 currentLevel = Levels.LEVEL_2;
                 break;
-            } case LEVEL_2:
+            } case LEVEL_2: {
                 currentLevel = Levels.LEVEL_3;
                 break;
+            } case LEVEL_3: {
+                currentLevel = Levels.LEVEL_4;
+                break;
+            }
         }
         map = MapLoader.loadMap(currentLevel.getMapFilePath(), map.getPlayer());
         refresh();
