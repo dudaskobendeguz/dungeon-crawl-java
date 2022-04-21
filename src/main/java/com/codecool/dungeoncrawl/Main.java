@@ -168,7 +168,11 @@ public class Main extends Application {
             case SPACE:
                 if (player.isMage() && player.isAbleToShootFireball()) {
                     Fireball fireball = player.getFireball();
-                    map.addMonster(fireball);
+                    if (fireball != null) {
+                        map.addMonster(fireball);
+                        refresh();
+                    }
+
                 }
         }
         if (player.isAboutToDie()) {

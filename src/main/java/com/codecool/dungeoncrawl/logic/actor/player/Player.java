@@ -1,8 +1,5 @@
 package com.codecool.dungeoncrawl.logic.actor.player;
-import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.CellType;
-import com.codecool.dungeoncrawl.logic.Chest;
-import com.codecool.dungeoncrawl.logic.Direction;
+import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actor.Actor;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Fireball;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
@@ -92,9 +89,12 @@ public class Player extends Actor {
     }
 
     public Fireball getFireball() {
-        fireballTimer = 0;
         Cell nextCell = cell.getNeighbor(direction);
-        return new Fireball(nextCell, direction);
+        if (GameMap.isValidStep(nextCell)) {
+            fireballTimer = 0;
+            return new Fireball(nextCell, direction);
+        }
+        return null;
     }
 
     public void tryToPickUpItem() {
