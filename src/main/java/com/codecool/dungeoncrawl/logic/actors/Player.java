@@ -184,6 +184,6 @@ public class Player extends Actor {
     }
 
     public String getTileName() {
-        return ActorType.PLAYER.getTileName();
+        return weapon.getPlayerSkin();
     }
 }
