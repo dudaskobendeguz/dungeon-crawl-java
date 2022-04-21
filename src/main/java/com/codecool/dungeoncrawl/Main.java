@@ -29,7 +29,7 @@ import java.util.TimerTask;
 public class Main extends Application {
     private static String playerName = "Player_1";
     private final static int MAP_SIZE = 15;
-    private Levels currentLevel = Levels.LEVEL_1;
+    private Levels currentLevel = Levels.TEST_LEVEL;
     GameMap map = MapLoader.loadMap(currentLevel.getMapFilePath(), new Player(playerName));
     Canvas canvas = new Canvas(
             MAP_SIZE * Tiles.TILE_WIDTH,
@@ -117,7 +117,7 @@ public class Main extends Application {
             @Override
             public void run() {
                 moveMonsters(false);
-                map.getPlayer().tryToAttack();
+                map.getPlayer().tryToAttack(false);
                 Platform.runLater(() -> refresh());
             }
         }, 1000, 100);
@@ -171,7 +171,7 @@ public class Main extends Application {
         }
         map.getPlayer().tryToPickUpItem();
         moveMonsters(true);
-        map.getPlayer().tryToAttack();
+        map.getPlayer().tryToAttack(true);
     }
 
     private void switchLevel() {
@@ -194,9 +194,7 @@ public class Main extends Application {
         int playerY = playerCell.getY();
         for (Monster monster : monsters) {
             if (monster instanceof Movable) {
-                if (isTurnBased && monster.isTurnBased()) {
-                    ((Movable) monster).move(playerX, playerY);
-                } else if (!isTurnBased && !monster.isTurnBased()) {
+                if (isTurnBased && monster.isTurnBased() || !isTurnBased && !monster.isTurnBased()) {
                     ((Movable) monster).move(playerX, playerY);
                 }
             }

@@ -150,10 +150,12 @@ public class Player extends Actor {
         return monsters;
     }
 
-    public void tryToAttack() {
+    public void tryToAttack(boolean isTurnBased) {
         List<Monster> monsters = getNeighborMonsters();
         for (Monster monster : monsters) {
-            attackMonster(monster);
+            if (isTurnBased && monster.isTurnBased() || !isTurnBased && !monster.isTurnBased()) {
+                attackMonster(monster);
+            }
         }
     }
 
