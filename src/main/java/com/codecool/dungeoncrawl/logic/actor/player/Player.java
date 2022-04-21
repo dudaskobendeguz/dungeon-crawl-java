@@ -79,12 +79,12 @@ public class Player extends Actor {
 
 
     public Player(Cell cell) {
-        super(cell, 10, 1);
+        super(cell, 10, WeaponType.FIST.getDamage());
         this.maxHealth = 10;
     }
 
     public Player(String playerName) {
-        super(10, 5);
+        super(10, WeaponType.FIST.getDamage());
         this.maxHealth = 10;
         name = playerName;
     }
@@ -150,10 +150,12 @@ public class Player extends Actor {
         return monsters;
     }
 
-    public void tryToAttack() {
+    public void tryToAttack(boolean isTurnBased) {
         List<Monster> monsters = getNeighborMonsters();
         for (Monster monster : monsters) {
-            attackMonster(monster);
+            if (isTurnBased && monster.isTurnBased() || !isTurnBased && !monster.isTurnBased()) {
+                attackMonster(monster);
+            }
         }
     }
 

@@ -55,6 +55,9 @@ public class MapLoader {
                     case 647:
                         cell.setType(CellType.LEVEL_SWITCH_HOUSE);
                         break;
+                    case 194:
+                        cell.setType(CellType.LEVEL_SWITCH_STAIRS);
+                        break;
                     case 673:
                         cell.setType(CellType.HOUSE_2);
                         break;
@@ -148,6 +151,9 @@ public class MapLoader {
                     case 4:
                         cell.setType(CellType.FLOOR_1);
                         break;
+                    case 16:
+                        cell.setType(CellType.BRICK_FLOOR);
+                        break;
                     case 93:
                         cell.setType(CellType.FLOOR_1);
                         Skeleton skeleton = new Skeleton(cell);
@@ -205,11 +211,11 @@ public class MapLoader {
                         cell.setType(CellType.FLOOR_1);
                         cell.setItem(new Consumable(cell, ConsumableType.APPLE));
                         break;
-                    case 754:
+                    case 753:
                         cell.setType(CellType.FLOOR_1);
                         cell.setItem(new Key(cell, KeyType.LEVEL_KEY));
                         break;
-                    case 753:
+                    case 754:
                         cell.setType(CellType.FLOOR_1);
                         cell.setItem(new Key(cell, KeyType.SIMPLE_DOOR_KEY));
                         break;

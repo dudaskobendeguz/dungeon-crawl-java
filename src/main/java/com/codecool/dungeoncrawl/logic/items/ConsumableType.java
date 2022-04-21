@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.logic.items;
 
 public enum ConsumableType {
-    APPLE("Apple", "apple", 5),
-    BREAD("Bread", "bread", 10),
-    MEAT("Meat", "meat", 20);
+    APPLE("Apple", "apple", 1),
+    BREAD("Bread", "bread", 2),
+    MEAT("Meat", "meat", 3);
 
     private final String name;
     private final String tileName;
