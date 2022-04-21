@@ -229,7 +229,7 @@ public class Main extends Application {
         }
         playerNameLabel.setText(map.getPlayer().getName());
         healthLabel.setText(String.format("%s %s", map.getPlayer().getHealth(), displayHealthBar()));
-        damageLabel.setText("" + map.getPlayer().getWeaponDamage());
+        damageLabel.setText("" + map.getPlayer().getDamage());
         weaponLabel.setText(map.getPlayer().getWeapon().toString());
         drawItems();
     }
