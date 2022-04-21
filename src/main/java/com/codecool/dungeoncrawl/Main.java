@@ -78,6 +78,18 @@ public class Main extends Application {
         addUiLabel(new Label("Inventory"), 0);
         addUiLabel(itemsLabel, 0);
 
+        addUiLabel(new Label("KEY BINDINGS"), 0);
+        addUiLabel(new Label("UP: Up arrow"), 0);
+        addUiLabel(new Label("DOWN: Down arrow"), 0);
+        addUiLabel(new Label("LEFT: Left arrow"), 0);
+        addUiLabel(new Label("RIGHT: Right arrow"), 0);
+        addUiLabel(new Label("FIGHT: Space"), 0);
+        addUiLabel(new Label("USE KEY: E"), 0);
+        addUiLabel(new Label("EAT APPLE: 1"), 0);
+        addUiLabel(new Label("EAT BREAD: 2"), 0);
+        addUiLabel(new Label("EAT MEAT: 3"), 0);
+
+
 
         BorderPane borderPane = new BorderPane();
 
