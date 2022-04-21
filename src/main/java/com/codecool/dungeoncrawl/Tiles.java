@@ -46,12 +46,14 @@ public class Tiles {
         tileMap.put(CellType.WALL.getTileName(), new Tile(10, 17));
         tileMap.put(CellType.FLOOR_1.getTileName(), new Tile(3, 0));
         tileMap.put(CellType.FLOOR_2.getTileName(), new Tile(1, 0));
+        tileMap.put(CellType.BRICK_FLOOR.getTileName(), new Tile(16, 0));
         tileMap.put(CellType.GRAVE_1.getTileName(), new Tile(1, 14));
         tileMap.put(CellType.GRAVE_2.getTileName(), new Tile(0, 14));
         tileMap.put(CellType.BONES.getTileName(), new Tile(0, 15));
         tileMap.put(CellType.CANDLES.getTileName(), new Tile(5, 15));
         tileMap.put(CellType.HOUSE_1.getTileName(), new Tile(4, 20));
         tileMap.put(CellType.LEVEL_SWITCH_HOUSE.getTileName(), new Tile(7, 20));
+        tileMap.put(CellType.LEVEL_SWITCH_STAIRS.getTileName(), new Tile(2, 6));
         tileMap.put(CellType.HOUSE_2.getTileName(), new Tile(1, 21));
 
         tileMap.put(CellType.TREE_1.getTileName(), new Tile(0, 1));
