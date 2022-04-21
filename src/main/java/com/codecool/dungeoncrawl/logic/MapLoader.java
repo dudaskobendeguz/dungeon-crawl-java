@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.logic.actors.Chicken;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.Slime;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.io.InputStream;
@@ -155,6 +156,11 @@ public class MapLoader {
                         cell.setType(CellType.FLOOR_1);
                         Chicken chicken = new Chicken(cell);
                         map.addMonster(chicken);
+                        break;
+                    case 283:
+                        cell.setType(CellType.FLOOR);
+                        Slime slime = new Slime(cell);
+                        map.addMonster(slime);
                         break;
                     case 25:
                         cell.setType(CellType.FLOOR_1);
