@@ -5,6 +5,8 @@ import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;
 
+import java.util.List;
+
 public class Fireball extends Monster implements Movable {
 
     private final Direction direction;
@@ -21,11 +23,26 @@ public class Fireball extends Monster implements Movable {
 
     @Override
     public void move(int playerX, int playerY) {
+        tryToKill();
         Cell nextCell = cell.getNeighbor(direction);
         if (!GameMap.isValidStep(nextCell)) {
             die();
         } else {
             stepOne(nextCell);
+        }
+    }
+
+    public void tryToKill() {
+        List<Monster> monsters = getNeighborMonsters();
+        for (Monster monster : monsters) {
+                killMonster(monster);
+        }
+    }
+
+    public void killMonster(Monster monster) {
+        monster.takeDamage(damage);
+        if (monster.isAboutToDie()) {
+            monster.die();
         }
     }
 }

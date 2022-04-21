@@ -139,20 +139,6 @@ public class Player extends Actor {
         }
     }
 
-    private List<Monster> getNeighborMonsters() {
-        List<Monster> monsters = new ArrayList<>();
-        List<Cell> cells = cell.getNonDiagonalNeighbors();
-        for (Cell cell : cells) {
-            if (cell != null) {
-                Actor actor = cell.getActor();
-                if (actor != null && actor.isMonster()) {
-                    monsters.add((Monster) actor);
-                }
-            }
-        }
-        return monsters;
-    }
-
     public void tryToAttack(boolean isTurnBased) {
         List<Monster> monsters = getNeighborMonsters();
         for (Monster monster : monsters) {

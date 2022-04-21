@@ -5,6 +5,9 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Actor implements Drawable {
     protected Cell cell;
     protected int health;
@@ -65,5 +68,19 @@ public abstract class Actor implements Drawable {
             nextCell.setActor(this);
             cell = nextCell;
         }
+    }
+
+    protected List<Monster> getNeighborMonsters() {
+        List<Monster> monsters = new ArrayList<>();
+        List<Cell> cells = cell.getNonDiagonalNeighbors();
+        for (Cell cell : cells) {
+            if (cell != null) {
+                Actor actor = cell.getActor();
+                if (actor != null && actor.isMonster()) {
+                    monsters.add((Monster) actor);
+                }
+            }
+        }
+        return monsters;
     }
 }
