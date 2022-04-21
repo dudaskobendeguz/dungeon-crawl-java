@@ -115,6 +115,18 @@ public class Main extends Application {
                 map.getPlayer().tryToUseKey();
                 refresh();
                 break;
+            case DIGIT1:
+                map.getPlayer().tryToUseInventory(ConsumableType.APPLE);
+                refresh();
+                break;
+            case DIGIT2:
+                map.getPlayer().tryToUseInventory(ConsumableType.BREAD);
+                refresh();
+                break;
+            case DIGIT3:
+                map.getPlayer().tryToUseInventory(ConsumableType.MEAT);
+                refresh();
+                break;
         }
         if (map.getPlayer().isAboutToDie()) {
             System.exit(0);
