@@ -1,6 +1,9 @@
 package com.codecool.dungeoncrawl.logic.actor.monsters;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.Direction;
+import com.codecool.dungeoncrawl.logic.items.Key;
+import com.codecool.dungeoncrawl.logic.items.KeyType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +15,7 @@ public class TimeMage extends Monster implements Movable {
 
 
     public TimeMage(Cell cell) {
-        super(cell, 10, 3, false);
+        super(cell, 500, 3, false);
 
     }
 
@@ -74,5 +77,12 @@ public class TimeMage extends Monster implements Movable {
             }
         }
         return teleportedMonsters;
+    }
+
+    @Override
+    public void die() {
+        Cell nextCell = cell.getNeighbor(Direction.UP);
+        nextCell.setItem(new Key(nextCell, KeyType.LEVEL_KEY));
+        super.die();
     }
 }
