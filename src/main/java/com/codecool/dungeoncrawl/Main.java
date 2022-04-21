@@ -128,6 +128,7 @@ public class Main extends Application {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
+        Player player = map.getPlayer();
         switch (keyEvent.getCode()) {
             case UP:
                 moveActors(Direction.UP);
@@ -146,23 +147,27 @@ public class Main extends Application {
                 refresh();
                 break;
             case E:
-                map.getPlayer().tryToUseKey();
+                player.tryToUseKey();
                 refresh();
                 break;
             case DIGIT1:
-                map.getPlayer().tryToUseInventory(ConsumableType.APPLE);
+                player.tryToUseInventory(ConsumableType.APPLE);
                 refresh();
                 break;
             case DIGIT2:
-                map.getPlayer().tryToUseInventory(ConsumableType.BREAD);
+                player.tryToUseInventory(ConsumableType.BREAD);
                 refresh();
                 break;
             case DIGIT3:
-                map.getPlayer().tryToUseInventory(ConsumableType.MEAT);
+                player.tryToUseInventory(ConsumableType.MEAT);
                 refresh();
                 break;
+            case SPACE:
+                if (player.isMage()) {
+                    player.shootFireball();
+                }
         }
-        if (map.getPlayer().isAboutToDie()) {
+        if (player.isAboutToDie()) {
             System.exit(0);
         }
     }

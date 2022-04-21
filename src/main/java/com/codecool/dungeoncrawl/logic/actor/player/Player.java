@@ -71,12 +71,12 @@ public class Player extends Actor {
         }
     }
 
-
     private String name = null;
     private final int maxHealth;
     private Weapon weapon = new Weapon(null, WeaponType.FIST);
     private final Inventory inventory = new Inventory();
-
+    private Direction direction = Direction.UP;
+    private boolean isMage = false;
 
     public Player(Cell cell) {
         super(cell, 10, WeaponType.FIST.getDamage());
@@ -89,6 +89,9 @@ public class Player extends Actor {
         name = playerName;
     }
 
+    public void shootFireball() {
+
+    }
 
     public void tryToPickUpItem() {
         if (isItemOnPlayersCell()) {
@@ -127,9 +130,8 @@ public class Player extends Actor {
         }
     }
 
-
-
     public void move(Direction direction) {
+        this.direction = direction;
         Cell nextCell = cell.getNeighbor(direction);
         if (isValidStep(nextCell)) {
             stepOne(nextCell);
@@ -241,5 +243,13 @@ public class Player extends Actor {
         } else {
             inventory.setItem(item);
         }
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public boolean isMage() {
+        return isMage;
     }
 }
