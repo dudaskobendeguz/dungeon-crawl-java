@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
 import com.codecool.dungeoncrawl.logic.actors.Movable;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.actors.Robot;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 import javafx.application.Application;
@@ -21,6 +22,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main extends Application {
     private static String playerName = "Player_1";
@@ -38,6 +41,7 @@ public class Main extends Application {
     Label itemsLabel = new Label();
     Label weaponLabel = new Label();
     private int uiRowIndex = 0;
+    Timer timer = new Timer();
 
     private enum Levels {
         TEST_LEVEL("/custom_map/test_level.csv"),
@@ -108,6 +112,13 @@ public class Main extends Application {
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                moveMonsters(false);
+                refresh();
+            }
+        }, 2000, 1000);
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -157,7 +168,7 @@ public class Main extends Application {
             switchLevel();
         }
         map.getPlayer().tryToPickUpItem();
-        moveMonsters();
+        moveMonsters(true);
         map.getPlayer().tryToAttack();
     }
 
@@ -172,7 +183,7 @@ public class Main extends Application {
         refresh();
     }
 
-    public void moveMonsters() {
+    public void moveMonsters(boolean isTurnBased) {
         List<Monster> monsters = map.getMonsters();
         clearDeadMonsters(monsters);
 
@@ -181,7 +192,11 @@ public class Main extends Application {
         int playerY = playerCell.getY();
         for (Monster monster : monsters) {
             if (monster instanceof Movable) {
-                ((Movable) monster).move(playerX, playerY);
+                if (isTurnBased && monster.isTurnBased()) {
+                    ((Movable) monster).move(playerX, playerY);
+                } else if (!isTurnBased && !monster.isTurnBased()) {
+                    ((Movable) monster).move(playerX, playerY);
+                }
             }
         }
     }
