@@ -39,6 +39,7 @@ public class Tiles {
         tileMap.put(MonsterType.SKELETON.getTileName(), new Tile(29, 6));
         tileMap.put("chicken", new Tile(26 ,7));
         tileMap.put("slime", new Tile(27, 8));
+        tileMap.put("robot", new Tile(26, 3));
 
         // Cell Skins
         tileMap.put(CellType.EMPTY.getTileName(), new Tile(0, 0));
