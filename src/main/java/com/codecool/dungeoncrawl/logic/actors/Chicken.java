@@ -21,7 +21,8 @@ public class Chicken extends Monster implements Movable {
     public void move(int playerX, int playerY) {
         setTimer();
         if (moveTimer == 0) {
-            moveTowardsPlayer(playerX, playerY);
+            stepOne(MoveUtil.moveTowardsPlayer(cell, playerX, playerY));
+            //moveTowardsPlayer(playerX, playerY);
         }
     }
 

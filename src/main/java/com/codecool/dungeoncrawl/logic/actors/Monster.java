@@ -24,23 +24,6 @@ public abstract class Monster extends Actor {
         return isTurnBased;
     }
 
-    protected void moveTowardsPlayer(int playerX, int playerY) {
-        int x = getX();
-        int y = getY();
-
-        if (x > playerX) {
-            stepOne(cell.getNeighbor(-1, 0));
-        } else if (x < playerX) {
-            stepOne(cell.getNeighbor(1, 0));
-        }
-
-        if (y > playerY) {
-            stepOne(cell.getNeighbor(0, -1));
-        } else if (y < playerY) {
-            stepOne(cell.getNeighbor(0, 1));
-        }
-    }
-
     protected void moveRandomly() {
         int maxRandom = 3;
         int randomNumber = random.nextInt(maxRandom + 1);
