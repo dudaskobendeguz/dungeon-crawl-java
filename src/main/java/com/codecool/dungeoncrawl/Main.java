@@ -32,7 +32,7 @@ import java.util.TimerTask;
 public class Main extends Application {
     private static String playerName = "Player_1";
     private final static int MAP_SIZE = 15;
-    private Levels currentLevel = Levels.LEVEL_5;
+    private Levels currentLevel = Levels.LEVEL_4;
     GameMap map = MapLoader.loadMap(currentLevel.getMapFilePath(), new Player(playerName));
     Canvas canvas = new Canvas(
             MAP_SIZE * Tiles.TILE_WIDTH,
@@ -127,6 +127,9 @@ public class Main extends Application {
                 moveMonsters(false);
                 player.tryToAttack(false);
                 player.setFireballTimer();
+                if (player.isAboutToDie()) {
+                    System.exit(0);
+                }
                 Platform.runLater(() -> refresh());
             }
         }, 1000, 100);
@@ -174,23 +177,22 @@ public class Main extends Application {
                         map.addMonster(fireball);
                         refresh();
                     }
-
                 }
-        }
-        if (player.isAboutToDie()) {
-            System.exit(0);
         }
     }
 
-
     public void moveActors(Direction direction) {
-        map.getPlayer().move(direction);
-        if (map.getPlayer().isTryingToSwitchLevel()) {
+        Player player = map.getPlayer();
+        player.move(direction);
+        if (player.isTryingToSwitchLevel()) {
             switchLevel();
         }
-        map.getPlayer().tryToPickUpItem();
+        player.tryToPickUpItem();
         moveMonsters(true);
-        map.getPlayer().tryToAttack(true);
+        player.tryToAttack(true);
+        if (player.isAboutToDie()) {
+            System.exit(0);
+        }
     }
 
     private void switchLevel() {
