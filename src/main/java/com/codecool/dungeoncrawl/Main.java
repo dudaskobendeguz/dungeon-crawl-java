@@ -138,19 +138,22 @@ public class Main extends Application {
         refresh();
     }
 
-
     public void moveMonsters() {
         List<Monster> monsters = map.getMonsters();
+        clearDeadMonsters(monsters);
+
         Cell playerCell = map.getPlayer().getCell();
         int playerX = playerCell.getX();
         int playerY = playerCell.getY();
-        monsters.removeIf(monster -> monster.getCell() == null);
         for (Monster monster : monsters) {
             if (monster instanceof Movable) {
-                Movable movableMonster = (Movable) monster;
-                movableMonster.move(playerX, playerY);
+                ((Movable) monster).move(playerX, playerY);
             }
         }
+    }
+
+    private void clearDeadMonsters(List<Monster> monsters) {
+        monsters.removeIf(monster -> monster.getCell() == null);
     }
 
     private void refresh() {
