@@ -65,6 +65,8 @@ public class TimeMage extends Monster implements Movable {
                         nonDiagonalNeighbor.setActor(skeleton);
                         teleportedMonsters.add(skeleton);
                         break;
+                    default:
+                        break;
                 }
                 if (MoveUtil.random.nextInt(4) < 1) {
                     return teleportedMonsters;
