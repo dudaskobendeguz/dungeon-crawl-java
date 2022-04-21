@@ -3,7 +3,7 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 
-public class Chicken extends Monster {
+public class Chicken extends Monster implements Movable {
 
     private int moveTimer = 0;
     private static final int MOVE_TIMER_CEILING = 3;

@@ -11,9 +11,4 @@ public class Skeleton extends Monster {
     public String getTileName() {
         return MonsterType.SKELETON.getTileName();
     }
-
-    @Override
-    public void move(int playerX, int playerY) {
-        // Skeleton doesn't move
-    }
 }

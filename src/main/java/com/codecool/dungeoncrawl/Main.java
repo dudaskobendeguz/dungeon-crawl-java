@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
+import com.codecool.dungeoncrawl.logic.actors.Movable;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
@@ -144,7 +145,12 @@ public class Main extends Application {
         int playerX = playerCell.getX();
         int playerY = playerCell.getY();
         monsters.removeIf(monster -> monster.getCell() == null);
-        monsters.forEach(monster -> monster.move(playerX, playerY));
+        for (Monster monster : monsters) {
+            if (monster instanceof Movable) {
+                Movable movableMonster = (Movable) monster;
+                movableMonster.move(playerX, playerY);
+            }
+        }
     }
 
     private void refresh() {

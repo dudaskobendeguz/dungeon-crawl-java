@@ -130,7 +130,6 @@ public class Player extends Actor {
         monster.takeDamage(damage);
         if (monster.isAboutToDie()) {
             monster.die();
-            monster.cell = 0;
         } else {
             takeDamage(monster.getDamage());
         }

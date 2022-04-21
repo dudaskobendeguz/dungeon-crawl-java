@@ -10,8 +10,6 @@ public abstract class Monster extends Actor {
         super(cell, health, damage);
     }
 
-    public abstract void move(int playerX, int playerY);
-
     protected void moveTowardsPlayer(int playerX, int playerY) {
         int x = getX();
         int y = getY();

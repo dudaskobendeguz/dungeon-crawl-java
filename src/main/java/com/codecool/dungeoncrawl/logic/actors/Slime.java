@@ -2,7 +2,7 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Slime extends Monster {
+public class Slime extends Monster implements Movable {
     public Slime(Cell cell) {
         super(cell, 20, 1);
     }
