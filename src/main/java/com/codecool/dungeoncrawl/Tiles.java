@@ -34,6 +34,7 @@ public class Tiles {
         tileMap.put(WeaponType.SWORD.getPlayerSkin(), new Tile(27, 0));
         tileMap.put(WeaponType.AXE.getPlayerSkin(), new Tile(26, 0));
         tileMap.put(WeaponType.HAMMER.getPlayerSkin(), new Tile(28, 1));
+        tileMap.put(WeaponType.MAGIC.getPlayerSkin(), new Tile(24, 3));
 
         // Monster Skins
         tileMap.put(MonsterType.SKELETON.getTileName(), new Tile(29, 6));
@@ -41,6 +42,7 @@ public class Tiles {
         tileMap.put(MonsterType.SLIME.getTileName(), new Tile(27, 8));
         tileMap.put(MonsterType.ROBOT.getTileName(), new Tile(26, 3));
         tileMap.put(MonsterType.TIME_MAGE.getTileName(), new Tile(24, 2));
+        tileMap.put(MonsterType.FIREBALL.getTileName(), new Tile(15, 10));
 
         // Cell Skins
         tileMap.put(CellType.EMPTY.getTileName(), new Tile(0, 0));
@@ -107,6 +109,7 @@ public class Tiles {
         tileMap.put(WeaponType.SWORD.getTileName(), new Tile(0, 30));
         tileMap.put(WeaponType.AXE.getTileName(), new Tile(10, 30));
         tileMap.put(WeaponType.HAMMER.getTileName(), new Tile(5, 29));
+        tileMap.put(WeaponType.MAGIC.getTileName(), new Tile (27, 11));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

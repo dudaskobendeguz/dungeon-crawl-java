@@ -209,6 +209,10 @@ public class MapLoader {
                         cell.setType(CellType.FLOOR_1);
                         cell.setItem(new Weapon(cell, WeaponType.HAMMER));
                         break;
+                    case 379:
+                        cell.setType(CellType.FLOOR_1);
+                        cell.setItem(new Weapon(cell, WeaponType.MAGIC));
+                        break;
                     case 913:
                         cell.setType(CellType.FLOOR_1);
                         cell.setItem(new Consumable(cell, ConsumableType.MEAT));

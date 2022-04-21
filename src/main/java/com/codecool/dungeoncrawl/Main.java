@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Fireball;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Movable;
 import com.codecool.dungeoncrawl.logic.actor.monsters.TimeMage;
@@ -31,7 +32,7 @@ import java.util.TimerTask;
 public class Main extends Application {
     private static String playerName = "Player_1";
     private final static int MAP_SIZE = 15;
-    private Levels currentLevel = Levels.LEVEL_1;
+    private Levels currentLevel = Levels.LEVEL_3;
     GameMap map = MapLoader.loadMap(currentLevel.getMapFilePath(), new Player(playerName));
     Canvas canvas = new Canvas(
             MAP_SIZE * Tiles.TILE_WIDTH,
@@ -120,14 +121,17 @@ public class Main extends Application {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                Player player = map.getPlayer();
                 moveMonsters(false);
-                map.getPlayer().tryToAttack(false);
+                player.tryToAttack(false);
+                player.setFireballTimer();
                 Platform.runLater(() -> refresh());
             }
         }, 1000, 100);
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
+        Player player = map.getPlayer();
         switch (keyEvent.getCode()) {
             case UP:
                 moveActors(Direction.UP);
@@ -146,23 +150,32 @@ public class Main extends Application {
                 refresh();
                 break;
             case E:
-                map.getPlayer().tryToUseKey();
+                player.tryToUseKey();
                 refresh();
                 break;
             case DIGIT1:
-                map.getPlayer().tryToUseInventory(ConsumableType.APPLE);
+                player.tryToUseInventory(ConsumableType.APPLE);
                 refresh();
                 break;
             case DIGIT2:
-                map.getPlayer().tryToUseInventory(ConsumableType.BREAD);
+                player.tryToUseInventory(ConsumableType.BREAD);
                 refresh();
                 break;
             case DIGIT3:
-                map.getPlayer().tryToUseInventory(ConsumableType.MEAT);
+                player.tryToUseInventory(ConsumableType.MEAT);
                 refresh();
                 break;
+            case SPACE:
+                if (player.isMage() && player.isAbleToShootFireball()) {
+                    Fireball fireball = player.getFireball();
+                    if (fireball != null) {
+                        map.addMonster(fireball);
+                        refresh();
+                    }
+
+                }
         }
-        if (map.getPlayer().isAboutToDie()) {
+        if (player.isAboutToDie()) {
             System.exit(0);
         }
     }

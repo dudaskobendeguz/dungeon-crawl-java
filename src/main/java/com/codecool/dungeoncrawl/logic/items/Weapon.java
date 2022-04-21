@@ -23,6 +23,10 @@ public class Weapon extends Item {
         return weaponType.getTileName();
     }
 
+    public WeaponType getType() {
+        return weaponType;
+    }
+
     @Override
     public String toString() {
         return weaponType.toString();
