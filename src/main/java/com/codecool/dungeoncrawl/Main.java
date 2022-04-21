@@ -116,9 +116,10 @@ public class Main extends Application {
             @Override
             public void run() {
                 moveMonsters(false);
+                map.getPlayer().tryToAttack();
                 refresh();
             }
-        }, 2000, 1000);
+        }, 1000, 300);
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
