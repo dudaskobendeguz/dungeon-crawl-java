@@ -5,6 +5,7 @@ public enum CellType {
     FLOOR_1("floor_1", true),
     FLOOR_2("floor_2", true),
     BRICK_FLOOR("brick_floor", true),
+    FLOOR_TIME_FLOOR("floor_time_floor", true),
     TREE_1("tree_1"),
     TREE_2("tree_2"),
     TREE_3("tree_3"),

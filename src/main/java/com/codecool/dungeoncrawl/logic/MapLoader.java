@@ -1,9 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actor.monsters.Chicken;
-import com.codecool.dungeoncrawl.logic.actor.monsters.Robot;
-import com.codecool.dungeoncrawl.logic.actor.monsters.Skeleton;
-import com.codecool.dungeoncrawl.logic.actor.monsters.Slime;
+import com.codecool.dungeoncrawl.logic.actor.monsters.*;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.*;
 
@@ -174,6 +171,11 @@ public class MapLoader {
                         Robot robot = new Robot(cell);
                         map.addMonster(robot);
                         break;
+                    case 88:
+                        cell.setType(CellType.FLOOR_TIME_FLOOR);
+                        TimeMage timeMage = new TimeMage(cell);
+                        map.addMonster(timeMage);
+                        break;
                     case 25:
                         cell.setType(CellType.FLOOR_1);
                         player.setCell(cell);
@@ -182,6 +184,9 @@ public class MapLoader {
                         break;
                     case 1:
                         cell.setType(CellType.FLOOR_2);
+                        break;
+                    case 588:
+                        cell.setType(CellType.FLOOR_TIME_FLOOR);
                         break;
                     case 896:
                         cell.setType(CellType.FLOOR_1);

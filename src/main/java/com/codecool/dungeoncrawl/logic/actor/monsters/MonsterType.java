@@ -4,7 +4,8 @@ public enum MonsterType {
     SKELETON("skeleton"),
     CHICKEN("chicken"),
     SLIME("slime"),
-    ROBOT("robot");
+    ROBOT("robot"),
+    TIME_MAGE("time_mage");
 
     private final String tileName;
 
