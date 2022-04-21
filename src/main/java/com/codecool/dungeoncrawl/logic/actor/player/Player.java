@@ -77,6 +77,8 @@ public class Player extends Actor {
     private Weapon weapon = new Weapon(null, WeaponType.FIST);
     private final Inventory inventory = new Inventory();
     private Direction direction = Direction.UP;
+    private int fireballTimer = 0;
+    private static final int FIREBALL_TIMER_CEILING = 10;
 
     public Player(Cell cell) {
         super(cell, 10, WeaponType.FIST.getDamage());
@@ -90,6 +92,7 @@ public class Player extends Actor {
     }
 
     public Fireball getFireball() {
+        fireballTimer = 0;
         Cell nextCell = cell.getNeighbor(direction);
         return new Fireball(nextCell, direction);
     }
@@ -232,11 +235,15 @@ public class Player extends Actor {
         }
     }
 
-    public Direction getDirection() {
-        return direction;
-    }
-
     public boolean isMage() {
         return weapon.getType() == WeaponType.MAGIC;
+    }
+
+    public void setFireballTimer() {
+        fireballTimer++;
+    }
+
+    public boolean isAbleToShootFireball() {
+        return fireballTimer >= FIREBALL_TIMER_CEILING;
     }
 }

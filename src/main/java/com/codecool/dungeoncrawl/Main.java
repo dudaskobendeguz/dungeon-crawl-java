@@ -121,8 +121,10 @@ public class Main extends Application {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                Player player = map.getPlayer();
                 moveMonsters(false);
-                map.getPlayer().tryToAttack(false);
+                player.tryToAttack(false);
+                player.setFireballTimer();
                 Platform.runLater(() -> refresh());
             }
         }, 1000, 100);
@@ -164,7 +166,7 @@ public class Main extends Application {
                 refresh();
                 break;
             case SPACE:
-                if (player.isMage()) {
+                if (player.isMage() && player.isAbleToShootFireball()) {
                     Fireball fireball = player.getFireball();
                     map.addMonster(fireball);
                 }
