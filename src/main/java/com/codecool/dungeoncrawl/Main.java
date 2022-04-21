@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Fireball;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Movable;
 import com.codecool.dungeoncrawl.logic.actor.monsters.TimeMage;
@@ -164,7 +165,8 @@ public class Main extends Application {
                 break;
             case SPACE:
                 if (player.isMage()) {
-                    player.shootFireball();
+                    Fireball fireball = player.getFireball();
+                    map.addMonster(fireball);
                 }
         }
         if (player.isAboutToDie()) {

@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Chest;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.actor.Actor;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Fireball;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.items.*;
 
@@ -76,7 +77,6 @@ public class Player extends Actor {
     private Weapon weapon = new Weapon(null, WeaponType.FIST);
     private final Inventory inventory = new Inventory();
     private Direction direction = Direction.UP;
-    private boolean isMage = false;
 
     public Player(Cell cell) {
         super(cell, 10, WeaponType.FIST.getDamage());
@@ -89,8 +89,9 @@ public class Player extends Actor {
         name = playerName;
     }
 
-    public void shootFireball() {
-
+    public Fireball getFireball() {
+        Cell nextCell = cell.getNeighbor(direction);
+        return new Fireball(nextCell, direction);
     }
 
     public void tryToPickUpItem() {
@@ -250,6 +251,6 @@ public class Player extends Actor {
     }
 
     public boolean isMage() {
-        return isMage;
+        return weapon.getType() == WeaponType.MAGIC;
     }
 }
