@@ -1,22 +1,19 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
-import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
-import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -26,7 +23,7 @@ import java.util.List;
 
 public class Main extends Application {
     private final static int MAP_SIZE = 15;
-    GameMap map = MapLoader.loadMap();
+    GameMap map = MapLoader.loadMap(Levels.LEVEL_2.getMapFilePath());
     Canvas canvas = new Canvas(
             MAP_SIZE * Tiles.TILE_WIDTH,
             MAP_SIZE * Tiles.TILE_WIDTH);
@@ -37,6 +34,22 @@ public class Main extends Application {
     Label itemsLabel = new Label();
     Label weaponLabel = new Label();
     private int uiRowIndex = 0;
+
+    private enum Levels {
+        TEST_LEVEL("/custom_map/test_level.csv"),
+        LEVEL_1("/custom_map/level_1.csv"),
+        LEVEL_2("/custom_map/level_2.csv");
+
+        private final String mapFilePath;
+
+        Levels(String mapFilePath) {
+            this.mapFilePath = mapFilePath;
+        }
+
+        public String getMapFilePath() {
+            return mapFilePath;
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -49,9 +62,9 @@ public class Main extends Application {
 
         ui.add(new Label("Health: "), 0, uiRowIndex);
         addUiLabel(healthLabel, 1);
-        ui.add(new Label("Damage: "),0, uiRowIndex);
+        ui.add(new Label("Damage: "), 0, uiRowIndex);
         addUiLabel(damageLabel, 1);
-        ui.add(new Label("Weapon: "),0,uiRowIndex);
+        ui.add(new Label("Weapon: "), 0, uiRowIndex);
         addUiLabel(weaponLabel, 1);
 
         addUiLabel(new Label("Inventory"), 0);
@@ -119,7 +132,9 @@ public class Main extends Application {
         for (int x = 0; x < MAP_SIZE; x++) {
             for (int y = 0; y < MAP_SIZE; y++) {
                 Cell cell = map.getCell(playerX - (MAP_SIZE / 2) + x, playerY - (MAP_SIZE / 2) + y);
-                if (cell.getActor() != null) {
+                if (cell == null) {
+                    Tiles.drawTile(context, new Cell(map, x,y, CellType.EMPTY), x, y);
+                } else if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
                 } else if (cell.getItem() != null) {
                     Tiles.drawTile(context, cell.getItem(), x, y);
