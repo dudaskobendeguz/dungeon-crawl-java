@@ -20,6 +20,10 @@ public class Cell implements Drawable {
         this.type = type;
     }
 
+    public Cell() {
+        this.type = CellType.EMPTY;
+    }
+
     public CellType getType() {
         return type;
     }

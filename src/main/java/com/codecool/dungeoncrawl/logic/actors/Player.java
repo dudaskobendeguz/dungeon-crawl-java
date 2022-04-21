@@ -91,7 +91,7 @@ public class Player extends Actor {
     }
 
     public Player(Cell cell) {
-        super(cell, 10, 5);
+        super(cell, 10, 1);
     }
 
     public Player() {
@@ -101,11 +101,8 @@ public class Player extends Actor {
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
         if (isValidStep(nextCell)) {
-            cell.setActor(null);
-            nextCell.setActor(this);
-            cell = nextCell;
+            stepOne(nextCell);
         }
-        tryToAttack();
     }
 
     private List<Monster> getNeighborMonsters() {

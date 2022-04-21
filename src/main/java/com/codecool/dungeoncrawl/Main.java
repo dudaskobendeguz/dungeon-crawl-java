@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
+import com.codecool.dungeoncrawl.logic.actors.Movable;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
@@ -110,7 +111,11 @@ public class Main extends Application {
                 refresh();
                 break;
         }
+        if (map.getPlayer().isAboutToDie()) {
+            System.exit(0);
+        }
     }
+
 
     public void moveActors(int dx, int dy) {
         map.getPlayer().move(dx, dy);
@@ -119,6 +124,7 @@ public class Main extends Application {
         }
         map.getPlayer().tryToPickUpItem();
         moveMonsters();
+        map.getPlayer().tryToAttack();
     }
 
     private void switchLevel() {
@@ -132,11 +138,22 @@ public class Main extends Application {
         refresh();
     }
 
-
     public void moveMonsters() {
         List<Monster> monsters = map.getMonsters();
+        clearDeadMonsters(monsters);
+
+        Cell playerCell = map.getPlayer().getCell();
+        int playerX = playerCell.getX();
+        int playerY = playerCell.getY();
+        for (Monster monster : monsters) {
+            if (monster instanceof Movable) {
+                ((Movable) monster).move(playerX, playerY);
+            }
+        }
+    }
+
+    private void clearDeadMonsters(List<Monster> monsters) {
         monsters.removeIf(monster -> monster.getCell() == null);
-        monsters.forEach(Monster::move);
     }
 
     private void refresh() {
@@ -149,7 +166,7 @@ public class Main extends Application {
             for (int y = 0; y < MAP_SIZE; y++) {
                 Cell cell = map.getCell(playerX - (MAP_SIZE / 2) + x, playerY - (MAP_SIZE / 2) + y);
                 if (cell == null) {
-                    Tiles.drawTile(context, new Cell(map, x,y, CellType.EMPTY), x, y);
+                    Tiles.drawTile(context, new Cell(), x, y);
                 } else if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
                 } else if (cell.getItem() != null) {

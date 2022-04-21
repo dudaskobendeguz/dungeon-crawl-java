@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.*;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.io.InputStream;
@@ -149,6 +148,21 @@ public class MapLoader {
                         cell.setType(CellType.FLOOR_1);
                         Skeleton skeleton = new Skeleton(cell);
                         map.addMonster(skeleton);
+                        break;
+                    case 250:
+                        cell.setType(CellType.FLOOR_1);
+                        Chicken chicken = new Chicken(cell);
+                        map.addMonster(chicken);
+                        break;
+                    case 283:
+                        cell.setType(CellType.FLOOR_1);
+                        Slime slime = new Slime(cell);
+                        map.addMonster(slime);
+                        break;
+                    case 122:
+                        cell.setType(CellType.FLOOR_1);
+                        Robot robot = new Robot(cell);
+                        map.addMonster(robot);
                         break;
                     case 25:
                         cell.setType(CellType.FLOOR_1);
