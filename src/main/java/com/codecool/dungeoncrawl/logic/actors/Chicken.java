@@ -14,7 +14,7 @@ public class Chicken extends Monster implements Movable {
 
     @Override
     public String getTileName() {
-        return "chicken";
+        return MonsterType.CHICKEN.getTileName();
     }
 
     @Override

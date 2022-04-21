@@ -1,7 +1,10 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 public enum MonsterType {
-    SKELETON("skeleton");
+    SKELETON("skeleton"),
+    CHICKEN("chicken"),
+    SLIME("slime"),
+    ROBOT("robot");
 
     private final String tileName;
 
