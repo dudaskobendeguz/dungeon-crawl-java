@@ -79,12 +79,12 @@ public class Player extends Actor {
 
 
     public Player(Cell cell) {
-        super(cell, 10, 1);
+        super(cell, 10, WeaponType.FIST.getDamage());
         this.maxHealth = 10;
     }
 
     public Player(String playerName) {
-        super(10, 5);
+        super(10, WeaponType.FIST.getDamage());
         this.maxHealth = 10;
         name = playerName;
     }
