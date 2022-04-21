@@ -11,6 +11,8 @@ import java.util.List;
 
 public class Player extends Actor {
 
+    private String name = null;
+    private final int maxHealth;
     private Weapon weapon = new Weapon(null, WeaponType.FIST);
     private final Inventory inventory = new Inventory();
 
@@ -92,10 +94,13 @@ public class Player extends Actor {
 
     public Player(Cell cell) {
         super(cell, 10, 1);
+        this.maxHealth = 10;
     }
 
-    public Player() {
+    public Player(String playerName) {
         super(10, 5);
+        this.maxHealth = 10;
+        name = playerName;
     }
 
     public void move(int dx, int dy) {
@@ -180,6 +185,10 @@ public class Player extends Actor {
         return null;
     }
 
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
     public int getWeaponDamage() {
         return weapon.getDamage();
     }
@@ -194,5 +203,9 @@ public class Player extends Actor {
 
     public String getTileName() {
         return weapon.getPlayerSkin();
+    }
+
+    public String getName() {
+        return name;
     }
 }
