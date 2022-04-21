@@ -4,7 +4,6 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Chest;
 import com.codecool.dungeoncrawl.logic.actor.Actor;
-import com.codecool.dungeoncrawl.logic.actor.ActorType;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.util.ArrayList;
