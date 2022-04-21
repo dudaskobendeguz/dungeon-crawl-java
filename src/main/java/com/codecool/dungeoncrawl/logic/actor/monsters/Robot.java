@@ -1,10 +1,11 @@
-package com.codecool.dungeoncrawl.logic.actors;
+package com.codecool.dungeoncrawl.logic.actor.monsters;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
+import com.codecool.dungeoncrawl.logic.Direction;
 
 public class Robot extends Monster implements Movable {
-    private int dx = 1;
+    Direction direction = Direction.RIGHT;
 
     public Robot(Cell cell) {
         super(cell, 1, 10, false);
@@ -17,9 +18,9 @@ public class Robot extends Monster implements Movable {
 
     @Override
     public void move(int playerX, int playerY) {
-        Cell nextCell = cell.getNeighbor(dx, 0);
+        Cell nextCell = cell.getNeighbor(direction);
         if (!GameMap.isValidStep(nextCell)) {
-            dx *= -1;
+            direction = (direction.equals(Direction.RIGHT)) ? Direction.DOWN : Direction.RIGHT;
         }
         stepOne(nextCell);
     }

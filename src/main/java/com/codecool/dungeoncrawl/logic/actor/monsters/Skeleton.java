@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.logic.actors;
+package com.codecool.dungeoncrawl.logic.actor.monsters;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
@@ -15,8 +15,7 @@ public class Skeleton extends Monster {
 
     @Override
     public void die() {
-        cell.setActor(null);
         cell.setType(CellType.BONES);
-        cell = null;
+        super.die();
     }
 }

@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.logic.actors;
+package com.codecool.dungeoncrawl.logic.actor.monsters;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.items.Key;
@@ -34,8 +34,7 @@ public class Slime extends Monster implements Movable {
 
     @Override
     public void die() {
-        cell.setActor(null);
         cell.setItem(new Key(cell, KeyType.CHEST_KEY));
-        cell = null;
+        super.die();
     }
 }

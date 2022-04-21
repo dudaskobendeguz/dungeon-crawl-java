@@ -44,18 +44,14 @@ public class Cell implements Drawable {
         return actor;
     }
 
-    public Cell getNeighbor(int dx, int dy) {
-        return gameMap.getCell(x + dx, y + dy);
+    public Cell getNeighbor(Direction direction) {
+        return gameMap.getCell(x + direction.getX(), y + direction.getY());
     }
 
     public List<Cell> getNonDiagonalNeighbors() {
         List<Cell> cells = new ArrayList<>();
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                if (Math.abs(x) != Math.abs(y)) {
-                    cells.add(getNeighbor(x, y));
-                }
-            }
+        for (Direction direction : Direction.values()) {
+            cells.add(getNeighbor(direction));
         }
         return cells;
     }

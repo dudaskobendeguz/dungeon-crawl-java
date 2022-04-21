@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.logic.actors;
+package com.codecool.dungeoncrawl.logic.actor.monsters;
 
 public enum MonsterType {
     SKELETON("skeleton"),

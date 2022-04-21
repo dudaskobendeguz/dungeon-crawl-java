@@ -2,7 +2,7 @@ package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
-import com.codecool.dungeoncrawl.logic.actors.MonsterType;
+import com.codecool.dungeoncrawl.logic.actor.monsters.MonsterType;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;

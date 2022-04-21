@@ -1,10 +1,10 @@
-package com.codecool.dungeoncrawl.logic.actor;
+package com.codecool.dungeoncrawl.logic;
 
 public enum Direction {
-    EAST(1, 0),
-    NORTH(0, -1),
-    SOUTH(1, 0),
-    WEST(-1, 0);
+    UP(0, -1),
+    DOWN(0, 1),
+    LEFT(-1, 0),
+    RIGHT(1, 0);
 
     private final int x;
     private final int y;
