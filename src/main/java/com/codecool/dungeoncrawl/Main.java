@@ -74,20 +74,25 @@ public class Main extends Application {
         addUiLabel(damageLabel, 1);
         ui.add(new Label("Weapon: "), 0, uiRowIndex);
         addUiLabel(weaponLabel, 1);
-
+        addUiLabel(new Label("---------"), 0);
         addUiLabel(new Label("Inventory"), 0);
+        addUiLabel(new Label(""), 0);
         addUiLabel(itemsLabel, 0);
+        addUiLabel(new Label(""), 0);
+        addUiLabel(new Label(""), 0);
+        addUiLabel(new Label(""), 0);
+        addUiLabel(new Label(""), 0);
 
         addUiLabel(new Label("KEY BINDINGS"), 0);
-        addUiLabel(new Label("UP: Up arrow"), 0);
-        addUiLabel(new Label("DOWN: Down arrow"), 0);
-        addUiLabel(new Label("LEFT: Left arrow"), 0);
-        addUiLabel(new Label("RIGHT: Right arrow"), 0);
-        addUiLabel(new Label("FIGHT: Space"), 0);
-        addUiLabel(new Label("USE KEY: E"), 0);
-        addUiLabel(new Label("EAT APPLE: 1"), 0);
-        addUiLabel(new Label("EAT BREAD: 2"), 0);
-        addUiLabel(new Label("EAT MEAT: 3"), 0);
+        addUiLabel(new Label("Up: UP"), 0);
+        addUiLabel(new Label("Down: DOWN"), 0);
+        addUiLabel(new Label("Left: LEFT"), 0);
+        addUiLabel(new Label("Right: RIGHT"), 0);
+        //addUiLabel(new Label("Attack: SPACE"), 0);
+        addUiLabel(new Label("Interact: E"), 0);
+        addUiLabel(new Label("Eat apple: 1"), 0);
+        addUiLabel(new Label("Eat bread: 2"), 0);
+        addUiLabel(new Label("Eat meat: 3"), 0);
 
 
 
@@ -229,9 +234,7 @@ public class Main extends Application {
         StringBuilder keysString = new StringBuilder("Keys: \n");
         for (KeyType keyType : KeyType.values()) {
             int numberOfKeys = map.getPlayer().countKeys(keyType);
-            if (numberOfKeys > 0) {
-                keysString.append(String.format("%s :   %s%n", keyType.toString(), numberOfKeys));
-            }
+            keysString.append(String.format("%s :   %s%n", keyType.toString(), numberOfKeys));
         }
         return keysString.toString();
     }
@@ -240,9 +243,7 @@ public class Main extends Application {
         StringBuilder consumables = new StringBuilder("Foods: \n");
         for (ConsumableType consumableType : ConsumableType.values()) {
             int numberOfConsumable = map.getPlayer().countConsumables(consumableType);
-            if (numberOfConsumable > 0) {
-                consumables.append(String.format("%s :  %s%n", consumableType.toString(), numberOfConsumable));
-            }
+            consumables.append(String.format("%s :  %s%n", consumableType.toString(), numberOfConsumable));
         }
         return consumables.toString();
     }
