@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
+import com.codecool.dungeoncrawl.logic.actor.ActorType;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;
@@ -27,8 +28,8 @@ public class Tiles {
     }
 
     static {
-        tileMap.put("player", new Tile(25, 0));
-        tileMap.put("skeleton", new Tile(29, 6));
+        tileMap.put(ActorType.PLAYER.getTileName(), new Tile(25, 0));
+        tileMap.put(ActorType.SKELETON.getTileName(), new Tile(29, 6));
 
         tileMap.put(CellType.EMPTY.getTileName(), new Tile(0, 0));
         tileMap.put(CellType.WALL.getTileName(), new Tile(10, 17));

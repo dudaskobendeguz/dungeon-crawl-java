@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.actor.ActorType;
 
 public class Skeleton extends Monster {
     public Skeleton(Cell cell) {
@@ -9,7 +10,7 @@ public class Skeleton extends Monster {
 
     @Override
     public String getTileName() {
-        return "skeleton";
+        return ActorType.SKELETON.getTileName();
     }
 
     @Override
