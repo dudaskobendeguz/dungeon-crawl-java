@@ -14,6 +14,6 @@ public class Slime extends Monster {
 
     @Override
     public void move(int playerX, int playerY) {
-
+        moveRandomly();
     }
 }
