@@ -107,6 +107,7 @@ public class Tiles {
         tileMap.put(WeaponType.SWORD.getTileName(), new Tile(0, 30));
         tileMap.put(WeaponType.AXE.getTileName(), new Tile(10, 30));
         tileMap.put(WeaponType.HAMMER.getTileName(), new Tile(5, 29));
+        tileMap.put(WeaponType.MAGIC.getTileName(), new Tile (27, 11));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

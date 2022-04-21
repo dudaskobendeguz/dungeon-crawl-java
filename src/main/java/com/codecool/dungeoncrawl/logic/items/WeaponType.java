@@ -5,8 +5,8 @@ public enum WeaponType {
     SWORD("Sword", "sword", "sword_player_skin", 5),
     AXE("Axe", "axe", "axe_player_skin", 10),
     HAMMER("Hammer", "hammer", "hammer_player_skin", 20),
-    FIST("Fist", "fist", "fist_player_skin", 1);
-
+    FIST("Fist", "fist", "fist_player_skin", 1),
+    MAGIC("Magic", "magic", "fist_player_skin", 100);
 
     private final String name;
     private final String tileName;
