@@ -17,7 +17,7 @@ public class Robot extends Monster implements Movable {
     }
 
     @Override
-    public void move(int playerX, int playerY) {
+    public void move(int playerX, int playerY, boolean timeMageAlive) {
         if (cell != null) {
             Cell nextCell = cell.getNeighbor(direction);
             if (!GameMap.isValidStep(nextCell)) {

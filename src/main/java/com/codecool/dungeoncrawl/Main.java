@@ -24,7 +24,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,6 +32,7 @@ public class Main extends Application {
     private static String playerName = "Player_1";
     private final static int MAP_SIZE = 15;
     private Levels currentLevel = Levels.LEVEL_1;
+    private boolean isTimeMageAlive = true;
     GameMap map = MapLoader.loadMap(currentLevel.getMapFilePath(), new Player(playerName));
     Canvas canvas = new Canvas(
             MAP_SIZE * Tiles.TILE_WIDTH,
@@ -54,7 +54,8 @@ public class Main extends Application {
         LEVEL_3("/custom_map/level_3.csv"),
         LEVEL_4("/custom_map/level_4.csv"),
         LEVEL_5("/custom_map/level_5.csv"),
-        LEVEL_6("/custom_map/level_6.csv");
+        LEVEL_6("/custom_map/level_6.csv"),
+        GRAVEYARD("/custom_map/graveyard.csv");
 
         private final String mapFilePath;
 
@@ -100,12 +101,11 @@ public class Main extends Application {
         addUiLabel(new Label("Down: DOWN"), 0);
         addUiLabel(new Label("Left: LEFT"), 0);
         addUiLabel(new Label("Right: RIGHT"), 0);
-        //addUiLabel(new Label("Attack: SPACE"), 0);
+        addUiLabel(new Label("Shoot: SPACE"), 0);
         addUiLabel(new Label("Interact: E"), 0);
         addUiLabel(new Label("Eat apple: 1"), 0);
         addUiLabel(new Label("Eat bread: 2"), 0);
         addUiLabel(new Label("Eat meat: 3"), 0);
-
 
 
         BorderPane borderPane = new BorderPane();
@@ -128,7 +128,8 @@ public class Main extends Application {
                 player.tryToAttack(false);
                 player.setFireballTimer();
                 if (player.isAboutToDie()) {
-                    System.exit(0);
+                    currentLevel = Levels.GRAVEYARD;
+                    switchLevel();
                 }
                 Platform.runLater(() -> refresh());
             }
@@ -178,6 +179,11 @@ public class Main extends Application {
                         refresh();
                     }
                 }
+                break;
+            case ESCAPE:
+                System.exit(0);
+                break;
+
         }
     }
 
@@ -191,7 +197,8 @@ public class Main extends Application {
         moveMonsters(true);
         player.tryToAttack(true);
         if (player.isAboutToDie()) {
-            System.exit(0);
+            currentLevel = Levels.GRAVEYARD;
+            switchLevel();
         }
     }
 
@@ -200,17 +207,24 @@ public class Main extends Application {
             case LEVEL_1: {
                 currentLevel = Levels.LEVEL_2;
                 break;
-            } case LEVEL_2: {
+            }
+            case LEVEL_2: {
                 currentLevel = Levels.LEVEL_3;
                 break;
-            } case LEVEL_3: {
+            }
+            case LEVEL_3: {
                 currentLevel = Levels.LEVEL_4;
                 break;
-            } case LEVEL_4: {
+            }
+            case LEVEL_4: {
                 currentLevel = Levels.LEVEL_5;
                 break;
-            } case LEVEL_5: {
+            }
+            case LEVEL_5: {
                 currentLevel = Levels.LEVEL_6;
+                break;
+            }
+            case GRAVEYARD: {
                 break;
             }
         }
@@ -220,24 +234,38 @@ public class Main extends Application {
 
     public void moveMonsters(boolean isTurnBased) {
         List<Monster> monsters = map.getMonsters();
+        if (isTimeMageAlive) {
+            setIsTimeMageAlive(monsters);
+        }
         clearDeadMonsters(monsters);
 
         Cell playerCell = map.getPlayer().getCell();
         int playerX = playerCell.getX();
         int playerY = playerCell.getY();
-        List<Monster> teleportedMonsters = new ArrayList<>();
+        Monster teleportedMonster = null;
         for (Monster monster : monsters) {
             if (monster instanceof Movable) {
                 if (isTurnBased && monster.isTurnBased() || !isTurnBased && !monster.isTurnBased()) {
-                    ((Movable) monster).move(playerX, playerY);
+                    ((Movable) monster).move(playerX, playerY, isTimeMageAlive);
                     if (monster instanceof TimeMage) {
-                        teleportedMonsters = ((TimeMage) monster).attack();
+                        teleportedMonster = ((TimeMage) monster).attack();
                     }
                 }
             }
         }
-        if (teleportedMonsters.size() > 0) {
-            teleportedMonsters.forEach(teleportedMonster -> map.addMonster(teleportedMonster));
+        if (teleportedMonster != null) {
+            map.addMonster(teleportedMonster);
+        }
+    }
+
+    private void setIsTimeMageAlive(List<Monster> monsters) {
+        for (Monster monster : monsters) {
+            if (monster.getCell() == null) {
+                if (monster instanceof TimeMage) {
+                    isTimeMageAlive = false;
+                    break;
+                }
+            }
         }
     }
 
@@ -275,7 +303,7 @@ public class Main extends Application {
     private String displayHealthBar() {
         double currentHealth = map.getPlayer().getHealth();
         double maxHealth = map.getPlayer().getMaxHealth();
-        double hp = ( currentHealth / maxHealth) * 10;
+        double hp = (currentHealth / maxHealth) * 10;
         return "♥".repeat(Math.max(0, (int) hp));
     }
 

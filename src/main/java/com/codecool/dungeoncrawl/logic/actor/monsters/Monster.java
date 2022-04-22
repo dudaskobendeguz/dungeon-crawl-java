@@ -6,7 +6,7 @@ import com.codecool.dungeoncrawl.logic.actor.Actor;
 import java.util.Random;
 
 public abstract class Monster extends Actor {
-    private final boolean isTurnBased;
+    protected boolean isTurnBased;
 
     public Monster(Cell cell, int health, int damage) {
         super(cell, health, damage);

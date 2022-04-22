@@ -12,19 +12,21 @@ abstract class MoveUtil {
     static Cell moveTowardsPlayer(Cell cell, int playerX, int playerY) {
         int x = cell.getX();
         int y = cell.getY();
-
+        Cell step;
         if (x > playerX) {
-            return cell.getNeighbor(Direction.LEFT);
+            step = cell.getNeighbor(Direction.LEFT);
         } else if (x < playerX) {
-            return cell.getNeighbor(Direction.RIGHT);
+            step = cell.getNeighbor(Direction.RIGHT);
         }
 
-        if (y > playerY) {
-            return cell.getNeighbor(Direction.UP);
+        else if (y > playerY) {
+            step = cell.getNeighbor(Direction.UP);
         } else if (y < playerY) {
-            return cell.getNeighbor(Direction.DOWN);
+            step = cell.getNeighbor(Direction.DOWN);
+        } else {
+            step = moveRandomly(cell);
         }
-        return null;
+        return (step.isStepable()) ? step : moveRandomly(cell);
     }
 
     static Cell moveRandomly(Cell cell) {
@@ -36,5 +38,13 @@ abstract class MoveUtil {
             moveTimer = 0;
         }
         return moveTimer;
+    }
+
+    static boolean setIsTurnBased(boolean isTimeMageAlive) {
+        return isTimeMageAlive;
+    }
+
+    static Direction getRandomDirection() {
+        return Direction.values()[random.nextInt(Direction.values().length)];
     }
 }

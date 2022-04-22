@@ -3,7 +3,6 @@ package com.codecool.dungeoncrawl.logic.actor.monsters;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.GameMap;
-import com.codecool.dungeoncrawl.logic.items.WeaponType;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class Fireball extends Monster implements Movable {
     }
 
     @Override
-    public void move(int playerX, int playerY) {
+    public void move(int playerX, int playerY, boolean timeMageAlive) {
         tryToKill();
         Cell nextCell = cell.getNeighbor(direction);
         if (!GameMap.isValidStep(nextCell)) {

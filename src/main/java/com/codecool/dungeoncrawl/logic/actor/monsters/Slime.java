@@ -19,7 +19,11 @@ public class Slime extends Monster implements Movable {
     }
 
     @Override
-    public void move(int playerX, int playerY) {
+    public void move(int playerX, int playerY, boolean timeMageAlive) {
+        isTurnBased = MoveUtil.setIsTurnBased(timeMageAlive);
+        if (!isTurnBased) {
+            damage = 0;
+        }
         setTimer();
         if (moveTimer == 0) {
             stepOne(MoveUtil.moveRandomly(cell));
