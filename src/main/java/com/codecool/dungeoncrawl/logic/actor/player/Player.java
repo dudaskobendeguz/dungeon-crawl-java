@@ -137,7 +137,7 @@ public class Player extends Actor {
     public void move(Direction direction) {
         this.direction = direction;
         Cell nextCell = cell.getNeighbor(direction);
-        if (isValidStep(nextCell)) {
+        if (GameMap.isValidStep(nextCell)) {
             stepOne(nextCell);
         }
     }
