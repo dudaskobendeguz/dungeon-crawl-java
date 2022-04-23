@@ -1,6 +1,9 @@
 package com.codecool.dungeoncrawl.logic.actor.monsters;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.Direction;
+import com.codecool.dungeoncrawl.logic.items.Key;
+import com.codecool.dungeoncrawl.logic.items.KeyType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +15,12 @@ public class TimeMage extends Monster implements Movable {
 
 
     public TimeMage(Cell cell) {
-        super(cell, 10, 3, false);
+        super(cell, 500, 3, false);
 
     }
 
     @Override
-    public void move(int playerX, int playerY) {
+    public void move(int playerX, int playerY, boolean timeMageAlive) {
         moveTimer = MoveUtil.setTimer(moveTimer, MOVE_TIMER_CEILING);
         if (moveTimer == 0) {
             stepOne(timeCells.get(MoveUtil.random.nextInt(timeCells.size())));
@@ -40,39 +43,41 @@ public class TimeMage extends Monster implements Movable {
         this.timeCells = timeCells;
     }
 
-    public List<Monster> attack() {
-        List<Monster> teleportedMonsters = new ArrayList<>();
-        for (Cell nonDiagonalNeighbor : cell.getNonDiagonalNeighbors()) {
-            if (nonDiagonalNeighbor.getActor() == null && nonDiagonalNeighbor.isStepable()) {
+    public Monster attack() {
+        if (moveTimer == 0) {
+            Cell randomNonDiagonalNeighbor = cell.getNeighbor(MoveUtil.getRandomDirection());
+            if (randomNonDiagonalNeighbor.getActor() == null && randomNonDiagonalNeighbor.isStepable()) {
                 switch (MonsterType.values()[MoveUtil.random.nextInt(MonsterType.values().length)]) {
                     case ROBOT:
-                        Robot robot = new Robot(nonDiagonalNeighbor);
-                        nonDiagonalNeighbor.setActor(robot);
-                        teleportedMonsters.add(robot);
-                        break;
+                        Robot robot = new Robot(randomNonDiagonalNeighbor);
+                        randomNonDiagonalNeighbor.setActor(robot);
+                        return robot;
+
                     case SLIME:
-                        Slime slime = new Slime(nonDiagonalNeighbor);
-                        nonDiagonalNeighbor.setActor(slime);
-                        teleportedMonsters.add(slime);
-                        break;
+                        Slime slime = new Slime(randomNonDiagonalNeighbor);
+                        randomNonDiagonalNeighbor.setActor(slime);
+                        return slime;
+
                     case CHICKEN:
-                        Chicken chicken = new Chicken(nonDiagonalNeighbor);
-                        nonDiagonalNeighbor.setActor(chicken);
-                        teleportedMonsters.add(chicken);
-                        break;
+                        Chicken chicken = new Chicken(randomNonDiagonalNeighbor);
+                        randomNonDiagonalNeighbor.setActor(chicken);
+                        return chicken;
+
                     case SKELETON:
-                        Skeleton skeleton = new Skeleton(nonDiagonalNeighbor);
-                        nonDiagonalNeighbor.setActor(skeleton);
-                        teleportedMonsters.add(skeleton);
-                        break;
+                        Skeleton skeleton = new Skeleton(randomNonDiagonalNeighbor);
+                        randomNonDiagonalNeighbor.setActor(skeleton);
+                        return skeleton;
                     default:
-                        break;
-                }
-                if (MoveUtil.random.nextInt(4) < 1) {
-                    return teleportedMonsters;
                 }
             }
         }
-        return teleportedMonsters;
+        return null;
+    }
+
+    @Override
+    public void die() {
+        Cell nextCell = cell.getNeighbor(Direction.UP);
+        nextCell.setItem(new Key(nextCell, KeyType.LEVEL_KEY));
+        super.die();
     }
 }
