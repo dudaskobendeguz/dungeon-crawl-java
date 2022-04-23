@@ -302,7 +302,7 @@ public class Main extends Application {
         playerNameLabel.setText(map.getPlayer().getName());
         healthLabel.setText(String.format("%s %s", map.getPlayer().getHealth(), displayHealthBar()));
         damageLabel.setText("" + map.getPlayer().getDamage());
-        weaponLabel.setText(map.getPlayer().getWeapon().toString());
+        weaponLabel.setText(map.getPlayer().getWeaponName());
         drawItems();
     }
 
@@ -323,7 +323,7 @@ public class Main extends Application {
         StringBuilder keysString = new StringBuilder("Keys: \n");
         for (KeyType keyType : KeyType.values()) {
             int numberOfKeys = map.getPlayer().countKeys(keyType);
-            keysString.append(String.format("%s :   %s%n", keyType.toString(), numberOfKeys));
+            keysString.append(String.format("%s :   %s%n", keyType.getName(), numberOfKeys));
         }
         return keysString.toString();
     }
@@ -332,7 +332,7 @@ public class Main extends Application {
         StringBuilder consumables = new StringBuilder("Foods: \n");
         for (ConsumableType consumableType : ConsumableType.values()) {
             int numberOfConsumable = map.getPlayer().countConsumables(consumableType);
-            consumables.append(String.format("%s :  %s%n", consumableType.toString(), numberOfConsumable));
+            consumables.append(String.format("%s :  %s%n", consumableType.getName(), numberOfConsumable));
         }
         return consumables.toString();
     }

@@ -209,6 +209,10 @@ public class Player extends Actor {
         return weapon;
     }
 
+    public String getWeaponName() {
+        return weapon.getNam();
+    }
+
     public String getTileName() {
         return weapon.getPlayerSkin();
     }

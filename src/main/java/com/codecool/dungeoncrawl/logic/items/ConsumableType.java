@@ -23,8 +23,7 @@ public enum ConsumableType {
         return tileName;
     }
 
-    @Override
-    public String toString() {
+    public String getName() {
         return name;
     }
 }

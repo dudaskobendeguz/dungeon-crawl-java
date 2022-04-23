@@ -27,8 +27,8 @@ public class Weapon extends Item {
         return weaponType;
     }
 
-    @Override
-    public String toString() {
-        return weaponType.toString();
+
+    public String getNam() {
+        return weaponType.getName();
     }
 }

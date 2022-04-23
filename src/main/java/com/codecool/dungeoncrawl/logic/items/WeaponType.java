@@ -32,8 +32,7 @@ public enum WeaponType {
         return damage;
     }
 
-    @Override
-    public String toString() {
+    public String getName() {
         return name;
     }
 }

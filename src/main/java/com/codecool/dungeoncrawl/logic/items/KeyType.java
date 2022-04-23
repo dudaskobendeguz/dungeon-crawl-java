@@ -42,8 +42,7 @@ public enum KeyType {
         return openedDoor;
     }
 
-    @Override
-    public String toString() {
+    public String getName() {
         return name;
     }
 }
