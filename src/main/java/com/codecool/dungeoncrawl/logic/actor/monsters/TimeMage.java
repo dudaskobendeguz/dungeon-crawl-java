@@ -11,7 +11,7 @@ import java.util.List;
 public class TimeMage extends Monster implements Movable {
     private int moveTimer = 0;
     private static final int MOVE_TIMER_CEILING = 20;
-    List<Cell> timeCells = new ArrayList<>();
+    List<Cell> timeCells;
 
 
     public TimeMage(Cell cell) {
@@ -23,15 +23,8 @@ public class TimeMage extends Monster implements Movable {
     public void move(int playerX, int playerY, boolean timeMageAlive) {
         moveTimer = MoveUtil.setTimer(moveTimer, MOVE_TIMER_CEILING);
         if (moveTimer == 0) {
-            stepOne(timeCells.get(MoveUtil.random.nextInt(timeCells.size())));
+            stepOne(timeCells.get(MoveUtil.random.nextInt(timeCells.size())), true);
         }
-    }
-
-    @Override
-    protected void stepOne(Cell nextCell) {
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
     }
 
     @Override
@@ -40,6 +33,7 @@ public class TimeMage extends Monster implements Movable {
     }
 
     public void setTimeCells(List<Cell> timeCells) {
+        if (this.timeCells == null) { this.timeCells = new ArrayList<>();}
         this.timeCells = timeCells;
     }
 
