@@ -205,10 +205,6 @@ public class Player extends Actor {
         return maxHealth;
     }
 
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
     public String getWeaponName() {
         return weapon.getNam();
     }
