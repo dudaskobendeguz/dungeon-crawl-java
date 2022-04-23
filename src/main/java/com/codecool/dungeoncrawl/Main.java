@@ -127,10 +127,6 @@ public class Main extends Application {
                 moveMonsters(false);
                 player.tryToAttack(false);
                 player.setFireballTimer();
-                if (player.isAboutToDie()) {
-                    currentLevel = Levels.GRAVEYARD;
-                    switchLevel();
-                }
                 Platform.runLater(() -> refresh());
             }
         }, 1000, 100);
