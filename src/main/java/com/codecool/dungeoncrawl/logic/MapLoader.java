@@ -32,10 +32,11 @@ public class MapLoader {
             String[] lineChars = line.split(delimiter);
             for (int x = 0; x < lineChars.length; x++) {
                 Cell cell = map.getCell(x, y);
-                switch (Integer.parseInt(lineChars[x])) {
+                int tileId = Integer.parseInt(lineChars[x]);
+                switch (tileId) {
                     case -1:
                     case 0:
-                        cell.setType(CellType.EMPTY);
+                        //cell.setType(CellType.EMPTY);
                         break;
                     case 586:
                         cell.setType(CellType.WALL);
@@ -64,7 +65,7 @@ public class MapLoader {
                     case 448:
                         cell.setType(CellType.GRAVE_2);
                         break;
-                    case 326:
+                    case 291:
                         cell.setType(CellType.SIMPLE_DOOR_CLOSED);
                         break;
                     case 288:

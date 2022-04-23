@@ -1,17 +1,17 @@
 package com.codecool.dungeoncrawl.logic.items;
 
 public enum ConsumableType {
-    APPLE("Apple", "apple", 1),
-    BREAD("Bread", "bread", 2),
-    MEAT("Meat", "meat", 3);
+    APPLE(943, "Apple", 1),
+    BREAD(911, "Bread",  2),
+    MEAT(913, "Meat",  3);
 
+    private final int ID;
     private final String name;
-    private final String tileName;
     private final int healthModifier;
 
-    ConsumableType(String name, String tileName, int healthModifier) {
+    ConsumableType(int id, String name, int healthModifier) {
+        ID = id;
         this.name = name;
-        this.tileName = tileName;
         this.healthModifier = healthModifier;
     }
 
@@ -19,8 +19,8 @@ public enum ConsumableType {
         return healthModifier;
     }
 
-    public String getTileName() {
-        return tileName;
+    public int getTileId() {
+        return ID;
     }
 
     public String getName() {

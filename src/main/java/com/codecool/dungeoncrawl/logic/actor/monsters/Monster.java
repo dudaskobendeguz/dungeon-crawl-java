@@ -7,14 +7,15 @@ import java.util.Random;
 
 public abstract class Monster extends Actor {
     protected boolean isTurnBased;
+    protected final MonsterType monsterType;
 
-    public Monster(Cell cell, int health, int damage) {
-        super(cell, health, damage);
-        this.isTurnBased = true;
+    public Monster(MonsterType monsterType, Cell cell, int health, int damage) {
+        this(monsterType, cell, health, damage, true);
     }
 
-    public Monster(Cell cell, int health, int damage, boolean isTurnBased) {
+    public Monster(MonsterType monsterType, Cell cell, int health, int damage, boolean isTurnBased) {
         super(cell, health, damage);
+        this.monsterType = monsterType;
         this.isTurnBased = isTurnBased;
     }
 

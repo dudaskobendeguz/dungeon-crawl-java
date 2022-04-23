@@ -8,12 +8,12 @@ public class Chicken extends Monster implements Movable {
     private static final int MOVE_TIMER_CEILING = 3;
 
     public Chicken(Cell cell) {
-        super(cell, 2, 1);
+        super(MonsterType.CHICKEN, cell, 2, 1);
     }
 
     @Override
-    public String getTileName() {
-        return MonsterType.CHICKEN.getTileName();
+    public int getTileId() {
+        return monsterType.getTileId();
     }
 
     @Override

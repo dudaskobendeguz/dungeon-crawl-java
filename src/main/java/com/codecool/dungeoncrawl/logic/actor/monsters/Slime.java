@@ -10,12 +10,12 @@ public class Slime extends Monster implements Movable {
     private static final int MOVE_TIMER_CEILING = 1;
 
     public Slime(Cell cell) {
-        super(cell, 8, 1);
+        super(MonsterType.SLIME, cell, 8, 1);
     }
 
     @Override
-    public String getTileName() {
-        return MonsterType.SLIME.getTileName();
+    public int getTileId() {
+        return monsterType.getTileId();
     }
 
     @Override

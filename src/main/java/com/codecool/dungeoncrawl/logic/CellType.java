@@ -1,88 +1,79 @@
 package com.codecool.dungeoncrawl.logic;
 
 public enum CellType {
-    EMPTY("empty"),
-    FLOOR_1("floor_1", true),
-    FLOOR_2("floor_2", true),
-    TIME_MAGE_FLOOR("time_mage_floor"),
-    BRICK_FLOOR("brick_floor", true),
-    TREE_1("tree_1"),
-    TREE_2("tree_2"),
-    TREE_3("tree_3"),
-    TREE_4("tree_4"),
-    TREE_5("tree_5"),
-    TREE_6("tree_6"),
-    TREE_7("tree_7", true),
-    TREE_8("tree_8", true),
-    TREE_9("tree_9", true),
-    TREE_10("tree_10"),
-    TREE_11("tree_11"),
-    TREE_12("tree_12", true),
-    TREE_13("tree_13", true),
-    TREE_14("tree_14", true),
-    TREE_15("tree_15", true),
-    TREE_16("tree_16"),
-    TREE_17("tree_17"),
-    TREE_18("tree_18", true),
-    TREE_19("tree_19", true),
-    TREE_20("tree_20", true),
-    TREE_21("tree_21", true),
-    TREE_22("tree_22", true),
-    TREE_23("tree_23"),
-    TREE_24("tree_24"),
-    TREE_25("tree_25"),
-    WALL("wall"),
+    EMPTY(0),
+    FLOOR_1(4, true),
+    FLOOR_2(1, true),
+    TIME_MAGE_FLOOR(588),
+    BRICK_FLOOR(16, true),
+    TREE_1(32),
+    TREE_2(33),
+    TREE_3(34),
+    TREE_4(35),
+    TREE_5(36),
+    TREE_6(37),
+    TREE_7(64, true),
+    TREE_8(65, true),
+    TREE_9(66, true),
+    TREE_10(67),
+    TREE_11(68),
+    TREE_12(69, true),
+    TREE_13(5, true),
+    TREE_14(6, true),
+    TREE_15(7, true),
+    TREE_16(179),
+    TREE_17(180),
+    TREE_18(205, true),
+    TREE_19(206, true),
+    TREE_20(207, true),
+    TREE_21(208, true),
+    TREE_22(209, true),
+    TREE_23(210),
+    TREE_24(211),
+    TREE_25(212),
+    WALL(586),
 
-    GRAVE_1("grave_1", true),
-    GRAVE_2("grave_2", true),
-    BONES("bones", true),
-    CANDLES("candles"),
-    HOUSE_1("house_1"),
-    LEVEL_SWITCH_HOUSE("level_switch_house", true, false, true),
-    LEVEL_SWITCH_STAIRS("level_switch_stairs", true, false, true),
-    HOUSE_2("house_2"),
-    SIMPLE_DOOR_OPENED("simple_door_opened", true, false),
-    SIMPLE_DOOR_CLOSED("simple_door_closed", false, true),
-    LEVEL_SWITCH_DOOR_OPENED("level_switch_door_opened", true, false, true),
-    LEVEL_SWITCH_DOOR_CLOSED("level_switch_door_closed", false, true),
-    CHEST_OPENED("chest_opened", true),
-    CHEST_CLOSED("chest_closed", false, true);
+    GRAVE_1(449, true),
+    GRAVE_2(448, true),
+    BONES(480, true),
+    CANDLES(485),
+    HOUSE_1(644),
+    LEVEL_SWITCH_HOUSE(647, true, false, true),
+    LEVEL_SWITCH_STAIRS(194, true, false, true),
+    HOUSE_2(673),
+    SIMPLE_DOOR_OPENED(294, true, false),
+    SIMPLE_DOOR_CLOSED(291, false, true),
+    LEVEL_SWITCH_DOOR_OPENED(289, true, false, true),
+    LEVEL_SWITCH_DOOR_CLOSED(288, false, true),
+    CHEST_OPENED(201, true),
+    CHEST_CLOSED(200, false, true);
 
+    private final int ID;
     private final boolean isLevelSwitcher;
-    private final String tileName;
     private final boolean isStepable;
     private final boolean isOpenable;
 
-    CellType(String tileName, boolean isStepable, boolean isOpenable, boolean isLevelSwitcher) {
+    CellType(int tileId, boolean isStepable, boolean isOpenable, boolean isLevelSwitcher) {
+        this.ID = tileId;
         this.isLevelSwitcher = isLevelSwitcher;
-        this.tileName = tileName;
         this.isStepable = isStepable;
         this.isOpenable = isOpenable;
     }
 
-    CellType(String tileName, boolean isStepable, boolean isOpenable) {
-        this.isLevelSwitcher = false;
-        this.tileName = tileName;
-        this.isStepable = isStepable;
-        this.isOpenable = isOpenable;
+    CellType(int tileId, boolean isStepable, boolean isOpenable) {
+        this(tileId, isStepable, isOpenable, false);
     }
 
-    CellType(String tileName) {
-        this.isLevelSwitcher = false;
-        this.tileName = tileName;
-        this.isStepable = false;
-        this.isOpenable = false;
+    CellType(int tileId) {
+        this(tileId, false, false, false);
     }
 
-    CellType(String tileName, boolean isStepable) {
-        this.isLevelSwitcher = false;
-        this.tileName = tileName;
-        this.isStepable = isStepable;
-        this.isOpenable = false;
+    CellType(int tileId, boolean isStepable) {
+        this(tileId, isStepable, false, false);
     }
 
-    public String getTileName() {
-        return tileName;
+    public int getTileId() {
+        return ID;
     }
 
     public boolean isStepable() {

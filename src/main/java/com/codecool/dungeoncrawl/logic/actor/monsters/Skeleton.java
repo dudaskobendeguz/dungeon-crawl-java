@@ -5,12 +5,12 @@ import com.codecool.dungeoncrawl.logic.CellType;
 
 public class Skeleton extends Monster {
     public Skeleton(Cell cell) {
-        super(cell, 2, 1);
+        super(MonsterType.SKELETON, cell, 2, 1);
     }
 
     @Override
-    public String getTileName() {
-        return MonsterType.SKELETON.getTileName();
+    public int getTileId() {
+        return monsterType.getTileId();
     }
 
     @Override

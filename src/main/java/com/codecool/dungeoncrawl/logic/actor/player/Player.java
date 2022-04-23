@@ -59,7 +59,7 @@ public class Player extends Actor {
 
         public Consumable takeFood(ConsumableType consumableType) {
             for (Item item : items) {
-                if (item instanceof Consumable && item.getTileName().equals(consumableType.getTileName())) {
+                if (item instanceof Consumable && item.getTileId() == consumableType.getTileId()) {
                     Consumable food = (Consumable) item;
                     items.remove(item);
                     return food;
@@ -209,7 +209,8 @@ public class Player extends Actor {
         return weapon.getNam();
     }
 
-    public String getTileName() {
+    @Override
+    public int getTileId() {
         return weapon.getPlayerSkin();
     }
 

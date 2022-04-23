@@ -8,12 +8,12 @@ public class Robot extends Monster implements Movable {
     Direction direction = Direction.RIGHT;
 
     public Robot(Cell cell) {
-        super(cell, 10, 2, false);
+        super(MonsterType.ROBOT, cell, 10, 2, false);
     }
 
     @Override
-    public String getTileName() {
-        return MonsterType.ROBOT.getTileName();
+    public int getTileId() {
+        return monsterType.getTileId();
     }
 
     @Override

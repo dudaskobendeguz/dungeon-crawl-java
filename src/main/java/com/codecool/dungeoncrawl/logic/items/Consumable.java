@@ -11,8 +11,8 @@ public class Consumable extends Item {
     }
 
     @Override
-    public String getTileName() {
-        return consumableType.getTileName();
+    public int getTileId() {
+        return consumableType.getTileId();
     }
 
     public int getHealthModifier() {

@@ -34,7 +34,9 @@ public class GameMap {
     }
 
     public void setChest(int x, int y) {
-        cells[x][y] = new Chest(this, x,y, CellType.CHEST_CLOSED);
+        if (getCell(x,y) != null) {
+            cells[x][y] = new Chest(this, x,y, CellType.CHEST_CLOSED);
+        }
     }
 
     public void setPlayer(Player player) {

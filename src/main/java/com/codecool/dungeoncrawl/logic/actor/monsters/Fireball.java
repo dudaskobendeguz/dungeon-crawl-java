@@ -11,13 +11,13 @@ public class Fireball extends Monster implements Movable {
     private final Direction direction;
 
     public Fireball(Cell cell, Direction direction) {
-        super(cell, 1, 100, false);
+        super(MonsterType.FIREBALL, cell, 1, 100, false);
         this.direction = direction;
     }
 
     @Override
-    public String getTileName() {
-        return MonsterType.FIREBALL.getTileName();
+    public int getTileId() {
+        return monsterType.getTileId();
     }
 
     @Override

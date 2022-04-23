@@ -1,20 +1,20 @@
 package com.codecool.dungeoncrawl.logic.actor.monsters;
 
 public enum MonsterType {
-    SKELETON("skeleton"),
-    CHICKEN("chicken"),
-    SLIME("slime"),
-    ROBOT("robot"),
-    TIME_MAGE("time_mage"),
-    FIREBALL("fireball");
+    SKELETON(93),
+    CHICKEN(250),
+    SLIME(283),
+    ROBOT(122),
+    TIME_MAGE(88),
+    FIREBALL(335);
 
-    private final String tileName;
+    private final int ID;
 
-    MonsterType(String tileName) {
-        this.tileName = tileName;
+    MonsterType(int tileId) {
+        this.ID = tileId;
     }
 
-    public String getTileName() {
-        return tileName;
+    public int getTileId() {
+        return ID;
     }
 }

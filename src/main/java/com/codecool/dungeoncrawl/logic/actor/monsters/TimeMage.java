@@ -15,7 +15,7 @@ public class TimeMage extends Monster implements Movable {
 
 
     public TimeMage(Cell cell) {
-        super(cell, 500, 3, false);
+        super(MonsterType.TIME_MAGE, cell, 500, 3, false);
 
     }
 
@@ -28,12 +28,11 @@ public class TimeMage extends Monster implements Movable {
     }
 
     @Override
-    public String getTileName() {
-        return MonsterType.TIME_MAGE.getTileName();
+    public int getTileId() {
+        return monsterType.getTileId();
     }
 
     public void setTimeCells(List<Cell> timeCells) {
-        if (this.timeCells == null) { this.timeCells = new ArrayList<>();}
         this.timeCells = timeCells;
     }
 
