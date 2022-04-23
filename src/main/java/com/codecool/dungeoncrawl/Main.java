@@ -245,14 +245,11 @@ public class Main extends Application {
         }
         clearDeadMonsters(monsters);
 
-        Cell playerCell = map.getPlayer().getCell();
-        int playerX = playerCell.getX();
-        int playerY = playerCell.getY();
         Monster teleportedMonster = null;
         for (Monster monster : monsters) {
             if (monster instanceof Movable) {
                 if (isTurnBased && monster.isTurnBased() || !isTurnBased && !monster.isTurnBased()) {
-                    ((Movable) monster).move(playerX, playerY, isTimeMageAlive);
+                    ((Movable) monster).move(map.getPlayer().getX(), map.getPlayer().getY(), isTimeMageAlive);
                     if (monster instanceof TimeMage) {
                         teleportedMonster = ((TimeMage) monster).attack();
                     }
@@ -282,12 +279,9 @@ public class Main extends Application {
     private void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, MAP_SIZE, MAP_SIZE);
-        Cell playerCell = map.getPlayer().getCell();
-        int playerX = playerCell.getX();
-        int playerY = playerCell.getY();
         for (int x = 0; x < MAP_SIZE; x++) {
             for (int y = 0; y < MAP_SIZE; y++) {
-                Cell cell = map.getCell(playerX - (MAP_SIZE / 2) + x, playerY - (MAP_SIZE / 2) + y);
+                Cell cell = map.getCell(map.getPlayer().getX() - (MAP_SIZE / 2) + x, map.getPlayer().getY() - (MAP_SIZE / 2) + y);
                 if (cell == null) {
                     Tiles.drawTile(context, new Cell(), x, y);
                 } else if (cell.getActor() != null) {
