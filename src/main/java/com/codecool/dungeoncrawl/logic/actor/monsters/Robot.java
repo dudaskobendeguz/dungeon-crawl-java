@@ -12,11 +12,6 @@ public class Robot extends Monster implements Movable {
     }
 
     @Override
-    public int getTileId() {
-        return monsterType.getTileId();
-    }
-
-    @Override
     public void move(int playerX, int playerY, boolean timeMageAlive) {
         if (cell != null) {
             Cell nextCell = cell.getNeighbor(direction);

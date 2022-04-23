@@ -27,11 +27,6 @@ public class TimeMage extends Monster implements Movable {
         }
     }
 
-    @Override
-    public int getTileId() {
-        return monsterType.getTileId();
-    }
-
     public void setTimeCells(List<Cell> timeCells) {
         this.timeCells = timeCells;
     }

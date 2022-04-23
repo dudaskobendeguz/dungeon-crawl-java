@@ -16,11 +16,6 @@ public class Fireball extends Monster implements Movable {
     }
 
     @Override
-    public int getTileId() {
-        return monsterType.getTileId();
-    }
-
-    @Override
     public void move(int playerX, int playerY, boolean timeMageAlive) {
         tryToKill();
         Cell nextCell = cell.getNeighbor(direction);
@@ -34,7 +29,7 @@ public class Fireball extends Monster implements Movable {
     public void tryToKill() {
         List<Monster> monsters = getNeighborMonsters();
         for (Monster monster : monsters) {
-                killMonster(monster);
+            killMonster(monster);
         }
     }
 

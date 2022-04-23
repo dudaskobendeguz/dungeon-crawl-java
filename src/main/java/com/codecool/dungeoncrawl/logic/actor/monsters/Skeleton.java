@@ -9,11 +9,6 @@ public class Skeleton extends Monster {
     }
 
     @Override
-    public int getTileId() {
-        return monsterType.getTileId();
-    }
-
-    @Override
     public void die() {
         cell.setType(CellType.BONES);
         super.die();

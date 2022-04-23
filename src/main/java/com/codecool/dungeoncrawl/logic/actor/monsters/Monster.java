@@ -19,6 +19,11 @@ public abstract class Monster extends Actor {
         this.isTurnBased = isTurnBased;
     }
 
+    @Override
+    public int getTileId() {
+        return monsterType.getTileId();
+    }
+
     public boolean isTurnBased() {
         return isTurnBased;
     }
