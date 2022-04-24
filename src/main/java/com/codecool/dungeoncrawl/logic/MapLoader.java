@@ -47,7 +47,7 @@ public class MapLoader {
                     map.setPlayer(player);
                 }
                 else if (tileType instanceof CellType) {
-                    timeCells = setCell(cell, (CellType) tileType, timeCells);
+                    timeCells = setCell(cell, (CellType) tileType, timeCells, map, x, y);
                 }
                 else if (tileType instanceof MonsterType) {
                     setMonster(cell, map, (MonsterType) tileType);
@@ -82,7 +82,10 @@ public class MapLoader {
         return scanner;
     }
 
-    private static List<Cell> setCell(Cell cell, CellType cellType, List<Cell> timeCells) {
+    private static List<Cell> setCell(Cell cell, CellType cellType, List<Cell> timeCells, GameMap map, int x, int y) {
+        if (cellType == CellType.CHEST_CLOSED) {
+            map.setChest(x, y);
+        }
         cell.setType(cellType);
         if (cellType == CellType.TIME_MAGE_FLOOR) {
             timeCells.add(cell);
