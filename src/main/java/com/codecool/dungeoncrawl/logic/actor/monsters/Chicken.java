@@ -12,8 +12,8 @@ public class Chicken extends Monster implements Movable {
     }
 
     @Override
-    public void move(int playerX, int playerY, boolean timeMageAlive) {
-        isTurnBased = MoveUtil.setIsTurnBased(timeMageAlive);
+    public void move(int playerX, int playerY, boolean isTimeMageAlive) {
+        isTurnBased = MoveUtil.setIsTurnBased(isTimeMageAlive);
         if (!isTurnBased) {
             damage = 0;
         }
