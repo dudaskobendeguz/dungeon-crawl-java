@@ -47,6 +47,14 @@ public class GameMap {
         return player;
     }
 
+    public int getPlayerX() {
+        return player.getX();
+    }
+
+    public int getPlayerY() {
+        return player.getY();
+    }
+
     public int getWidth() {
         return width;
     }
