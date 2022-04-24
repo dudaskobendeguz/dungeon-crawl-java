@@ -16,7 +16,7 @@ public class Tiles {
 
     private static final Image tileset = new Image("/tiles.png", 543 * 2, 543 * 2, true, false);
     private static final Map<Integer, Tile> tileMap = new HashMap<>();
-    public static final Map<Integer, TileType> tileTypeMap = new HashMap<>();
+    public static final Map<Integer, LoadableTile> loadableTileMap = new HashMap<>();
     public static class Tile {
         public final int x, y, w, h;
         Tile(int col, int row) {
@@ -28,33 +28,33 @@ public class Tiles {
     }
 
     static {
-        tileTypeMap.put(-1, CellType.EMPTY);
+        loadableTileMap.put(-1, CellType.EMPTY);
         for (int tileId = 0; tileId < NUMBER_OF_TILES; tileId++) {
             int row = tileId / (TILE_WIDTH);
             int col = tileId % (TILE_WIDTH);
 //            System.out.printf("%s: (%s,%s)%n", tileId, row, col);
             tileMap.put(tileId, new Tile(col,row));
 
-            TileType tileType = getTileTypeById(tileId);
-            tileTypeMap.put(tileId, tileType);
+            LoadableTile loadableTile = getTileTypeById(tileId);
+            loadableTileMap.put(tileId, loadableTile);
         }
     }
 
-    private static List<TileType> loadTileTypes() {
-        List<TileType> tileTypes = new ArrayList<>();
-        tileTypes.addAll(Arrays.asList(CellType.values()));
-        tileTypes.addAll(Arrays.asList(MonsterType.values()));
-        tileTypes.addAll(Arrays.asList(ConsumableType.values()));
-        tileTypes.addAll(Arrays.asList(KeyType.values()));
-        tileTypes.addAll(Arrays.asList(WeaponType.values()));
-        return tileTypes;
+    private static List<LoadableTile> loadTileTypes() {
+        List<LoadableTile> loadableTiles = new ArrayList<>();
+        loadableTiles.addAll(Arrays.asList(CellType.values()));
+        loadableTiles.addAll(Arrays.asList(MonsterType.values()));
+        loadableTiles.addAll(Arrays.asList(ConsumableType.values()));
+        loadableTiles.addAll(Arrays.asList(KeyType.values()));
+        loadableTiles.addAll(Arrays.asList(WeaponType.values()));
+        return loadableTiles;
     }
 
-    private static TileType getTileTypeById(int id) {
-        List<TileType> tileTypes = loadTileTypes();
-        for (TileType tileType : tileTypes) {
-            if (tileType.getTileId() == id) {
-                return tileType;
+    private static LoadableTile getTileTypeById(int id) {
+        List<LoadableTile> loadableTiles = loadTileTypes();
+        for (LoadableTile loadableTile : loadableTiles) {
+            if (loadableTile.getTileId() == id) {
+                return loadableTile;
             }
         }
         return null;

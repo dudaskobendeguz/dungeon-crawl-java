@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.logic.items;
 
-import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.TileType;
+import com.codecool.dungeoncrawl.LoadableTile;
 
-public enum WeaponType implements TileType {
+public enum WeaponType implements LoadableTile {
     KNIFE(896, "Knife",  23, 2),
     SWORD(960, "Sword",  27, 5),
     AXE(970, "Axe",  26, 10),
@@ -40,7 +40,7 @@ public enum WeaponType implements TileType {
     }
 
     @Override
-    public TileCategory getTileCategory() {
-        return TileCategory.ITEM;
+    public TileType getTileType() {
+        return TileType.ITEM;
     }
 }

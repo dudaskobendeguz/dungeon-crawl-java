@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.TileType;
+import com.codecool.dungeoncrawl.LoadableTile;
 
-public enum CellType implements TileType {
+public enum CellType implements LoadableTile {
     EMPTY(0),
     FLOOR_1(4, true),
     FLOOR_2(1, true),
@@ -80,8 +80,8 @@ public enum CellType implements TileType {
     }
 
     @Override
-    public TileCategory getTileCategory() {
-        return TileCategory.CELL;
+    public TileType getTileType() {
+        return TileType.CELL;
     }
 
     public boolean isStepable() {

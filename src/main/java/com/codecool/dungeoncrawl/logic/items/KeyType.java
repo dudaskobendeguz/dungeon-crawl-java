@@ -1,10 +1,10 @@
 package com.codecool.dungeoncrawl.logic.items;
 
-import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.TileType;
+import com.codecool.dungeoncrawl.LoadableTile;
 import com.codecool.dungeoncrawl.logic.CellType;
 
-public enum KeyType implements TileType {
+public enum KeyType implements LoadableTile {
     CHEST_KEY(
             752,
             "Chest key",
@@ -53,7 +53,7 @@ public enum KeyType implements TileType {
     }
 
     @Override
-    public TileCategory getTileCategory() {
-        return TileCategory.ITEM;
+    public TileType getTileType() {
+        return TileType.ITEM;
     }
 }
