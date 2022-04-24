@@ -15,7 +15,7 @@ public class Robot extends Monster implements Movable {
     public void move(int playerX, int playerY, boolean timeMageAlive) {
         if (cell != null) {
             Cell nextCell = cell.getNeighbor(direction);
-            if (!GameMap.isValidStep(nextCell)) {
+            if (!GameMap.isStepValid(nextCell)) {
                 direction = (direction.equals(Direction.RIGHT)) ? Direction.LEFT : Direction.RIGHT;
             }
             stepOne(nextCell);

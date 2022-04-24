@@ -83,7 +83,7 @@ public class Player extends Actor {
 
     public Fireball getFireball() {
         Cell nextCell = cell.getNeighbor(direction);
-        if (GameMap.isValidStep(nextCell)) {
+        if (GameMap.isStepValid(nextCell)) {
             fireballTimer = 0;
             return new Fireball(nextCell, direction);
         }
@@ -130,7 +130,7 @@ public class Player extends Actor {
     public void move(Direction direction) {
         this.direction = direction;
         Cell nextCell = cell.getNeighbor(direction);
-        if (GameMap.isValidStep(nextCell)) {
+        if (GameMap.isStepValid(nextCell)) {
             stepOne(nextCell);
         }
     }

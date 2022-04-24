@@ -19,7 +19,7 @@ public class Fireball extends Monster implements Movable {
     public void move(int playerX, int playerY, boolean timeMageAlive) {
         tryToKill();
         Cell nextCell = cell.getNeighbor(direction);
-        if (!GameMap.isValidStep(nextCell)) {
+        if (!GameMap.isStepValid(nextCell)) {
             die();
         } else {
             stepOne(nextCell);

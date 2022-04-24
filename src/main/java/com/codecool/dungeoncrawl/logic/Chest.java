@@ -19,7 +19,7 @@ public class Chest extends Cell{
     public void dropConsumable() {
         List<Cell> nonDiagonalNeighbors = getNonDiagonalNeighbors();
         for (Cell nonDiagonalNeighbor : nonDiagonalNeighbors) {
-            if (GameMap.isValidStep(nonDiagonalNeighbor) && isPlaceItem()) {
+            if (GameMap.isStepValid(nonDiagonalNeighbor) && isPlaceItem()) {
                 if (isKey()) {
                     nonDiagonalNeighbor.setItem(new Key(nonDiagonalNeighbor, KeyType.CHEST_KEY));
                 } else {

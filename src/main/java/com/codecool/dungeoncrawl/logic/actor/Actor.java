@@ -63,7 +63,7 @@ public abstract class Actor implements Drawable {
     }
 
     protected void stepOne(Cell nextCell, boolean isNoNeedsToBeValidStep) {
-        if (isNoNeedsToBeValidStep || GameMap.isValidStep(nextCell)) {
+        if (isNoNeedsToBeValidStep || GameMap.isStepValid(nextCell)) {
             cell.setActor(null);
             nextCell.setActor(this);
             cell = nextCell;

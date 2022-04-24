@@ -25,7 +25,7 @@ public class GameMap {
         }
     }
 
-    public static boolean isValidStep(Cell cell) {
+    public static boolean isStepValid(Cell cell) {
         return cell != null && cell.isStepable() && cell.getActor() == null;
     }
 
