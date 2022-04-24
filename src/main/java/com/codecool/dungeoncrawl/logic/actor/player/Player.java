@@ -1,4 +1,5 @@
 package com.codecool.dungeoncrawl.logic.actor.player;
+
 import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actor.Actor;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Fireball;
@@ -7,6 +8,7 @@ import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Player extends Actor {
 
@@ -18,38 +20,28 @@ public class Player extends Actor {
         }
 
         public int countConsumables(ConsumableType consumableType) {
-            int consumableCounter = 0;
-            for (Item item : items) {
-                if (item instanceof Consumable) {
-                    Consumable consumable = (Consumable) item;
-                    if (consumable.getConsumableType().equals(consumableType)) {
-                        consumableCounter++;
-                    }
+            AtomicInteger consumableCounter = new AtomicInteger();
+            items.forEach(item ->  {
+                if (item instanceof Consumable && ((Consumable) item).getConsumableType().equals(consumableType)) {
+                    consumableCounter.getAndIncrement();
                 }
-            }
-            return consumableCounter;
+            });
+            return consumableCounter.get();
         }
 
         public int countKeys(KeyType keyType) {
-            int keyCounter = 0;
-            for (Item item : items) {
-                if (item instanceof Key) {
-                    Key key = (Key) item;
-                    if (key.getKeyType().equals(keyType)) {
-                        keyCounter++;
-                    }
+            AtomicInteger keyCounter = new AtomicInteger();
+            items.forEach(item -> {
+                if (item instanceof Key && ((Key) item).getKeyType().equals(keyType)) {
+                    keyCounter.getAndIncrement();
                 }
-            }
-            return keyCounter;
+            });
+            return keyCounter.get();
         }
 
         public List<Key> getKeys() {
             List<Key> keys = new ArrayList<>();
-            for (Item item : items) {
-                if (item instanceof Key) {
-                    keys.add((Key) item);
-                }
-            }
+            items.forEach(item -> {if (item instanceof Key){keys.add((Key) item);}});
             return keys;
         }
 
@@ -59,7 +51,7 @@ public class Player extends Actor {
 
         public Consumable takeFood(ConsumableType consumableType) {
             for (Item item : items) {
-                if (item instanceof Consumable && item.getTileId() == consumableType.getTileId()) {
+                if (item instanceof Consumable && ((Consumable) item).getConsumableType().equals(consumableType)) {
                     Consumable food = (Consumable) item;
                     items.remove(item);
                     return food;
@@ -67,6 +59,7 @@ public class Player extends Actor {
             }
             return null;
         }
+
     }
 
     private String name = null;
@@ -176,7 +169,7 @@ public class Player extends Actor {
     }
 
     private void unlockOpenableCell(Cell cell, Key key) {
-        if(cell instanceof Chest && cell.getType().equals(CellType.CHEST_CLOSED)) {
+        if (cell instanceof Chest && cell.getType().equals(CellType.CHEST_CLOSED)) {
             Chest chest = (Chest) cell;
             chest.dropConsumable();
         }
