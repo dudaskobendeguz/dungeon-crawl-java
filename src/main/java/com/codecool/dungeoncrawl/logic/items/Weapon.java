@@ -15,7 +15,7 @@ public class Weapon extends Item {
     }
 
     public int getPlayerSkin() {
-        return weaponType.getPlayerSkinId();
+        return weaponType.getPlayerSkinTileId();
     }
 
     @Override

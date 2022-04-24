@@ -10,13 +10,13 @@ public enum WeaponType {
 
     private final int ID;
     private final String name;
-    private final int playerSkinId;
+    private final int playerSkinTileId;
     private final int damage;
 
-    WeaponType(int tileId, String name, int playerSkin, int damage) {
+    WeaponType(int tileId, String name, int playerSkinTileId, int damage) {
         this.ID = tileId;
         this.name = name;
-        this.playerSkinId = playerSkin;
+        this.playerSkinTileId = playerSkinTileId;
         this.damage = damage;
     }
 
@@ -28,8 +28,8 @@ public enum WeaponType {
         return name;
     }
 
-    public int getPlayerSkinId() {
-        return playerSkinId;
+    public int getPlayerSkinTileId() {
+        return playerSkinTileId;
     }
 
     public int getDamage() {
