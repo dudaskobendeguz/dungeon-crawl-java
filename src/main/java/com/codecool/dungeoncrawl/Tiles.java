@@ -38,8 +38,8 @@ public class Tiles {
         }
     }
 
-    public static void drawTile(GraphicsContext context, Drawable drawable, int x, int y) {
-        Tile tile = tileMap.get(drawable.getTileId());
+    public static void drawTile(GraphicsContext context, int tileId, int x, int y) {
+        Tile tile = tileMap.get(tileId);
         context.drawImage(tileset, tile.x, tile.y, tile.w, tile.h,
                 x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
     }
