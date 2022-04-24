@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.items;
 
+import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.TileType;
 
 public enum WeaponType implements TileType {
@@ -36,5 +37,10 @@ public enum WeaponType implements TileType {
 
     public int getDamage() {
         return damage;
+    }
+
+    @Override
+    public TileCategory getTileCategory() {
+        return TileCategory.ITEM;
     }
 }

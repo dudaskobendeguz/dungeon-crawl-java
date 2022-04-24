@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.TileType;
 
 public enum CellType implements TileType {
@@ -76,6 +77,11 @@ public enum CellType implements TileType {
 
     public int getTileId() {
         return tileId;
+    }
+
+    @Override
+    public TileCategory getTileCategory() {
+        return TileCategory.CELL;
     }
 
     public boolean isStepable() {

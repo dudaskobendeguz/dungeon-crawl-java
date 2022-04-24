@@ -28,6 +28,7 @@ public class Tiles {
     }
 
     static {
+        tileTypeMap.put(-1, CellType.EMPTY);
         for (int tileId = 0; tileId < NUMBER_OF_TILES; tileId++) {
             int row = tileId / (TILE_WIDTH);
             int col = tileId % (TILE_WIDTH);

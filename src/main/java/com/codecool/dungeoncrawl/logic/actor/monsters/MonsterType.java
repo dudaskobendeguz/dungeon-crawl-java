@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.actor.monsters;
 
+import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.TileType;
 
 public enum MonsterType implements TileType {
@@ -18,5 +19,10 @@ public enum MonsterType implements TileType {
 
     public int getTileId() {
         return ID;
+    }
+
+    @Override
+    public TileCategory getTileCategory() {
+        return TileCategory.MONSTER;
     }
 }

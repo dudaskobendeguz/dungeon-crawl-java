@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.items;
 
+import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.TileType;
 
 public enum ConsumableType implements TileType {
@@ -23,6 +24,11 @@ public enum ConsumableType implements TileType {
 
     public int getTileId() {
         return ID;
+    }
+
+    @Override
+    public TileCategory getTileCategory() {
+        return TileCategory.ITEM;
     }
 
     public String getName() {

@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.items;
 
+import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.TileType;
 import com.codecool.dungeoncrawl.logic.CellType;
 
@@ -49,5 +50,10 @@ public enum KeyType implements TileType {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public TileCategory getTileCategory() {
+        return TileCategory.ITEM;
     }
 }
