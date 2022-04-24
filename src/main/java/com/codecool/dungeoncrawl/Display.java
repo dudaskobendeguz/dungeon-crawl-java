@@ -45,6 +45,21 @@ public class Display {
         itemsLabel = new Label();
         weaponLabel = new Label();
 
+        setupUi();
+
+        BorderPane borderPane = new BorderPane();
+
+        borderPane.setCenter(canvas);
+        borderPane.setRight(ui);
+
+        scene = new Scene(borderPane);
+        primaryStage.setScene(scene);
+
+        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.show();
+    }
+
+    private void setupUi() {
         ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
 
@@ -74,16 +89,6 @@ public class Display {
         addUiLabel(new Label("Eat apple: 1"), 0);
         addUiLabel(new Label("Eat bread: 2"), 0);
         addUiLabel(new Label("Eat meat: 3"), 0);
-        BorderPane borderPane = new BorderPane();
-
-        borderPane.setCenter(canvas);
-        borderPane.setRight(ui);
-
-        scene = new Scene(borderPane);
-        primaryStage.setScene(scene);
-
-        primaryStage.setTitle("Dungeon Crawl");
-        primaryStage.show();
     }
 
     void refresh(GameMap map) {
