@@ -48,13 +48,13 @@ public enum CellType {
     CHEST_OPENED(201, true),
     CHEST_CLOSED(200, false, true);
 
-    private final int ID;
+    private final int tileId;
     private final boolean isLevelSwitcher;
     private final boolean isStepable;
     private final boolean isOpenable;
 
     CellType(int tileId, boolean isStepable, boolean isOpenable, boolean isLevelSwitcher) {
-        this.ID = tileId;
+        this.tileId = tileId;
         this.isLevelSwitcher = isLevelSwitcher;
         this.isStepable = isStepable;
         this.isOpenable = isOpenable;
@@ -73,7 +73,7 @@ public enum CellType {
     }
 
     public int getTileId() {
-        return ID;
+        return tileId;
     }
 
     public boolean isStepable() {
