@@ -5,7 +5,6 @@ import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TimeMage extends Monster implements Movable {
@@ -23,7 +22,7 @@ public class TimeMage extends Monster implements Movable {
     public void move(int playerX, int playerY, boolean timeMageAlive) {
         moveTimer = MoveUtil.setTimer(moveTimer, MOVE_TIMER_CEILING);
         if (moveTimer == 0) {
-            stepOne(timeCells.get(MoveUtil.random.nextInt(timeCells.size())), true);
+            stepOne(timeCells.get(MoveUtil.random.nextInt(timeCells.size())), false);
         }
     }
 
