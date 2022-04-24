@@ -48,13 +48,11 @@ public class Display {
         setupUi();
 
         BorderPane borderPane = new BorderPane();
-
         borderPane.setCenter(canvas);
         borderPane.setRight(ui);
 
         scene = new Scene(borderPane);
         primaryStage.setScene(scene);
-
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
@@ -92,6 +90,20 @@ public class Display {
     }
 
     void refresh(GameMap map) {
+        refreshTiles(map);
+        refreshUi(map);
+    }
+
+    private void refreshUi(GameMap map) {
+        Player player = map.getPlayer();
+        playerNameLabel.setText(player.getName());
+        healthLabel.setText(String.format("%s %s", player.getHealth(), displayHealthBar(player)));
+        damageLabel.setText("" + player.getDamage());
+        weaponLabel.setText(player.getWeaponName());
+        drawItems(player);
+    }
+
+    private void refreshTiles(GameMap map) {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, MAP_SIZE, MAP_SIZE);
         for (int x = 0; x < MAP_SIZE; x++) {
@@ -108,12 +120,6 @@ public class Display {
                 }
             }
         }
-        Player player = map.getPlayer();
-        playerNameLabel.setText(player.getName());
-        healthLabel.setText(String.format("%s %s", player.getHealth(), displayHealthBar(player)));
-        damageLabel.setText("" + player.getDamage());
-        weaponLabel.setText(player.getWeaponName());
-        drawItems(player);
     }
 
     private String displayHealthBar(Player player) {
