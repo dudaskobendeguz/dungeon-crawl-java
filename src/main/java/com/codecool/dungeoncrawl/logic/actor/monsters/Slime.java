@@ -19,15 +19,9 @@ public class Slime extends Monster implements Movable {
         if (!isTurnBased) {
             damage = 0;
         }
-        setTimer();
+        moveTimer = MoveUtil.setTimer(moveTimer, MOVE_TIMER_CEILING);
         if (moveTimer == 0) {
             stepOne(MoveUtil.moveRandomly(cell));
-        }
-    }
-
-    private void setTimer() {
-        if (++moveTimer >= MOVE_TIMER_CEILING) {
-            moveTimer = 0;
         }
     }
 
