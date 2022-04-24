@@ -1,6 +1,8 @@
 package com.codecool.dungeoncrawl.logic.items;
 
-public enum WeaponType {
+import com.codecool.dungeoncrawl.TileType;
+
+public enum WeaponType implements TileType {
     KNIFE(896, "Knife",  23, 2),
     SWORD(960, "Sword",  27, 5),
     AXE(970, "Axe",  26, 10),

@@ -1,8 +1,9 @@
 package com.codecool.dungeoncrawl.logic.items;
 
+import com.codecool.dungeoncrawl.TileType;
 import com.codecool.dungeoncrawl.logic.CellType;
 
-public enum KeyType {
+public enum KeyType implements TileType {
     CHEST_KEY(
             752,
             "Chest key",

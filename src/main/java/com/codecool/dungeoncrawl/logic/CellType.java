@@ -1,6 +1,8 @@
 package com.codecool.dungeoncrawl.logic;
 
-public enum CellType {
+import com.codecool.dungeoncrawl.TileType;
+
+public enum CellType implements TileType {
     EMPTY(0),
     FLOOR_1(4, true),
     FLOOR_2(1, true),

@@ -1,6 +1,8 @@
 package com.codecool.dungeoncrawl.logic.actor.monsters;
 
-public enum MonsterType {
+import com.codecool.dungeoncrawl.TileType;
+
+public enum MonsterType implements TileType {
     SKELETON(93),
     CHICKEN(250),
     SLIME(283),

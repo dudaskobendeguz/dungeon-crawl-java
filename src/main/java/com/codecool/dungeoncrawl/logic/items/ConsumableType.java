@@ -1,6 +1,8 @@
 package com.codecool.dungeoncrawl.logic.items;
 
-public enum ConsumableType {
+import com.codecool.dungeoncrawl.TileType;
+
+public enum ConsumableType implements TileType {
     APPLE(943, "Apple", 1),
     BREAD(911, "Bread",  2),
     MEAT(913, "Meat",  3);

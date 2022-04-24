@@ -1,17 +1,20 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.TileType;
 import com.codecool.dungeoncrawl.logic.actor.monsters.*;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class MapLoader {
     private static final String delimiter = ",";
     public static GameMap loadMap(String filePath, Player player) {
+        List<TileType> tileTypes = loadTileTypes();
         Scanner scanner = loadMapFile(filePath);
         String firstLine = scanner.nextLine();
         String[] firstLineChars = firstLine.split(delimiter);
@@ -251,6 +254,16 @@ public class MapLoader {
             }
         }
         return map;
+    }
+
+    private static List<TileType> loadTileTypes() {
+        List<TileType> tileTypes = new ArrayList<>();
+        tileTypes.addAll(Arrays.asList(CellType.values()));
+        tileTypes.addAll(Arrays.asList(MonsterType.values()));
+        tileTypes.addAll(Arrays.asList(ConsumableType.values()));
+        tileTypes.addAll(Arrays.asList(KeyType.values()));
+        tileTypes.addAll(Arrays.asList(WeaponType.values()));
+        return tileTypes;
     }
 
     private static Scanner loadMapFile(String filePath) {
