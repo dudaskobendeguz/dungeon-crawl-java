@@ -32,7 +32,6 @@ public class Tiles {
         for (int tileId = 0; tileId < NUMBER_OF_TILES; tileId++) {
             int row = tileId / (TILE_WIDTH);
             int col = tileId % (TILE_WIDTH);
-//            System.out.printf("%s: (%s,%s)%n", tileId, row, col);
             tileMap.put(tileId, new Tile(col,row));
 
             LoadableTile loadableTile = getTileTypeById(tileId);
