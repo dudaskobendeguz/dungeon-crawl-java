@@ -52,9 +52,9 @@ public enum CellType implements TileType {
     CHEST_CLOSED(200, CellAttribute.OPENABLE),
 
     //ICONS
-    HOME(921, CellAttribute.STEPABLE),
-    FLOPPY(922, CellAttribute.STEPABLE),
-    EXIT(824, CellAttribute.STEPABLE),
+    HOME(921, CellAttribute.LEVEL_SWITCHER),
+    FLOPPY(922, CellAttribute.LEVEL_SWITCHER),
+    EXIT(824, CellAttribute.LEVEL_SWITCHER),
 
     // Alphabet
     NUMERIC_0(947),

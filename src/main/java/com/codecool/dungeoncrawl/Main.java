@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
@@ -151,6 +152,16 @@ public class Main extends Application {
 
     private void switchLevel() {
         switch (currentLevel) {
+            case MAIN_MENU:
+                if (map.getPlayer().getCell().getType().equals(CellType.HOME)) {
+                    currentLevel = Levels.LEVEL_1;
+                } else if (map.getPlayer().getCell().getType().equals(CellType.FLOPPY)) {
+                    // TODO Implement load level
+                    System.out.println("Implement load level");
+                }else if (map.getPlayer().getCell().getType().equals(CellType.EXIT)) {
+                    System.exit(0);
+                }
+                break;
             case LEVEL_1: {
                 currentLevel = Levels.LEVEL_2;
                 break;
