@@ -17,24 +17,15 @@ public class MapLoader {
     private static final CellType DEFAULT_CELL = CellType.FLOOR_1;
 
     public static GameMap loadMap(String filePath, Player player) {
-        // TODO Add getWidth() and getHeight()
-        Scanner scanner = loadMapFile(filePath);
-        String firstLine = scanner.nextLine();
-        String[] firstLineChars = firstLine.split(DELIMITER);
+        Scanner mapSizeScanner = loadMapFile(filePath);
+        int width = getMapWidth(mapSizeScanner);
+        int height = getMapHeight(mapSizeScanner);
 
-        int width = firstLineChars.length;
-        int height = 1;
-        while (scanner.hasNextLine()) {
-            scanner.nextLine();
-            height++;
-        }
-
-        scanner = loadMapFile(filePath);
-
+        Scanner mapScanner = loadMapFile(filePath);
         GameMap map = new GameMap(width, height, CellType.EMPTY);
         List<Cell> timeCells = new ArrayList<>();
         for (int y = 0; y < height; y++) {
-            String line = scanner.nextLine();
+            String line = mapScanner.nextLine();
             String[] lineChars = line.split(DELIMITER);
             for (int x = 0; x < lineChars.length; x++) {
                 Cell cell = map.getCell(x, y);
@@ -71,6 +62,29 @@ public class MapLoader {
         return map;
     }
 
+    private static Scanner loadMapFile(String filePath) {
+        InputStream is = MapLoader.class.getResourceAsStream(filePath);
+        assert is != null;
+        Scanner scanner = new Scanner(is);
+        scanner.useDelimiter(DELIMITER);
+        return scanner;
+    }
+
+    private static int getMapWidth(Scanner scanner) {
+        String firstLine = scanner.nextLine();
+        String[] firstLineChars = firstLine.split(DELIMITER);
+        return firstLineChars.length;
+    }
+
+    private  static int getMapHeight(Scanner scanner) {
+        int height = 1;
+        while (scanner.hasNextLine()) {
+            scanner.nextLine();
+            height++;
+        }
+        return height;
+    }
+
     private static TileCategory getTileCategory(int tileId, TileType tileType) {
         // TODO Think about putting PLAYER and CHEST somewhere
         final int PLAYER_ID = 25;
@@ -91,14 +105,6 @@ public class MapLoader {
         cell.setType(DEFAULT_CELL);
         cell.setActor(player);
         map.setPlayer(player);
-    }
-
-    private static Scanner loadMapFile(String filePath) {
-        InputStream is = MapLoader.class.getResourceAsStream(filePath);
-        assert is != null;
-        Scanner scanner = new Scanner(is);
-        scanner.useDelimiter(DELIMITER);
-        return scanner;
     }
 
     private static List<Cell> setCell(Cell cell, CellType cellType, List<Cell> timeCells) {
