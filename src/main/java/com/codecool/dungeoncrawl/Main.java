@@ -28,7 +28,7 @@ import java.sql.SQLException;
 public class Main extends Application {
     private static String playerName = "Player_1";
     private final static int MAP_SIZE = 15;
-    private Levels currentLevel = Levels.LEVEL_1;
+    private Levels currentLevel = Levels.MAIN_MENU;
     private boolean isTimeMageAlive = true;
     GameMap map = MapLoader.getGameMap(currentLevel.getMapFilePath(), new Player(playerName));
     Display display;
@@ -36,6 +36,7 @@ public class Main extends Application {
     GameDatabaseManager dbManager;
 
     private enum Levels {
+        MAIN_MENU("/custom_map/main_menu.csv"),
         TEST_LEVEL("/custom_map/test_level.csv"),
         LEVEL_1("/custom_map/level_1.csv"),
         LEVEL_2("/custom_map/level_2.csv"),
