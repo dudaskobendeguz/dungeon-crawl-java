@@ -5,5 +5,6 @@ public enum TileCategory {
     PLAYER,
     MONSTER,
     ITEM,
-    CHEST
+    CHEST,
+    TIME_CELL
 }

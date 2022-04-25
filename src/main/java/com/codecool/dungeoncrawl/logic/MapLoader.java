@@ -39,7 +39,7 @@ public class MapLoader {
                 TileCategory tileCategory = getTileCategory(tileId, tileType);
                 switch (tileCategory) {
                     case CELL:
-                        timeCells = setCell(cell, (CellType) tileType, timeCells);
+                        cell.setType((CellType) tileType);
                         break;
                     case PLAYER:
                         setPlayer(player, map, cell);
@@ -52,6 +52,10 @@ public class MapLoader {
                         break;
                     case CHEST:
                         map.setChest(x, y);
+                        break;
+                    case TIME_CELL:
+                        cell.setType((CellType) tileType);
+                        timeCells.add(cell);
                         break;
                 }
             }
@@ -102,14 +106,6 @@ public class MapLoader {
         cell.setType(DEFAULT_CELL);
         cell.setActor(player);
         map.setPlayer(player);
-    }
-
-    private static List<Cell> setCell(Cell cell, CellType cellType, List<Cell> timeCells) {
-        cell.setType(cellType);
-        if (cellType == CellType.TIME_MAGE_FLOOR) {
-            timeCells.add(cell);
-        }
-        return timeCells;
     }
 
     private static void setMonster(Cell cell, GameMap map, MonsterType monsterType) {
