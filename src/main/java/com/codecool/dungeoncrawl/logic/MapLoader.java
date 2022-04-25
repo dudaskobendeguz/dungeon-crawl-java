@@ -17,6 +17,7 @@ public class MapLoader {
     private static final CellType DEFAULT_CELL = CellType.FLOOR_1;
 
     public static GameMap loadMap(String filePath, Player player) {
+        // TODO Add getWidth() and getHeight()
         Scanner scanner = loadMapFile(filePath);
         String firstLine = scanner.nextLine();
         String[] firstLineChars = firstLine.split(DELIMITER);
@@ -59,6 +60,7 @@ public class MapLoader {
                 }
             }
         }
+        // TODO Find a way to extract this
         if (timeCells.size() > 0) {
             for (Monster monster : map.getMonsters()) {
                 if (monster instanceof TimeMage) {
@@ -70,6 +72,7 @@ public class MapLoader {
     }
 
     private static TileCategory getTileCategory(int tileId, TileType tileType) {
+        // TODO Think about putting PLAYER and CHEST somewhere
         final int PLAYER_ID = 25;
         final int CHEST_ID = 200;
         switch (tileId) {
@@ -107,7 +110,7 @@ public class MapLoader {
     }
 
     private static void setMonster(Cell cell, GameMap map, MonsterType monsterType) {
-        cell.setType(CellType.FLOOR_1);
+        cell.setType(DEFAULT_CELL);
         Monster monster = null;
         switch (monsterType) {
             case SKELETON:
@@ -130,6 +133,7 @@ public class MapLoader {
     }
 
     private static void setItem(Cell cell, TileType tileType) {
+        // TODO Think about ItemType
         cell.setType(DEFAULT_CELL);
         if (tileType instanceof ConsumableType) {
             cell.setItem(new Consumable(cell, (ConsumableType) tileType));
