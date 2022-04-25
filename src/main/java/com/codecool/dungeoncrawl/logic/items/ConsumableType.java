@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.logic.items;
 
+import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.TileType;
-import com.codecool.dungeoncrawl.LoadableTile;
 
-public enum ConsumableType implements LoadableTile {
+public enum ConsumableType implements TileType {
     APPLE(943, "Apple", 1),
     BREAD(911, "Bread",  2),
     MEAT(913, "Meat",  3);
@@ -27,8 +27,8 @@ public enum ConsumableType implements LoadableTile {
     }
 
     @Override
-    public TileType getTileType() {
-        return TileType.ITEM;
+    public TileCategory getTileCategory() {
+        return TileCategory.ITEM;
     }
 
     public String getName() {

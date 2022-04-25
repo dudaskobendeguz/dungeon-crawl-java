@@ -1,9 +1,6 @@
 package com.codecool.dungeoncrawl;
 
-public enum TileType {
-    CELL,
-    PLAYER,
-    MONSTER,
-    ITEM,
-    CHEST
+public interface TileType {
+    int getTileId();
+    TileCategory getTileCategory();
 }

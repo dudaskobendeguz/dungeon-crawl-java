@@ -1,7 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.LoadableTile;
 import com.codecool.dungeoncrawl.TileType;
+import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.Tiles;
 import com.codecool.dungeoncrawl.logic.actor.monsters.*;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
@@ -15,7 +15,6 @@ import java.util.Scanner;
 public class MapLoader {
     private static final String DELIMITER = ",";
     private static final CellType DEFAULT_CELL = CellType.FLOOR_1;
-    private static final int PLAYER_ID = 25;
 
     public static GameMap loadMap(String filePath, Player player) {
         Scanner scanner = loadMapFile(filePath);
@@ -39,26 +38,24 @@ public class MapLoader {
             for (int x = 0; x < lineChars.length; x++) {
                 Cell cell = map.getCell(x, y);
                 int tileId = Integer.parseInt(lineChars[x]);
-                LoadableTile loadableTile = Tiles.loadableTileMap.get(tileId);
-                TileType tileType = getTileType(tileId, loadableTile);
-                switch (tileType) {
+                TileType tileType = Tiles.tileTypeMap.get(tileId);
+                TileCategory tileCategory = getTileCategory(tileId, tileType);
+                switch (tileCategory) {
                     case CELL:
-                        timeCells = setCell(cell, (CellType) loadableTile, timeCells);
+                        timeCells = setCell(cell, (CellType) tileType, timeCells);
                         break;
                     case PLAYER:
                         setPlayer(player, map, cell);
                         break;
                     case MONSTER:
-                        setMonster(cell, map, (MonsterType) loadableTile);
+                        setMonster(cell, map, (MonsterType) tileType);
                         break;
                     case ITEM:
-                        setItem(cell, loadableTile);
+                        setItem(cell, tileType);
                         break;
                     case CHEST:
                         map.setChest(x, y);
                         break;
-                    default:
-                        throw new RuntimeException("Unrecognized character: '" + lineChars[x] + "'");
                 }
             }
         }
@@ -72,16 +69,17 @@ public class MapLoader {
         return map;
     }
 
-    private static TileType getTileType(int tileId, LoadableTile loadableTile) {
+    private static TileCategory getTileCategory(int tileId, TileType tileType) {
         final int PLAYER_ID = 25;
         final int CHEST_ID = 200;
         switch (tileId) {
             case PLAYER_ID:
-                return TileType.PLAYER;
+                return TileCategory.PLAYER;
             case CHEST_ID:
-                return TileType.CHEST;
+                return TileCategory.CHEST;
             default:
-                return loadableTile.getTileType();
+                if (tileType == null) throw new RuntimeException("Unrecognized character: '" + tileId + "'");
+                return tileType.getTileCategory();
         }
     }
 
@@ -131,14 +129,14 @@ public class MapLoader {
         map.addMonster(monster);
     }
 
-    private static void setItem(Cell cell, LoadableTile loadableTile) {
+    private static void setItem(Cell cell, TileType tileType) {
         cell.setType(DEFAULT_CELL);
-        if (loadableTile instanceof ConsumableType) {
-            cell.setItem(new Consumable(cell, (ConsumableType) loadableTile));
-        } else if (loadableTile instanceof KeyType) {
-            cell.setItem(new Key(cell, (KeyType) loadableTile));
-        } else if (loadableTile instanceof WeaponType) {
-            cell.setItem(new Weapon(cell, (WeaponType) loadableTile));
+        if (tileType instanceof ConsumableType) {
+            cell.setItem(new Consumable(cell, (ConsumableType) tileType));
+        } else if (tileType instanceof KeyType) {
+            cell.setItem(new Key(cell, (KeyType) tileType));
+        } else if (tileType instanceof WeaponType) {
+            cell.setItem(new Weapon(cell, (WeaponType) tileType));
         }
     }
 }

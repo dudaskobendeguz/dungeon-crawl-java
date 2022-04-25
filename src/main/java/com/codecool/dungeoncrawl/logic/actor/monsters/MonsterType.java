@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.logic.actor.monsters;
 
+import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.TileType;
-import com.codecool.dungeoncrawl.LoadableTile;
 
-public enum MonsterType implements LoadableTile {
+public enum MonsterType implements TileType {
     SKELETON(93),
     CHICKEN(250),
     SLIME(283),
@@ -22,7 +22,7 @@ public enum MonsterType implements LoadableTile {
     }
 
     @Override
-    public TileType getTileType() {
-        return TileType.MONSTER;
+    public TileCategory getTileCategory() {
+        return TileCategory.MONSTER;
     }
 }
