@@ -51,14 +51,7 @@ public class MapLoader {
                 }
             }
         }
-        // TODO Find a way to extract this
-        if (timeCells.size() > 0) {
-            for (Monster monster : map.getMonsters()) {
-                if (monster instanceof TimeMage) {
-                    ((TimeMage) monster).setTimeCells(timeCells);
-                }
-            }
-        }
+        setTimeMageCells(map, timeCells);
         return map;
     }
 
@@ -147,6 +140,16 @@ public class MapLoader {
             cell.setItem(new Key(cell, (KeyType) tileType));
         } else if (tileType instanceof WeaponType) {
             cell.setItem(new Weapon(cell, (WeaponType) tileType));
+        }
+    }
+
+    private static void setTimeMageCells(GameMap map, List<Cell> timeCells) {
+        if (timeCells.size() > 0) {
+            for (Monster monster : map.getMonsters()) {
+                if (monster instanceof TimeMage) {
+                    ((TimeMage) monster).setTimeCells(timeCells);
+                }
+            }
         }
     }
 }
