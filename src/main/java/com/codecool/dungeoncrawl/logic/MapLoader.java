@@ -16,18 +16,23 @@ public class MapLoader {
     private static final String DELIMITER = ",";
     private static final CellType DEFAULT_CELL = CellType.FLOOR_1;
 
-    public static GameMap loadMap(String filePath, Player player) {
+    public static GameMap getGameMap(String filePath, Player player) {
         Scanner mapSizeScanner = loadMapFile(filePath);
         int width = getMapWidth(mapSizeScanner);
         int height = getMapHeight(mapSizeScanner);
 
-        Scanner mapScanner = loadMapFile(filePath);
         GameMap map = new GameMap(width, height, CellType.EMPTY);
+        Scanner mapScanner = loadMapFile(filePath);
+        loadTiles(map, mapScanner, player, width, height);
+        return map;
+    }
+
+    private static void loadTiles(GameMap map, Scanner mapScanner, Player player, int width, int height) {
         List<Cell> timeCells = new ArrayList<>();
         for (int y = 0; y < height; y++) {
             String line = mapScanner.nextLine();
             String[] lineChars = line.split(DELIMITER);
-            for (int x = 0; x < lineChars.length; x++) {
+            for (int x = 0; x < width; x++) {
                 Cell cell = map.getCell(x, y);
                 int tileId = Integer.parseInt(lineChars[x]);
                 TileType tileType = Tiles.tileTypeMap.get(tileId);
@@ -52,7 +57,6 @@ public class MapLoader {
             }
         }
         setTimeMageCells(map, timeCells);
-        return map;
     }
 
     private static Scanner loadMapFile(String filePath) {
