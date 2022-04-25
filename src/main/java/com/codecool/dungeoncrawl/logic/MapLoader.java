@@ -110,24 +110,7 @@ public class MapLoader {
 
     private static void setMonster(Cell cell, GameMap map, MonsterType monsterType) {
         cell.setType(DEFAULT_CELL);
-        Monster monster = null;
-        switch (monsterType) {
-            case SKELETON:
-                monster = new Skeleton(cell);
-                break;
-            case SLIME:
-                monster = new Slime(cell);
-                break;
-            case CHICKEN:
-                monster = new Chicken(cell);
-                break;
-            case ROBOT:
-                monster = new Robot(cell);
-                break;
-            case TIME_MAGE:
-                monster = new TimeMage(cell);
-                break;
-        }
+        Monster monster = MonsterType.getMonsterByMonsterType(monsterType, cell);
         map.addMonster(monster);
     }
 
