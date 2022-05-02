@@ -2,9 +2,20 @@ package com.codecool.dungeoncrawl.model;
 
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class PlayerModel extends BaseModel {
     private String playerName;
     private int hp;
+    private int maxHp;
+    private int fireballTimer;
+    private int damage;
+    private String directionType;
+    private int cellType;
+    private int weaponType;
+    private List<Integer> items;
+
     private int x;
     private int y;
 
