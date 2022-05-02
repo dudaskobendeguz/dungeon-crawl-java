@@ -102,6 +102,7 @@ public class Player extends Actor {
 
     private void pickUpItem() {
         Item item = getCell().getItem();
+        item.setCell(null);
         setItem(item);
         getCell().setItem(null);
     }
