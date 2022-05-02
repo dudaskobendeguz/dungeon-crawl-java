@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.model;
 
+import com.codecool.dungeoncrawl.logic.Drawable;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 
 import java.util.List;
@@ -29,9 +30,16 @@ public class PlayerModel extends BaseModel {
         this.playerName = player.getName();
         this.x = player.getX();
         this.y = player.getY();
-
         this.hp = player.getHealth();
-
+        this.maxHp = player.getMaxHealth();
+        this.fireballTimer = player.getFireballTimer();
+        this.damage = player.getDamage();
+        this.directionType = player.getDirection().name();
+        this.cellType = player.getCellTitleId();
+        this.weaponType = player.getWeaponTitleId();
+        items = player.getItems().stream()
+                .map(Drawable::getTileId)
+                .collect(Collectors.toList());
     }
 
     public String getPlayerName() {
