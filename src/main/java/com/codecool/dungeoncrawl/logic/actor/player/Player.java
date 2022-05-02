@@ -200,7 +200,23 @@ public class Player extends Actor {
     }
 
     public String getWeaponName() {
-        return weapon.getNam();
+        return weapon.getName();
+    }
+
+    public int getWeaponTitleId() {
+        return weapon.getTileId();
+    }
+
+    public int getFireballTimer() {
+        return fireballTimer;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public List<Item> getItems() {
+        return new ArrayList<>(inventory.items);
     }
 
     @Override
