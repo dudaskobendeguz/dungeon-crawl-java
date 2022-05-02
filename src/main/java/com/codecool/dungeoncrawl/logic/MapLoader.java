@@ -90,11 +90,14 @@ public class MapLoader {
         // TODO Think about putting PLAYER and CHEST somewhere
         final int PLAYER_ID = 25;
         final int CHEST_ID = 200;
+        final int TIME_MAGE_FLOOR = 588;
         switch (tileId) {
             case PLAYER_ID:
                 return TileCategory.PLAYER;
             case CHEST_ID:
                 return TileCategory.CHEST;
+            case TIME_MAGE_FLOOR:
+                return TileCategory.TIME_CELL;
             default:
                 if (tileType == null) throw new RuntimeException("Unrecognized character: '" + tileId + "'");
                 return tileType.getTileCategory();
@@ -111,6 +114,9 @@ public class MapLoader {
     private static void setMonster(Cell cell, GameMap map, MonsterType monsterType) {
         cell.setType(DEFAULT_CELL);
         Monster monster = MonsterType.getMonsterByMonsterType(monsterType, cell);
+        if (monster instanceof TimeMage) {
+            cell.setType(CellType.TIME_MAGE_FLOOR);
+        }
         map.addMonster(monster);
     }
 
