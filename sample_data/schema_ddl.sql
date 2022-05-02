@@ -11,6 +11,13 @@ CREATE TABLE public.player (
     id serial NOT NULL PRIMARY KEY,
     player_name text NOT NULL,
     hp integer NOT NULL,
+    max_hp integer NOT NULL,
+    fireball_timer integer NOT NULL,
+    damage integer NOT NULL,
+    direction_type text NOT NULL,
+    cell_type integer NOT NULL,
+    weapon_type integer NOT NULL,
+    items integer ARRAY NOT NULL,
     x integer NOT NULL,
     y integer NOT NULL
 );
