@@ -138,7 +138,8 @@ public class Main extends Application {
             case S: // new line
                 dbManager.savePlayer(player);
                 break;
-
+            case D:
+                dbManager.loadPlayer();
         }
     }
 
