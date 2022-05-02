@@ -59,7 +59,31 @@ public class PlayerDaoJdbc implements PlayerDao {
 
     @Override
     public PlayerModel get(int id) {
-        return null;
+        try (Connection connection = dataSource.getConnection()) {
+            //TODO this query is a dummy query(it gives back the last added player)
+            String sqlQuery = "SELECT * FROM player ORDER BY id DESC LIMIT 1";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) { // first row was not found == no data was returned by the query
+                return null;
+            }
+            Array itemsPgArray = resultSet.getArray(10);
+            return new PlayerModel(
+                    resultSet.getString(2), // playerName
+                    resultSet.getInt(3), // hp
+                    resultSet.getInt(4), // maxHp
+                    resultSet.getInt(5), // fireballTimer
+                    resultSet.getInt(6), // damage
+                    resultSet.getString(7), // directionType
+                    resultSet.getInt(8), // cellType
+                    resultSet.getInt(9), // weaponType
+                    (Integer[])itemsPgArray.getArray(), // items
+                    resultSet.getInt(11), // x
+                    resultSet.getInt(12) // y
+            );
+        } catch (SQLException throwables) {
+            throw new RuntimeException(throwables);
+        }
     }
 
     @Override
