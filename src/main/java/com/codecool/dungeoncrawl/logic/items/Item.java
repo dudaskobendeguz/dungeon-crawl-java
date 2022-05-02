@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Item implements Drawable {
-    private final Cell cell;
+    private Cell cell;
 
     public Item(Cell cell) {
         this.cell = cell;
@@ -20,5 +20,9 @@ public abstract class Item implements Drawable {
 
     public int getY() {
         return cell.getY();
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 }
