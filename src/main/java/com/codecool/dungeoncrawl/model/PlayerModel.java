@@ -58,6 +58,62 @@ public class PlayerModel extends BaseModel {
         this.hp = hp;
     }
 
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+    }
+
+    public int getFireballTimer() {
+        return fireballTimer;
+    }
+
+    public void setFireballTimer(int fireballTimer) {
+        this.fireballTimer = fireballTimer;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public String getDirectionType() {
+        return directionType;
+    }
+
+    public void setDirectionType(String directionType) {
+        this.directionType = directionType;
+    }
+
+    public int getCellType() {
+        return cellType;
+    }
+
+    public void setCellType(int cellType) {
+        this.cellType = cellType;
+    }
+
+    public int getWeaponType() {
+        return weaponType;
+    }
+
+    public void setWeaponType(int weaponType) {
+        this.weaponType = weaponType;
+    }
+
+    public List<Integer> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Integer> items) {
+        this.items = items;
+    }
+
     public int getX() {
         return x;
     }
