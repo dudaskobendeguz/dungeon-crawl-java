@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.GameMap;
@@ -24,9 +25,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
+import java.sql.SQLException;
 
 public class Main extends Application {
     private static String playerName = "Player_1";
@@ -46,6 +51,7 @@ public class Main extends Application {
     Label weaponLabel = new Label();
     private int uiRowIndex = 0;
     Timer timer = new Timer();
+    GameDatabaseManager dbManager;
 
     private enum Levels {
         TEST_LEVEL("/custom_map/test_level.csv"),
@@ -75,6 +81,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        setupDbManager();
         ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
 
@@ -178,6 +185,9 @@ public class Main extends Application {
                 break;
             case ESCAPE:
                 System.exit(0);
+                break;
+            case S: // new line
+                dbManager.savePlayer(player);
                 break;
 
         }
@@ -330,5 +340,14 @@ public class Main extends Application {
 
     private void addUiLabel(Label label, int colIndex) {
         ui.add(label, colIndex, uiRowIndex++);
+    }
+
+    private void setupDbManager() {
+        dbManager = new GameDatabaseManager();
+        try {
+            dbManager.setup();
+        } catch (SQLException ex) {
+            System.out.println("Cannot connect to database.");
+        }
     }
 }
