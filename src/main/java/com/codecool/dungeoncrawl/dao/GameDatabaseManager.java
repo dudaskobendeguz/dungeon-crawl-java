@@ -20,6 +20,18 @@ public class GameDatabaseManager {
         playerDao.add(model);
     }
 
+    public void loadPlayer() {
+        //TODO the given id is just a dummy data, fix it
+        PlayerModel playerModel = playerDao.get(1);
+        createNewPlayer(playerModel);
+    }
+
+    private Player createNewPlayer(PlayerModel playerModel) {
+        //TODO implement the loading player phase
+        System.out.println(playerModel);
+        return null;
+    }
+
     /**
      * Trying to make connection with the database.
      * The connection needs environment variables:
