@@ -20,11 +20,25 @@ public class GameDatabaseManager {
         playerDao.add(model);
     }
 
+    /**
+     * Trying to make connection with the database.
+     * The connection needs environment variables:
+     *
+     * DB_NAME: the name of the current database
+     *
+     * DB_USERNAME: name of the database's user
+     *
+     * DB_PASSWORD: the password of the database's user.
+     *
+     * Create these environment variables before running the program!!!
+     * @return connected DataSource object
+     * @throws SQLException if the connection failed
+     */
     private DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        String dbName = "test";
-        String user = "test";
-        String password = "test";
+        String dbName = System.getenv("DB_NAME");
+        String user = System.getenv("DB_USERNAME");
+        String password = System.getenv("DB_PASSWORD");
 
         dataSource.setDatabaseName(dbName);
         dataSource.setUser(user);
