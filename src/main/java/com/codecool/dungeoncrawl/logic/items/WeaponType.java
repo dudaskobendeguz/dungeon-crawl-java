@@ -1,31 +1,38 @@
 package com.codecool.dungeoncrawl.logic.items;
 
-public enum WeaponType {
-    KNIFE("Knife", "knife", "knife_player_skin", 2),
-    SWORD("Sword", "sword", "sword_player_skin", 5),
-    AXE("Axe", "axe", "axe_player_skin", 10),
-    HAMMER("Hammer", "hammer", "hammer_player_skin", 20),
-    FIST("Fist", "fist", "fist_player_skin", 1),
-    MAGIC("Magic", "magic", "magic_player_skin", 5);
+import com.codecool.dungeoncrawl.TileCategory;
+import com.codecool.dungeoncrawl.TileType;
 
+public enum WeaponType implements TileType {
+    KNIFE(896, "Knife",  23, 2),
+    SWORD(960, "Sword",  27, 5),
+    AXE(970, "Axe",  26, 10),
+    HAMMER(933, "Hammer",  60, 20),
+    FIST(-999999,"Fist",  25, 1),
+    MAGIC(379, "Magic",  120, 5);
+
+    private final int ID;
     private final String name;
-    private final String tileName;
-    private final String playerSkin;
+    private final int playerSkinTileId;
     private final int damage;
 
-    WeaponType(String name, String tileName, String playerSkin, int damage) {
+    WeaponType(int tileId, String name, int playerSkinTileId, int damage) {
+        this.ID = tileId;
         this.name = name;
-        this.tileName = tileName;
-        this.playerSkin = playerSkin;
+        this.playerSkinTileId = playerSkinTileId;
         this.damage = damage;
     }
 
-    public String getTileName() {
-        return tileName;
+    public int getTileId() {
+        return ID;
     }
 
-    public String getPlayerSkin() {
-        return playerSkin;
+    public String getName() {
+        return name;
+    }
+
+    public int getPlayerSkinTileId() {
+        return playerSkinTileId;
     }
 
     public int getDamage() {
@@ -33,7 +40,7 @@ public enum WeaponType {
     }
 
     @Override
-    public String toString() {
-        return name;
+    public TileCategory getTileCategory() {
+        return TileCategory.ITEM;
     }
 }

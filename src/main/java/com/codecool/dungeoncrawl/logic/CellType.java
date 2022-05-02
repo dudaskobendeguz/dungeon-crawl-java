@@ -1,99 +1,149 @@
 package com.codecool.dungeoncrawl.logic;
 
-public enum CellType {
-    EMPTY("empty"),
-    FLOOR_1("floor_1", true),
-    FLOOR_2("floor_2", true),
-    TIME_MAGE_FLOOR("time_mage_floor"),
-    BRICK_FLOOR("brick_floor", true),
-    TREE_1("tree_1"),
-    TREE_2("tree_2"),
-    TREE_3("tree_3"),
-    TREE_4("tree_4"),
-    TREE_5("tree_5"),
-    TREE_6("tree_6"),
-    TREE_7("tree_7", true),
-    TREE_8("tree_8", true),
-    TREE_9("tree_9", true),
-    TREE_10("tree_10"),
-    TREE_11("tree_11"),
-    TREE_12("tree_12", true),
-    TREE_13("tree_13", true),
-    TREE_14("tree_14", true),
-    TREE_15("tree_15", true),
-    TREE_16("tree_16"),
-    TREE_17("tree_17"),
-    TREE_18("tree_18", true),
-    TREE_19("tree_19", true),
-    TREE_20("tree_20", true),
-    TREE_21("tree_21", true),
-    TREE_22("tree_22", true),
-    TREE_23("tree_23"),
-    TREE_24("tree_24"),
-    TREE_25("tree_25"),
-    WALL("wall"),
+import com.codecool.dungeoncrawl.TileCategory;
+import com.codecool.dungeoncrawl.TileType;
 
-    GRAVE_1("grave_1", true),
-    GRAVE_2("grave_2", true),
-    BONES("bones", true),
-    CANDLES("candles"),
-    HOUSE_1("house_1"),
-    LEVEL_SWITCH_HOUSE("level_switch_house", true, false, true),
-    LEVEL_SWITCH_STAIRS("level_switch_stairs", true, false, true),
-    HOUSE_2("house_2"),
-    SIMPLE_DOOR_OPENED("simple_door_opened", true, false),
-    SIMPLE_DOOR_CLOSED("simple_door_closed", false, true),
-    LEVEL_SWITCH_DOOR_OPENED("level_switch_door_opened", true, false, true),
-    LEVEL_SWITCH_DOOR_CLOSED("level_switch_door_closed", false, true),
-    CHEST_OPENED("chest_opened", true),
-    CHEST_CLOSED("chest_closed", false, true);
+public enum CellType implements TileType {
+    EMPTY(0),
+    FLOOR_1(4, CellAttribute.STEPABLE),
+    FLOOR_2(1, CellAttribute.STEPABLE),
+    TIME_MAGE_FLOOR(588),
+    BRICK_FLOOR(16, CellAttribute.STEPABLE),
+    TREE_1(32),
+    TREE_2(33),
+    TREE_3(34),
+    TREE_4(35),
+    TREE_5(36),
+    TREE_6(37),
+    TREE_7(64, CellAttribute.STEPABLE),
+    TREE_8(65, CellAttribute.STEPABLE),
+    TREE_9(66, CellAttribute.STEPABLE),
+    TREE_10(67),
+    TREE_11(68),
+    TREE_12(69, CellAttribute.STEPABLE),
+    TREE_13(5, CellAttribute.STEPABLE),
+    TREE_14(6, CellAttribute.STEPABLE),
+    TREE_15(7, CellAttribute.STEPABLE),
+    TREE_16(179),
+    TREE_17(180),
+    TREE_18(205, CellAttribute.STEPABLE),
+    TREE_19(206, CellAttribute.STEPABLE),
+    TREE_20(207, CellAttribute.STEPABLE),
+    TREE_21(208, CellAttribute.STEPABLE),
+    TREE_22(209, CellAttribute.STEPABLE),
+    TREE_23(210),
+    TREE_24(211),
+    TREE_25(212),
+    WALL(586),
 
-    private final boolean isLevelSwitcher;
-    private final String tileName;
-    private final boolean isStepable;
-    private final boolean isOpenable;
+    GRAVE_1(449, CellAttribute.STEPABLE),
+    GRAVE_2(448, CellAttribute.STEPABLE),
+    BONES(480, CellAttribute.STEPABLE),
+    CANDLES(485),
+    HOUSE_1(644),
+    LEVEL_SWITCH_HOUSE(647, CellAttribute.LEVEL_SWITCHER),
+    LEVEL_SWITCH_STAIRS(194, CellAttribute.LEVEL_SWITCHER),
+    HOUSE_2(673),
+    SIMPLE_DOOR_OPENED(294, CellAttribute.STEPABLE),
+    SIMPLE_DOOR_CLOSED(291, CellAttribute.OPENABLE),
+    LEVEL_SWITCH_DOOR_OPENED(289, CellAttribute.LEVEL_SWITCHER),
+    LEVEL_SWITCH_DOOR_CLOSED(288, CellAttribute.OPENABLE),
+    CHEST_OPENED(201, CellAttribute.STEPABLE),
+    CHEST_CLOSED(200, CellAttribute.OPENABLE),
 
-    CellType(String tileName, boolean isStepable, boolean isOpenable, boolean isLevelSwitcher) {
-        this.isLevelSwitcher = isLevelSwitcher;
-        this.tileName = tileName;
-        this.isStepable = isStepable;
-        this.isOpenable = isOpenable;
+    //ICONS
+    HOME(921, CellAttribute.LEVEL_SWITCHER),
+    FLOPPY(922, CellAttribute.LEVEL_SWITCHER),
+    EXIT(824, CellAttribute.LEVEL_SWITCHER),
+
+    // Alphabet
+    NUMERIC_0(947),
+    NUMERIC_1(948),
+    NUMERIC_2(949),
+    NUMERIC_3(950),
+    NUMERIC_4(951),
+    NUMERIC_5(952),
+    NUMERIC_6(953),
+    NUMERIC_7(954),
+    NUMERIC_8(955),
+    NUMERIC_9(956),
+    COLON(957),
+    DOT(958),
+    PERCENT(959),
+    A(979),
+    B(980),
+    C(981),
+    D(982),
+    E(983),
+    F(984),
+    G(985),
+    H(986),
+    I(987),
+    J(988),
+    K(989),
+    L(990),
+    M(991),
+    N(1011),
+    O(1012),
+    P(1013),
+    Q(1014),
+    R(1015),
+    S(1016),
+    T(1017),
+    U(1018),
+    V(1019),
+    W(1020),
+    X(1021),
+    Y(1022),
+    Z(1023);
+
+    private enum CellAttribute {
+        DECORATIVE(false, false, false),
+        STEPABLE(true, false, false),
+        OPENABLE(false, true, false),
+        LEVEL_SWITCHER(true, false, true);
+
+        private final boolean isStepable;
+        private final boolean isOpenable;
+        private final boolean isLevelSwitcher;
+
+        CellAttribute(boolean isStepable, boolean isOpenable, boolean isLevelSwitcher) {
+            this.isStepable = isStepable;
+            this.isOpenable = isOpenable;
+            this.isLevelSwitcher = isLevelSwitcher;
+        }
     }
 
-    CellType(String tileName, boolean isStepable, boolean isOpenable) {
-        this.isLevelSwitcher = false;
-        this.tileName = tileName;
-        this.isStepable = isStepable;
-        this.isOpenable = isOpenable;
+    private final int tileId;
+    private final CellAttribute cellAttribute;
+
+    CellType(int tileId) {
+        this(tileId, CellAttribute.DECORATIVE);
     }
 
-    CellType(String tileName) {
-        this.isLevelSwitcher = false;
-        this.tileName = tileName;
-        this.isStepable = false;
-        this.isOpenable = false;
+    CellType(int tileId, CellAttribute cellAttribute) {
+        this.tileId = tileId;
+        this.cellAttribute = cellAttribute;
     }
 
-    CellType(String tileName, boolean isStepable) {
-        this.isLevelSwitcher = false;
-        this.tileName = tileName;
-        this.isStepable = isStepable;
-        this.isOpenable = false;
+    public int getTileId() {
+        return tileId;
     }
 
-    public String getTileName() {
-        return tileName;
+    @Override
+    public TileCategory getTileCategory() {
+        return TileCategory.CELL;
     }
 
     public boolean isStepable() {
-        return isStepable;
+        return cellAttribute.isStepable;
     }
 
     public boolean isLevelSwitcher() {
-        return isLevelSwitcher;
+        return cellAttribute.isLevelSwitcher;
     }
 
     public boolean isOpenable() {
-        return isOpenable;
+        return cellAttribute.isOpenable;
     }
 }

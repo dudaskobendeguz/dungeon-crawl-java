@@ -10,12 +10,7 @@ public class Slime extends Monster implements Movable {
     private static final int MOVE_TIMER_CEILING = 1;
 
     public Slime(Cell cell) {
-        super(cell, 8, 1);
-    }
-
-    @Override
-    public String getTileName() {
-        return MonsterType.SLIME.getTileName();
+        super(MonsterType.SLIME, cell, 8, 1);
     }
 
     @Override
@@ -24,15 +19,9 @@ public class Slime extends Monster implements Movable {
         if (!isTurnBased) {
             damage = 0;
         }
-        setTimer();
+        moveTimer = MoveUtil.setTimer(moveTimer, MOVE_TIMER_CEILING);
         if (moveTimer == 0) {
             stepOne(MoveUtil.moveRandomly(cell));
-        }
-    }
-
-    private void setTimer() {
-        if (++moveTimer >= MOVE_TIMER_CEILING) {
-            moveTimer = 0;
         }
     }
 

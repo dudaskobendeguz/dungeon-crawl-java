@@ -33,8 +33,8 @@ abstract class MoveUtil {
         return cell.getNeighbor(Direction.values()[random.nextInt(Direction.values().length)]);
     }
 
-    static int setTimer(int moveTimer, int MOVE_TIMER_CEILING) {
-        if (++moveTimer >= MOVE_TIMER_CEILING) {
+    static int setTimer(int moveTimer, int moveTimerCeiling) {
+        if (++moveTimer >= moveTimerCeiling) {
             moveTimer = 0;
         }
         return moveTimer;

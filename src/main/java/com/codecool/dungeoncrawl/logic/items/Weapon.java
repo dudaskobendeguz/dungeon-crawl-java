@@ -14,21 +14,21 @@ public class Weapon extends Item {
         return weaponType.getDamage();
     }
 
-    public String getPlayerSkin() {
-        return weaponType.getPlayerSkin();
+    public int getPlayerSkin() {
+        return weaponType.getPlayerSkinTileId();
     }
 
     @Override
-    public String getTileName() {
-        return weaponType.getTileName();
+    public int getTileId() {
+        return weaponType.getTileId();
     }
 
     public WeaponType getType() {
         return weaponType;
     }
 
-    @Override
-    public String toString() {
-        return weaponType.toString();
+
+    public String getNam() {
+        return weaponType.getName();
     }
 }

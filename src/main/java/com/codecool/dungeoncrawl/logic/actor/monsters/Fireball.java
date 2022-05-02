@@ -11,20 +11,15 @@ public class Fireball extends Monster implements Movable {
     private final Direction direction;
 
     public Fireball(Cell cell, Direction direction) {
-        super(cell, 1, 100, false);
+        super(MonsterType.FIREBALL, cell, 1, 100, false);
         this.direction = direction;
-    }
-
-    @Override
-    public String getTileName() {
-        return MonsterType.FIREBALL.getTileName();
     }
 
     @Override
     public void move(int playerX, int playerY, boolean timeMageAlive) {
         tryToKill();
         Cell nextCell = cell.getNeighbor(direction);
-        if (!GameMap.isValidStep(nextCell)) {
+        if (!GameMap.isStepValid(nextCell)) {
             die();
         } else {
             stepOne(nextCell);
@@ -34,7 +29,7 @@ public class Fireball extends Monster implements Movable {
     public void tryToKill() {
         List<Monster> monsters = getNeighborMonsters();
         for (Monster monster : monsters) {
-                killMonster(monster);
+            killMonster(monster);
         }
     }
 

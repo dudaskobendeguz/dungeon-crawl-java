@@ -14,18 +14,18 @@ public class GameMap {
     private Player player;
     private final List<Monster> monsters = new ArrayList<>();
 
-    public GameMap(int width, int height, CellType defaultCellType) {
+    public GameMap(int width, int height, CellType defaultCell) {
         this.width = width;
         this.height = height;
         cells = new Cell[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                cells[x][y] = new Cell(this, x, y, defaultCellType);
+                cells[x][y] = new Cell(this, x, y, defaultCell);
             }
         }
     }
 
-    public static boolean isValidStep(Cell cell) {
+    public static boolean isStepValid(Cell cell) {
         return cell != null && cell.isStepable() && cell.getActor() == null;
     }
 
@@ -34,7 +34,9 @@ public class GameMap {
     }
 
     public void setChest(int x, int y) {
-        cells[x][y] = new Chest(this, x,y, CellType.CHEST_CLOSED);
+        if (getCell(x,y) != null) {
+            cells[x][y] = new Chest(this, x,y, CellType.CHEST_CLOSED);
+        }
     }
 
     public void setPlayer(Player player) {
@@ -43,6 +45,14 @@ public class GameMap {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public int getPlayerX() {
+        return player.getX();
+    }
+
+    public int getPlayerY() {
+        return player.getY();
     }
 
     public int getWidth() {

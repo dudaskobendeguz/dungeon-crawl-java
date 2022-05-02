@@ -26,10 +26,6 @@ public abstract class Actor implements Drawable {
         this.damage = damage;
     }
 
-    protected boolean isValidStep(Cell cell) {
-        return cell != null && cell.isStepable() && cell.getActor() == null; //TODO REMOVE THIS
-    }
-
     public boolean isAboutToDie() {
         return health <= 0;
     }
@@ -63,7 +59,11 @@ public abstract class Actor implements Drawable {
     }
 
     protected void stepOne(Cell nextCell) {
-        if (GameMap.isValidStep(nextCell)) {
+        stepOne(nextCell, true);
+    }
+
+    protected void stepOne(Cell nextCell, boolean hasToBeValid) {
+        if (!hasToBeValid || GameMap.isStepValid(nextCell)) {
             cell.setActor(null);
             nextCell.setActor(this);
             cell = nextCell;

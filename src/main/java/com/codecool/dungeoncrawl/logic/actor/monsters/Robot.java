@@ -8,19 +8,14 @@ public class Robot extends Monster implements Movable {
     Direction direction = Direction.RIGHT;
 
     public Robot(Cell cell) {
-        super(cell, 10, 2, false);
-    }
-
-    @Override
-    public String getTileName() {
-        return MonsterType.ROBOT.getTileName();
+        super(MonsterType.ROBOT, cell, 10, 2, false);
     }
 
     @Override
     public void move(int playerX, int playerY, boolean timeMageAlive) {
         if (cell != null) {
             Cell nextCell = cell.getNeighbor(direction);
-            if (!GameMap.isValidStep(nextCell)) {
+            if (!GameMap.isStepValid(nextCell)) {
                 direction = (direction.equals(Direction.RIGHT)) ? Direction.LEFT : Direction.RIGHT;
             }
             stepOne(nextCell);

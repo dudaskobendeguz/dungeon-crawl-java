@@ -8,17 +8,12 @@ public class Chicken extends Monster implements Movable {
     private static final int MOVE_TIMER_CEILING = 3;
 
     public Chicken(Cell cell) {
-        super(cell, 2, 1);
+        super(MonsterType.CHICKEN, cell, 2, 1);
     }
 
     @Override
-    public String getTileName() {
-        return MonsterType.CHICKEN.getTileName();
-    }
-
-    @Override
-    public void move(int playerX, int playerY, boolean timeMageAlive) {
-        isTurnBased = MoveUtil.setIsTurnBased(timeMageAlive);
+    public void move(int playerX, int playerY, boolean isTimeMageAlive) {
+        isTurnBased = MoveUtil.setIsTurnBased(isTimeMageAlive);
         if (!isTurnBased) {
             damage = 0;
         }

@@ -5,17 +5,16 @@ import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TimeMage extends Monster implements Movable {
     private int moveTimer = 0;
     private static final int MOVE_TIMER_CEILING = 20;
-    List<Cell> timeCells = new ArrayList<>();
+    List<Cell> timeCells;
 
 
     public TimeMage(Cell cell) {
-        super(cell, 500, 3, false);
+        super(MonsterType.TIME_MAGE, cell, 500, 3, false);
 
     }
 
@@ -23,20 +22,8 @@ public class TimeMage extends Monster implements Movable {
     public void move(int playerX, int playerY, boolean timeMageAlive) {
         moveTimer = MoveUtil.setTimer(moveTimer, MOVE_TIMER_CEILING);
         if (moveTimer == 0) {
-            stepOne(timeCells.get(MoveUtil.random.nextInt(timeCells.size())));
+            stepOne(timeCells.get(MoveUtil.random.nextInt(timeCells.size())), false);
         }
-    }
-
-    @Override
-    protected void stepOne(Cell nextCell) {
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
-    }
-
-    @Override
-    public String getTileName() {
-        return MonsterType.TIME_MAGE.getTileName();
     }
 
     public void setTimeCells(List<Cell> timeCells) {
