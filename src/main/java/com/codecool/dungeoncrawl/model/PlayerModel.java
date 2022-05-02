@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.model;
 import com.codecool.dungeoncrawl.logic.Drawable;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,8 +21,31 @@ public class PlayerModel extends BaseModel {
     private int x;
     private int y;
 
-    public PlayerModel(String playerName, int x, int y) {
+    /**
+     * This constructor create an instance by the datas from the database.
+     */
+    public PlayerModel(
+            String playerName,
+            int hp,
+            int maxHp,
+            int fireballTimer,
+            int damage,
+            String directionType,
+            int cellType,
+            int weaponType,
+            Integer[] items,
+            int x,
+            int y
+    ) {
         this.playerName = playerName;
+        this.hp = hp;
+        this.maxHp = maxHp;
+        this.fireballTimer = fireballTimer;
+        this.damage = damage;
+        this.directionType = directionType;
+        this.cellType = cellType;
+        this.weaponType = weaponType;
+        this.items = new ArrayList<>(List.of(items));
         this.x = x;
         this.y = y;
     }
