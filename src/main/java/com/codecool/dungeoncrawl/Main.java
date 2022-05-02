@@ -2,7 +2,6 @@ package com.codecool.dungeoncrawl;
 
 
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
-import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.GameMap;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import java.sql.SQLException;
 
 public class Main extends Application {
@@ -79,6 +77,15 @@ public class Main extends Application {
                 Platform.runLater(() -> display.refresh(map));
             }
         }, 1000, 100);
+    }
+
+    private void setupDbManager() {
+        dbManager = new GameDatabaseManager();
+        try {
+            dbManager.setup();
+        } catch (SQLException ex) {
+            System.out.println("Cannot connect to database.");
+        }
     }
 
     void onKeyPressed(KeyEvent keyEvent) {
@@ -222,14 +229,5 @@ public class Main extends Application {
 
     private void clearDeadMonsters(List<Monster> monsters) {
         monsters.removeIf(monster -> monster.getCell() == null);
-    }
-
-    private void setupDbManager() {
-        dbManager = new GameDatabaseManager();
-        try {
-            dbManager.setup();
-        } catch (SQLException ex) {
-            System.out.println("Cannot connect to database.");
-        }
     }
 }
