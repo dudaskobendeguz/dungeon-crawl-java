@@ -2,7 +2,7 @@ package com.codecool.dungeoncrawl.logic.actor.monsters;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Chicken extends Monster implements Movable {
+public class Chicken extends Monster implements Movable, MoveTimer {
 
     private int moveTimer = 0;
     private static final int MOVE_TIMER_CEILING = 3;
@@ -21,5 +21,10 @@ public class Chicken extends Monster implements Movable {
         if (moveTimer == 0) {
             stepOne(MoveUtil.moveTowardsPlayer(cell, playerX, playerY));
         }
+    }
+
+    @Override
+    public int getMoveTimer() {
+        return moveTimer;
     }
 }

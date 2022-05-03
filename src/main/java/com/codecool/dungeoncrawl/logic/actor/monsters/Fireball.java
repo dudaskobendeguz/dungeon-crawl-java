@@ -6,19 +6,19 @@ import com.codecool.dungeoncrawl.logic.GameMap;
 
 import java.util.List;
 
-public class Fireball extends Monster implements Movable {
+public class Fireball extends Monster implements Movable, MoveDirection {
 
-    private final Direction direction;
+    private final Direction moveDirection;
 
-    public Fireball(Cell cell, Direction direction) {
+    public Fireball(Cell cell, Direction moveDirection) {
         super(MonsterType.FIREBALL, cell, 1, 100, false);
-        this.direction = direction;
+        this.moveDirection = moveDirection;
     }
 
     @Override
     public void move(int playerX, int playerY, boolean timeMageAlive) {
         tryToKill();
-        Cell nextCell = cell.getNeighbor(direction);
+        Cell nextCell = cell.getNeighbor(moveDirection);
         if (!GameMap.isStepValid(nextCell)) {
             die();
         } else {
@@ -38,5 +38,10 @@ public class Fireball extends Monster implements Movable {
         if (monster.isAboutToDie()) {
             monster.die();
         }
+    }
+
+    @Override
+    public Direction getMoveDirection() {
+        return moveDirection;
     }
 }
