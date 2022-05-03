@@ -36,7 +36,7 @@ public class GameStateDaoJdbc implements GameStateDao {
     }
 
     @Override
-    public GameState get(int id) {
+    public GameState get(int gameStateId) {
         return null;
     }
 
