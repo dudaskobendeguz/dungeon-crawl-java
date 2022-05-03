@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.dao;
 
 import com.codecool.dungeoncrawl.Level;
 import com.codecool.dungeoncrawl.logic.GameMap;
+import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
@@ -10,6 +11,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameDatabaseManager {
@@ -52,10 +54,30 @@ public class GameDatabaseManager {
         }
     }
 
-    public void loadPlayer() {
-        //TODO the given id is just a dummy data, fix it
-        PlayerModel playerModel = playerDao.get(1);
+
+    public GameMap loadGame(int gameStateId) {
+        Level loadedLevel = loadGameState(gameStateId);
+        PlayerModel playerModel = loadPlayer(gameStateId);
         createNewPlayer(playerModel);
+        List<CellModel> cellModels = loadCells(gameStateId);
+//        GameMap map = MapLoader.getGameMap(loadedLevel.getMAP_FILE_PATH(),)
+        return null;
+    }
+
+    private List<CellModel> loadCells(int gameStateId) {
+        return cellDao.getAllByGameStateId(gameStateId);
+    }
+
+    private Level loadGameState(int gameStateId) {
+        GameState gameState = gameStateDao.get(gameStateId);
+        return Arrays.stream(Level.values())
+                .filter(level -> level.getID() == gameState.getLevelId())
+                .findFirst()
+                .orElseThrow();
+    }
+
+    public PlayerModel loadPlayer(int gameStateId) {
+        return playerDao.get(gameStateId);
     }
 
     private Player createNewPlayer(PlayerModel playerModel) {
