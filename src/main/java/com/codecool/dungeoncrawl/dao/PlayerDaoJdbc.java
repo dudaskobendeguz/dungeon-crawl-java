@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.model.PlayerModel;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerDaoJdbc implements PlayerDao {
@@ -36,9 +37,9 @@ public class PlayerDaoJdbc implements PlayerDao {
             statement.setInt(3, player.getMaxHp());
             statement.setInt(4, player.getFireballTimer());
             statement.setInt(5, player.getDamage());
-            statement.setString(6, player.getDirectionType());
-            statement.setInt(7, player.getCellType());
-            statement.setInt(8, player.getWeaponType());
+            statement.setInt(6, player.getDirectionTypeId());
+            statement.setInt(7, player.getCellTypeId());
+            statement.setInt(8, player.getWeaponTypeId());
             Array items = conn.createArrayOf("INTEGER", player.getItems().toArray(new Integer[0]));
             statement.setArray(9, items);
             statement.setInt(10, player.getX());
@@ -68,16 +69,17 @@ public class PlayerDaoJdbc implements PlayerDao {
                 return null;
             }
             Array itemsPgArray = resultSet.getArray(10);
+            List<Integer> itemsIds = new ArrayList<>(List.of((Integer[])itemsPgArray.getArray()));
             return new PlayerModel(
                     resultSet.getString(2), // playerName
                     resultSet.getInt(3), // hp
                     resultSet.getInt(4), // maxHp
                     resultSet.getInt(5), // fireballTimer
                     resultSet.getInt(6), // damage
-                    resultSet.getString(7), // directionType
+                    resultSet.getInt(7), // directionType
                     resultSet.getInt(8), // cellType
                     resultSet.getInt(9), // weaponType
-                    (Integer[])itemsPgArray.getArray(), // items
+                    itemsIds, // items
                     resultSet.getInt(11), // x
                     resultSet.getInt(12) // y
             );

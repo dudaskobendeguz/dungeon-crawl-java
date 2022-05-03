@@ -13,9 +13,9 @@ public class PlayerModel extends BaseModel {
     private int maxHp;
     private int fireballTimer;
     private int damage;
-    private String directionType;
-    private int cellType;
-    private int weaponType;
+    private int directionTypeId;
+    private int cellTypeId;
+    private int weaponTypeId;
     private List<Integer> items;
 
     private int x;
@@ -30,10 +30,10 @@ public class PlayerModel extends BaseModel {
             int maxHp,
             int fireballTimer,
             int damage,
-            String directionType,
-            int cellType,
-            int weaponType,
-            Integer[] items,
+            int directionTypeId,
+            int cellTypeId,
+            int weaponTypeId,
+            List<Integer> items,
             int x,
             int y
     ) {
@@ -42,10 +42,10 @@ public class PlayerModel extends BaseModel {
         this.maxHp = maxHp;
         this.fireballTimer = fireballTimer;
         this.damage = damage;
-        this.directionType = directionType;
-        this.cellType = cellType;
-        this.weaponType = weaponType;
-        this.items = new ArrayList<>(List.of(items));
+        this.directionTypeId = directionTypeId;
+        this.cellTypeId = cellTypeId;
+        this.weaponTypeId = weaponTypeId;
+        this.items = items;
         this.x = x;
         this.y = y;
     }
@@ -58,9 +58,9 @@ public class PlayerModel extends BaseModel {
         this.maxHp = player.getMaxHealth();
         this.fireballTimer = player.getFireballTimer();
         this.damage = player.getDamage();
-        this.directionType = player.getDirection().name();
-        this.cellType = player.getCellTitleId();
-        this.weaponType = player.getWeaponTitleId();
+        this.directionTypeId = player.getDirection().getID();
+        this.cellTypeId = player.getCellTitleId();
+        this.weaponTypeId = player.getWeaponTitleId();
         items = player.getItems().stream()
                 .map(Drawable::getTileId)
                 .collect(Collectors.toList());
@@ -106,28 +106,28 @@ public class PlayerModel extends BaseModel {
         this.damage = damage;
     }
 
-    public String getDirectionType() {
-        return directionType;
+    public int getDirectionTypeId() {
+        return directionTypeId;
     }
 
-    public void setDirectionType(String directionType) {
-        this.directionType = directionType;
+    public void setDirectionTypeId(int directionTypeId) {
+        this.directionTypeId = directionTypeId;
     }
 
-    public int getCellType() {
-        return cellType;
+    public int getCellTypeId() {
+        return cellTypeId;
     }
 
-    public void setCellType(int cellType) {
-        this.cellType = cellType;
+    public void setCellTypeId(int cellTypeId) {
+        this.cellTypeId = cellTypeId;
     }
 
-    public int getWeaponType() {
-        return weaponType;
+    public int getWeaponTypeId() {
+        return weaponTypeId;
     }
 
-    public void setWeaponType(int weaponType) {
-        this.weaponType = weaponType;
+    public void setWeaponTypeId(int weaponTypeId) {
+        this.weaponTypeId = weaponTypeId;
     }
 
     public List<Integer> getItems() {
