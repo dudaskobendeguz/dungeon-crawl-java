@@ -17,17 +17,25 @@ public class MapLoader {
     private static final CellType DEFAULT_CELL = CellType.FLOOR_1;
 
     public static GameMap getGameMap(String filePath, Player player) {
+        return createGameMap(filePath, player, false);
+    }
+
+    public static GameMap getGameMap(String filePath, Player player, List<Monster> monsters, List<Item> items) {
+        return createGameMap(filePath, player, true);
+    }
+
+    private static GameMap createGameMap(String filePath, Player player, boolean isLoading) {
         Scanner mapSizeScanner = loadMapFile(filePath);
         int width = getMapWidth(mapSizeScanner);
         int height = getMapHeight(mapSizeScanner);
 
         GameMap map = new GameMap(width, height, CellType.EMPTY);
         Scanner mapScanner = loadMapFile(filePath);
-        loadTiles(map, mapScanner, player, width, height);
+        loadTiles(map, mapScanner, player, width, height, isLoading);
         return map;
     }
 
-    private static void loadTiles(GameMap map, Scanner mapScanner, Player player, int width, int height) {
+    private static void loadTiles(GameMap map, Scanner mapScanner, Player player, int width, int height, boolean isLoading) {
         List<Cell> timeCells = new ArrayList<>();
         for (int y = 0; y < height; y++) {
             String line = mapScanner.nextLine();
@@ -37,26 +45,32 @@ public class MapLoader {
                 int tileId = Integer.parseInt(lineChars[x]);
                 TileType tileType = Tiles.tileTypeMap.get(tileId);
                 TileCategory tileCategory = getTileCategory(tileId, tileType);
-                switch (tileCategory) {
-                    case CELL:
+                if (isLoading) {
+                    if (tileCategory == TileCategory.CELL) {
                         cell.setType((CellType) tileType);
-                        break;
-                    case PLAYER:
-                        setPlayer(player, map, cell);
-                        break;
-                    case MONSTER:
-                        setMonster(cell, map, (MonsterType) tileType);
-                        break;
-                    case ITEM:
-                        setItem(cell, tileType);
-                        break;
-                    case CHEST:
-                        map.setChest(x, y);
-                        break;
-                    case TIME_CELL:
-                        cell.setType((CellType) tileType);
-                        timeCells.add(cell);
-                        break;
+                    }
+                } else {
+                    switch (tileCategory) {
+                        case CELL:
+                            cell.setType((CellType) tileType);
+                            break;
+                        case PLAYER:
+                            setPlayer(player, map, cell);
+                            break;
+                        case MONSTER:
+                            setMonster(cell, map, (MonsterType) tileType);
+                            break;
+                        case ITEM:
+                            setItem(cell, tileType);
+                            break;
+                        case CHEST:
+                            map.setChest(x, y);
+                            break;
+                        case TIME_CELL:
+                            cell.setType((CellType) tileType);
+                            timeCells.add(cell);
+                            break;
+                    }
                 }
             }
         }

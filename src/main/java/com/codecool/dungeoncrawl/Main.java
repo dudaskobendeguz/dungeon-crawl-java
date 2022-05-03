@@ -34,13 +34,24 @@ public class Main extends Application {
     Timer timer = new Timer();
     GameDatabaseManager dbManager;
 
-    private enum Levels {
-
-    }
-
     public static void main(String[] args) {
         playerName = args[0];
         launch(args);
+    }
+
+    private void loadSave(int id) {
+        // TODO Implement loadSave
+        // get Everything according to that id from database
+        // -> GameDatabaseManager methods
+        // Load Level
+        // Load Player
+        // Load Monsters
+        // Load Items
+
+        // Set Level
+        // Send Models to MapLoader
+        // Set Map
+        // Refresh
     }
 
     @Override
