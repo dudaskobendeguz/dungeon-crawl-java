@@ -66,18 +66,18 @@ public class PlayerDaoJdbc implements PlayerDao {
             if (!resultSet.next()) { // first row was not found == no data was returned by the query
                 return null;
             }
-            Array itemsPgArray = resultSet.getArray(8);
+            Array itemsPgArray = resultSet.getArray(9);
             List<Integer> itemsIds = new ArrayList<>(List.of((Integer[])itemsPgArray.getArray()));
             return new PlayerModel(
-                    resultSet.getString(2), // playerName
-                    resultSet.getInt(3),    // hp
-                    resultSet.getInt(4),    // fireballTimer
-                    resultSet.getInt(5),    // directionType
-                    resultSet.getInt(6),    // cellType
-                    resultSet.getInt(7),    // weaponType
+                    resultSet.getString(3), // playerName
+                    resultSet.getInt(4),    // hp
+                    resultSet.getInt(5),    // fireballTimer
+                    resultSet.getInt(6),    // directionType
+                    resultSet.getInt(7),    // cellType
+                    resultSet.getInt(8),    // weaponType
                     itemsIds,                          // items
-                    resultSet.getInt(9),    // x
-                    resultSet.getInt(10)    // y
+                    resultSet.getInt(10),    // x
+                    resultSet.getInt(11)    // y
             );
         } catch (SQLException throwables) {
             throw new RuntimeException(throwables);
