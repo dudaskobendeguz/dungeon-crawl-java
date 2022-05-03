@@ -38,17 +38,17 @@ public enum CellType implements TileType {
 
     GRAVE_1(449, CellAttribute.STEPABLE),
     GRAVE_2(448, CellAttribute.STEPABLE),
-    BONES(480, CellAttribute.STEPABLE),
+    BONES(480, CellAttribute.CHANGED_STEPABLE),
     CANDLES(485),
     HOUSE_1(644),
     LEVEL_SWITCH_HOUSE(647, CellAttribute.LEVEL_SWITCHER),
     LEVEL_SWITCH_STAIRS(194, CellAttribute.LEVEL_SWITCHER),
     HOUSE_2(673),
-    SIMPLE_DOOR_OPENED(294, CellAttribute.STEPABLE),
+    SIMPLE_DOOR_OPENED(294, CellAttribute.CHANGED_STEPABLE),
     SIMPLE_DOOR_CLOSED(291, CellAttribute.OPENABLE),
-    LEVEL_SWITCH_DOOR_OPENED(289, CellAttribute.LEVEL_SWITCHER),
+    LEVEL_SWITCH_DOOR_OPENED(289, CellAttribute.CHANGED_LEVEL_SWITCHER),
     LEVEL_SWITCH_DOOR_CLOSED(288, CellAttribute.OPENABLE),
-    CHEST_OPENED(201, CellAttribute.STEPABLE),
+    CHEST_OPENED(201, CellAttribute.CHANGED_STEPABLE),
     CHEST_CLOSED(200, CellAttribute.OPENABLE),
 
     //ICONS
@@ -98,19 +98,23 @@ public enum CellType implements TileType {
     Z(1023);
 
     private enum CellAttribute {
-        DECORATIVE(false, false, false),
-        STEPABLE(true, false, false),
-        OPENABLE(false, true, false),
-        LEVEL_SWITCHER(true, false, true);
+        DECORATIVE(false, false, false, false),
+        STEPABLE(true, false, false, false),
+        CHANGED_STEPABLE(true,false, false, true),
+        OPENABLE(false, true, false, false),
+        LEVEL_SWITCHER(true, false, true, false),
+        CHANGED_LEVEL_SWITCHER(true,false,true,true);
 
         private final boolean isStepable;
         private final boolean isOpenable;
         private final boolean isLevelSwitcher;
+        private final boolean isChanged;
 
-        CellAttribute(boolean isStepable, boolean isOpenable, boolean isLevelSwitcher) {
+        CellAttribute(boolean isStepable, boolean isOpenable, boolean isLevelSwitcher, boolean isChanged) {
             this.isStepable = isStepable;
             this.isOpenable = isOpenable;
             this.isLevelSwitcher = isLevelSwitcher;
+            this.isChanged = isChanged;
         }
     }
 
@@ -146,4 +150,6 @@ public enum CellType implements TileType {
     public boolean isOpenable() {
         return cellAttribute.isOpenable;
     }
+
+    public boolean isChanged() { return cellAttribute.isChanged; }
 }
