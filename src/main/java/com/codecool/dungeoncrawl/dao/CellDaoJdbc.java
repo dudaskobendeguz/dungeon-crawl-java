@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.model.CellModel;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CellDaoJdbc implements CellDao {
@@ -37,8 +38,26 @@ public class CellDaoJdbc implements CellDao {
     }
 
     @Override
-    public CellModel get(int id) {
-        return null;
+    public List<CellModel> getAllByGameStateId(int gameStateId) {
+        try (Connection connection = dataSource.getConnection()) {
+            String sqlQuery = "SELECT * FROM cell WHERE game_state_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, gameStateId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<CellModel> cellModels = new ArrayList<>();
+            while (resultSet.next()) {
+                cellModels.add(new CellModel(
+                        resultSet.getInt(3),
+                        resultSet.getInt(4),
+                        resultSet.getInt(5)
+                ));
+            }
+            return cellModels;
+            
+        } catch (SQLException throwables) {
+            throw new RuntimeException("Error under get all cell by game state id database -" + throwables, throwables);
+        }
     }
 
     @Override
