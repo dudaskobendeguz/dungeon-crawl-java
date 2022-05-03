@@ -15,10 +15,11 @@ public class PlayerDaoJdbc implements PlayerDao {
     }
 
     @Override
-    public void add(PlayerModel player) {
+    public void add(PlayerModel player, int gameStateId) {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "INSERT INTO " +
                     "player (" +
+                    "game_state_id," +
                     "player_name," +
                     "hp, " +
                     "max_hp, " +
@@ -30,20 +31,21 @@ public class PlayerDaoJdbc implements PlayerDao {
                     "items, " +
                     "x, " +
                     "y ) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, player.getPlayerName());
-            statement.setInt(2, player.getHp());
-            statement.setInt(3, player.getMaxHp());
-            statement.setInt(4, player.getFireballTimer());
-            statement.setInt(5, player.getDamage());
-            statement.setInt(6, player.getDirectionTypeId());
-            statement.setInt(7, player.getCellTypeId());
-            statement.setInt(8, player.getWeaponTypeId());
+            statement.setInt(1, gameStateId);
+            statement.setString(2, player.getPlayerName());
+            statement.setInt(3, player.getHp());
+            statement.setInt(4, player.getMaxHp());
+            statement.setInt(5, player.getFireballTimer());
+            statement.setInt(6, player.getDamage());
+            statement.setInt(7, player.getDirectionTypeId());
+            statement.setInt(8, player.getCellTypeId());
+            statement.setInt(9, player.getWeaponTypeId());
             Array items = conn.createArrayOf("INTEGER", player.getItems().toArray(new Integer[0]));
-            statement.setArray(9, items);
-            statement.setInt(10, player.getX());
-            statement.setInt(11, player.getY());
+            statement.setArray(10, items);
+            statement.setInt(11, player.getX());
+            statement.setInt(12, player.getY());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
