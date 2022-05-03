@@ -35,6 +35,20 @@ CREATE TABLE cell (
     y                   integer         NOT NULL
 );
 
+DROP TABLE IF EXISTS monster;
+CREATE TABLE monster (
+    id                  serial          NOT NULL PRIMARY KEY,
+    game_state_id       integer         NOT NULL,
+    type_id             integer         NOT NULL,
+    x                   integer         NOT NULL,
+    y                   integer         NOT NULL,
+    hp                  integer         NOT NULL,
+    direction           integer
+);
+
+ALTER TABLE ONLY monster
+    ADD CONSTRAINT fk_game_state_id FOREIGN KEY (game_state_id) REFERENCES game_state(id);
+
 ALTER TABLE ONLY cell
     ADD CONSTRAINT fk_game_state_id FOREIGN KEY (game_state_id) REFERENCES game_state(id);
 
