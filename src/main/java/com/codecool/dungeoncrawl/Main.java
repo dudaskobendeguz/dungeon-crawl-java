@@ -29,7 +29,7 @@ public class Main extends Application {
     private final static int MAP_SIZE = 15;
     private Level currentLevel = Level.MAIN_MENU;
     private boolean isTimeMageAlive = true;
-    GameMap map = MapLoader.getGameMap(currentLevel.getMapFilePath(), new Player(playerName));
+    GameMap map = MapLoader.getGameMap(currentLevel.getMAP_FILE_PATH(), new Player(playerName));
     Display display;
     Timer timer = new Timer();
     GameDatabaseManager dbManager;
