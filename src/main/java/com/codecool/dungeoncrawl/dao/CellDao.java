@@ -7,6 +7,6 @@ import java.util.List;
 public interface CellDao {
     void add(CellModel cellModel, int gameStateId);
     void update(CellModel cellModel);
-    CellModel get(int id);
+    List<CellModel> getAllByGameStateId(int gameStateId);
     List<CellModel> getAll();
 }
