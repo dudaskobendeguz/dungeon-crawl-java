@@ -1,44 +1,52 @@
 package com.codecool.dungeoncrawl.dao;
 
-import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.Level;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
+import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import com.codecool.dungeoncrawl.model.CellModel;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GameDatabaseManager {
+    private GameStateDao gameStateDao;
     private PlayerDao playerDao;
     private CellDao cellDao;
 
     public void setup() throws SQLException {
         DataSource dataSource = connect();
+        gameStateDao = new GameStateDaoJdbc(dataSource);
         playerDao = new PlayerDaoJdbc(dataSource);
         cellDao = new CellDaoJdbc(dataSource);
     }
 
-    public void savePlayer(Player player) {
+    public void saveGame(GameMap map, Level currentLevel) {
+        int gameStateId = saveGameState(currentLevel);
+        savePlayer(map.getPlayer(), gameStateId);
+        saveCells(map, gameStateId);
+    }
+
+    private int saveGameState(Level currentLevel) {
+        GameState gameState = new GameState(currentLevel.getID());
+        return gameStateDao.add(gameState);
+
+    }
+
+    public void savePlayer(Player player, int gameStateId) {
         PlayerModel model = new PlayerModel(player);
-        playerDao.add(model);
+        playerDao.add(model, gameStateId);
     }
 
-    public void saveGameMap(GameMap map) {
-        saveCells(map);
-    }
-
-    private void saveCells(GameMap map) {
+    private void saveCells(GameMap map, int gameStateId) {
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 if (map.getCell(x, y).getType().isChanged()) {
                     CellModel cellModel = new CellModel(map.getCell(x, y).getTileId(), x, y);
-                    cellDao.add(cellModel);
+                    cellDao.add(cellModel, gameStateId);
                 }
             }
         }
@@ -63,14 +71,15 @@ public class GameDatabaseManager {
     /**
      * Trying to make connection with the database.
      * The connection needs environment variables:
-     *
+     * <p>
      * DB_NAME: the name of the current database
-     *
+     * <p>
      * DB_USERNAME: name of the database's user
-     *
+     * <p>
      * DB_PASSWORD: the password of the database's user.
-     *
+     * <p>
      * Create these environment variables before running the program!!!
+     *
      * @return connected DataSource object
      * @throws SQLException if the connection failed
      */
@@ -90,4 +99,6 @@ public class GameDatabaseManager {
 
         return dataSource;
     }
+
+
 }
