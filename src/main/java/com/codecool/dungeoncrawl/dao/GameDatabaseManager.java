@@ -56,6 +56,10 @@ public class GameDatabaseManager {
         return null;
     }
 
+    public List<CellModel> loadMap() {
+        return null;
+    }
+
     /**
      * Trying to make connection with the database.
      * The connection needs environment variables:
