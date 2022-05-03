@@ -27,7 +27,7 @@ import java.sql.SQLException;
 public class Main extends Application {
     private static String playerName = "Player_1";
     private final static int MAP_SIZE = 15;
-    private Levels currentLevel = Levels.MAIN_MENU;
+    private Level currentLevel = Level.MAIN_MENU;
     private boolean isTimeMageAlive = true;
     GameMap map = MapLoader.getGameMap(currentLevel.getMapFilePath(), new Player(playerName));
     Display display;
@@ -35,25 +35,7 @@ public class Main extends Application {
     GameDatabaseManager dbManager;
 
     private enum Levels {
-        MAIN_MENU("/custom_map/main_menu.csv"),
-        TEST_LEVEL("/custom_map/test_level.csv"),
-        LEVEL_1("/custom_map/level_1.csv"),
-        LEVEL_2("/custom_map/level_2.csv"),
-        LEVEL_3("/custom_map/level_3.csv"),
-        LEVEL_4("/custom_map/level_4.csv"),
-        LEVEL_5("/custom_map/level_5.csv"),
-        LEVEL_6("/custom_map/level_6.csv"),
-        GRAVEYARD("/custom_map/graveyard.csv");
 
-        private final String mapFilePath;
-
-        Levels(String mapFilePath) {
-            this.mapFilePath = mapFilePath;
-        }
-
-        public String getMapFilePath() {
-            return mapFilePath;
-        }
     }
 
     public static void main(String[] args) {
@@ -153,7 +135,7 @@ public class Main extends Application {
         moveMonsters(true);
         player.tryToAttack(true);
         if (player.isAboutToDie()) {
-            currentLevel = Levels.GRAVEYARD;
+            currentLevel = Level.GRAVEYARD;
             switchLevel();
         }
     }
@@ -162,7 +144,7 @@ public class Main extends Application {
         switch (currentLevel) {
             case MAIN_MENU:
                 if (map.getPlayer().getCell().getType().equals(CellType.HOME)) {
-                    currentLevel = Levels.LEVEL_1;
+                    currentLevel = Level.LEVEL_1;
                 } else if (map.getPlayer().getCell().getType().equals(CellType.FLOPPY)) {
                     // TODO Implement load level
                     System.out.println("Implement load level");
@@ -171,30 +153,30 @@ public class Main extends Application {
                 }
                 break;
             case LEVEL_1: {
-                currentLevel = Levels.LEVEL_2;
+                currentLevel = Level.LEVEL_2;
                 break;
             }
             case LEVEL_2: {
-                currentLevel = Levels.LEVEL_3;
+                currentLevel = Level.LEVEL_3;
                 break;
             }
             case LEVEL_3: {
-                currentLevel = Levels.LEVEL_4;
+                currentLevel = Level.LEVEL_4;
                 break;
             }
             case LEVEL_4: {
-                currentLevel = Levels.LEVEL_5;
+                currentLevel = Level.LEVEL_5;
                 break;
             }
             case LEVEL_5: {
-                currentLevel = Levels.LEVEL_6;
+                currentLevel = Level.LEVEL_6;
                 break;
             }
             case GRAVEYARD: {
                 break;
             }
         }
-        map = MapLoader.getGameMap(currentLevel.getMapFilePath(), map.getPlayer());
+        map = MapLoader.getGameMap(currentLevel.getMAP_FILE_PATH(), map.getPlayer());
         display.refresh(map);
     }
 
