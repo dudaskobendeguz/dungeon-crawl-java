@@ -118,10 +118,11 @@ public class Main extends Application {
                 System.exit(0);
                 break;
             case S: // new line
-                dbManager.savePlayer(player);
+                dbManager.saveGame(map, currentLevel);
                 break;
             case D:
                 dbManager.loadPlayer();
+                dbManager.loadMap();
         }
     }
 
