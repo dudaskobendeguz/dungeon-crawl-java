@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.dao;
 import com.codecool.dungeoncrawl.model.MonsterModel;
 
 import javax.sql.DataSource;
+import java.sql.*;
 import java.util.List;
 
 public class MonsterDaoJdbc implements MonsterDao {
@@ -14,8 +15,27 @@ public class MonsterDaoJdbc implements MonsterDao {
     }
 
     @Override
-    public void add(MonsterModel monsterModel, int gameState) {
-
+    public void add(MonsterModel monsterModel, int gameStateId) {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "INSERT INTO monster" +
+                    "(game_state_id, type_id, x, y, hp, timer, direction) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            st.setInt(1, gameStateId);
+            st.setInt(2, monsterModel.getTypeId());
+            st.setInt(3, monsterModel.getX());
+            st.setInt(4, monsterModel.getY());
+            st.setInt(5, monsterModel.getHp());
+            st.setInt(6, monsterModel.getMoveTimer());
+            st.setInt(7, monsterModel.getDirectionId());
+            st.executeUpdate();
+            ResultSet rs = st.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+            monsterModel.setId(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
