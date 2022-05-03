@@ -6,20 +6,13 @@ public class MonsterModel extends BaseModel {
     private int y;
     private int hp;
     private int directionId;
+    private int moveTimer;
 
     public MonsterModel(int typeId, int x, int y, int hp) {
         this.typeId = typeId;
         this.x = x;
         this.y = y;
         this.hp = hp;
-    }
-
-    public MonsterModel(int typeId, int x, int y, int hp, int directionId) {
-        this.typeId = typeId;
-        this.x = x;
-        this.y = y;
-        this.hp = hp;
-        this.directionId = directionId;
     }
 
     public int getTypeId() {
@@ -60,5 +53,13 @@ public class MonsterModel extends BaseModel {
 
     public void setDirectionId(int directionId) {
         this.directionId = directionId;
+    }
+
+    public int getMoveTimer() {
+        return moveTimer;
+    }
+
+    public void setMoveTimer(int moveTimer) {
+        this.moveTimer = moveTimer;
     }
 }

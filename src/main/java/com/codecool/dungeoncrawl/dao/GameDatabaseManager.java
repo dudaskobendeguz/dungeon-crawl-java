@@ -2,9 +2,14 @@ package com.codecool.dungeoncrawl.dao;
 
 import com.codecool.dungeoncrawl.Level;
 import com.codecool.dungeoncrawl.logic.GameMap;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
+import com.codecool.dungeoncrawl.logic.actor.monsters.MoveDirection;
+import com.codecool.dungeoncrawl.logic.actor.monsters.MoveTimer;
+import com.codecool.dungeoncrawl.logic.actor.monsters.Robot;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.model.GameState;
+import com.codecool.dungeoncrawl.model.MonsterModel;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import com.codecool.dungeoncrawl.model.CellModel;
 import org.postgresql.ds.PGSimpleDataSource;
@@ -18,18 +23,21 @@ public class GameDatabaseManager {
     private GameStateDao gameStateDao;
     private PlayerDao playerDao;
     private CellDao cellDao;
+    private MonsterDao monsterDao;
 
     public void setup() throws SQLException {
         DataSource dataSource = connect();
         gameStateDao = new GameStateDaoJdbc(dataSource);
         playerDao = new PlayerDaoJdbc(dataSource);
         cellDao = new CellDaoJdbc(dataSource);
+        monsterDao = new MonsterDaoJdbc(dataSource);
     }
 
     public void saveGame(GameMap map, Level currentLevel) {
         int gameStateId = saveGameState(currentLevel);
         savePlayer(map.getPlayer(), gameStateId);
         saveCells(map, gameStateId);
+        saveMonsters(map, gameStateId);
     }
 
     private int saveGameState(Level currentLevel) {
@@ -54,6 +62,25 @@ public class GameDatabaseManager {
         }
     }
 
+    private void saveMonsters(GameMap map, int gameStateId) {
+        for (Monster monster : map.getMonsters()) {
+            MonsterModel monsterModel = new MonsterModel(
+                    monster.getTileId(),
+                    monster.getX(),
+                    monster.getY(),
+                    monster.getHealth()
+            );
+            if (monster instanceof MoveTimer) {
+                int moveTimer = ((MoveTimer) monster).getMoveTimer();
+                monsterModel.setMoveTimer(moveTimer);
+            }
+            if (monster instanceof MoveDirection) {
+                int directionId = ((MoveDirection) monster).getMoveDirection().getID();
+                monsterModel.setDirectionId(directionId);
+            }
+            monsterDao.add(monsterModel, gameStateId);
+        }
+    }
 
     public GameMap loadGame(int gameStateId) {
         Level loadedLevel = loadGameState(gameStateId);

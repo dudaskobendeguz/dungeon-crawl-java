@@ -1,5 +1,6 @@
 ALTER TABLE IF EXISTS player DROP CONSTRAINT IF EXISTS fk_game_state_id;
 ALTER TABLE IF EXISTS cell DROP CONSTRAINT IF EXISTS fk_game_state_id;
+ALTER TABLE IF EXISTS monster DROP CONSTRAINT IF EXISTS fk_game_state_id;
 ALTER TABLE IF EXISTS player DROP CONSTRAINT IF EXISTS player_pkey;
 ALTER TABLE IF EXISTS cell DROP CONSTRAINT IF EXISTS cell_pkey;
 ALTER TABLE IF EXISTS game_state DROP CONSTRAINT IF EXISTS game_state_pkey;
@@ -43,7 +44,8 @@ CREATE TABLE monster (
     x                   integer         NOT NULL,
     y                   integer         NOT NULL,
     hp                  integer         NOT NULL,
-    direction           integer
+    timer               integer         NULL,
+    direction           integer         NULL
 );
 
 ALTER TABLE ONLY monster
