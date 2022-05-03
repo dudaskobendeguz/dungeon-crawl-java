@@ -16,7 +16,7 @@ public class CellDaoJdbc implements CellDao {
     @Override
     public void add(CellModel cellModel, int gameStateId) {
         try (Connection connection = dataSource.getConnection()) {
-            String sqlQuery = "INSERT INTO cell (game_state_id, type_id, x, y) VALUES (?, ?, ?, ?)";
+            String sqlQuery = "INSERT INTO cell (game_state_id, tile_id, x, y) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, gameStateId);
             preparedStatement.setInt(2, cellModel.getTypeId());

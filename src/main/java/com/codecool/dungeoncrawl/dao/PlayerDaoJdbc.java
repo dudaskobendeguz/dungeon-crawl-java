@@ -22,30 +22,26 @@ public class PlayerDaoJdbc implements PlayerDao {
                     "game_state_id," +
                     "player_name," +
                     "hp, " +
-                    "max_hp, " +
                     "fireball_timer, " +
-                    "damage, " +
                     "direction_type, " +
                     "cell_type, " +
                     "weapon_type, " +
                     "items, " +
                     "x, " +
                     "y ) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, gameStateId);
             statement.setString(2, player.getPlayerName());
             statement.setInt(3, player.getHp());
-            statement.setInt(4, player.getMaxHp());
-            statement.setInt(5, player.getFireballTimer());
-            statement.setInt(6, player.getDamage());
-            statement.setInt(7, player.getDirectionTypeId());
-            statement.setInt(8, player.getCellTypeId());
-            statement.setInt(9, player.getWeaponTypeId());
+            statement.setInt(4, player.getFireballTimer());
+            statement.setInt(5, player.getDirectionTypeId());
+            statement.setInt(6, player.getCellTypeId());
+            statement.setInt(7, player.getWeaponTypeId());
             Array items = conn.createArrayOf("INTEGER", player.getItems().toArray(new Integer[0]));
-            statement.setArray(10, items);
-            statement.setInt(11, player.getX());
-            statement.setInt(12, player.getY());
+            statement.setArray(8, items);
+            statement.setInt(9, player.getX());
+            statement.setInt(10, player.getY());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
@@ -61,29 +57,27 @@ public class PlayerDaoJdbc implements PlayerDao {
     }
 
     @Override
-    public PlayerModel get(int id) {
+    public PlayerModel get(int gameStateId) {
         try (Connection connection = dataSource.getConnection()) {
-            //TODO this query is a dummy query(it gives back the last added player)
-            String sqlQuery = "SELECT * FROM player ORDER BY id DESC LIMIT 1";
+            String sqlQuery = "SELECT * FROM player WHERE game_state_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, gameStateId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) { // first row was not found == no data was returned by the query
                 return null;
             }
-            Array itemsPgArray = resultSet.getArray(10);
+            Array itemsPgArray = resultSet.getArray(8);
             List<Integer> itemsIds = new ArrayList<>(List.of((Integer[])itemsPgArray.getArray()));
             return new PlayerModel(
                     resultSet.getString(2), // playerName
-                    resultSet.getInt(3), // hp
-                    resultSet.getInt(4), // maxHp
-                    resultSet.getInt(5), // fireballTimer
-                    resultSet.getInt(6), // damage
-                    resultSet.getInt(7), // directionType
-                    resultSet.getInt(8), // cellType
-                    resultSet.getInt(9), // weaponType
-                    itemsIds, // items
-                    resultSet.getInt(11), // x
-                    resultSet.getInt(12) // y
+                    resultSet.getInt(3),    // hp
+                    resultSet.getInt(4),    // fireballTimer
+                    resultSet.getInt(5),    // directionType
+                    resultSet.getInt(6),    // cellType
+                    resultSet.getInt(7),    // weaponType
+                    itemsIds,                          // items
+                    resultSet.getInt(9),    // x
+                    resultSet.getInt(10)    // y
             );
         } catch (SQLException throwables) {
             throw new RuntimeException(throwables);
