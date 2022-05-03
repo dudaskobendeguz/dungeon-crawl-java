@@ -1,12 +1,12 @@
 package com.codecool.dungeoncrawl.model;
 
-public class TileModel extends BaseModel {
+public class CellModel extends BaseModel {
     private int typeId;
     private int x;
     private int y;
 
 
-    public TileModel(int typeId, int x, int y) {
+    public CellModel(int typeId, int x, int y) {
         this.typeId = typeId;
         this.x = x;
         this.y = y;
