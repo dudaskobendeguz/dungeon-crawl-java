@@ -1,4 +1,8 @@
-
+ALTER TABLE IF EXISTS player DROP CONSTRAINT IF EXISTS fk_game_state_id;
+ALTER TABLE IF EXISTS cell DROP CONSTRAINT IF EXISTS fk_game_state_id;
+ALTER TABLE IF EXISTS player DROP CONSTRAINT IF EXISTS player_pkey;
+ALTER TABLE IF EXISTS cell DROP CONSTRAINT IF EXISTS cell_pkey;
+ALTER TABLE IF EXISTS game_state DROP CONSTRAINT IF EXISTS game_state_pkey;
 
 DROP TABLE IF EXISTS game_state;
 CREATE TABLE game_state (
@@ -13,9 +17,7 @@ CREATE TABLE player (
     game_state_id       integer         NOT NULL,
     player_name         text            NOT NULL,
     hp                  integer         NOT NULL,
-    max_hp              integer         NOT NULL,
     fireball_timer      integer         NOT NULL,
-    damage              integer         NOT NULL,
     direction_type      integer         NOT NULL,
     cell_type           integer         NOT NULL,
     weapon_type         integer         NOT NULL,
@@ -26,9 +28,9 @@ CREATE TABLE player (
 
 DROP TABLE IF EXISTS cell;
 CREATE TABLE cell (
-    id                  serial          NOT NULL,
+    id                  serial          NOT NULL PRIMARY KEY,
     game_state_id       integer         NOT NULL,
-    type_id             integer         NOT NULL,
+    tile_id             integer         NOT NULL,
     x                   integer         NOT NULL,
     y                   integer         NOT NULL
 );
