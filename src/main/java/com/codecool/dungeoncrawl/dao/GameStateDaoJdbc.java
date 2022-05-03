@@ -37,7 +37,18 @@ public class GameStateDaoJdbc implements GameStateDao {
 
     @Override
     public GameState get(int gameStateId) {
-        return null;
+        try (Connection connection = dataSource.getConnection()) {
+            String sqlQuery = "SELECT level_id FROM game_state WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, gameStateId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) { // first row was not found == no data was returned by the query
+                return null;
+            }
+            return new GameState(resultSet.getInt(1));
+        } catch (SQLException throwables) {
+            throw new RuntimeException("Error under get game state from database", throwables);
+        }
     }
 
     @Override
