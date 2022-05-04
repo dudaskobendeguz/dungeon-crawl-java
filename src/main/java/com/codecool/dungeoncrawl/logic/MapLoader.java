@@ -30,7 +30,7 @@ public class MapLoader {
     }
 
     private static Player createNewPlayer(PlayerModel playerModel) {
-        List<Item> items = createItemsFromData(playerModel.getItems());
+        List<Item> items = createItemsFromData(playerModel.getItems(), null);
         Cell cell = createCellFromData(playerModel.getX(), playerModel.getY(), playerModel.getCellTypeId());
         Weapon weapon = createWeaponFromData(playerModel.getWeaponTypeId());
         Direction direction = createDirectionFromData(playerModel.getDirectionTypeId());
@@ -68,10 +68,10 @@ public class MapLoader {
                 .orElseThrow(RuntimeException::new);
     }
 
-    private static List<Item> createItemsFromData(List<Integer> itemsTileIds) {
+    public static List<Item> createItemsFromData(List<Integer> itemsTileIds, Cell cell) {
         List<Item> items = new ArrayList<>();
         for (Integer itemsTileId : itemsTileIds) {
-            Item item = MapLoader.createItem(null, Tiles.tileTypeMap.get(itemsTileId));
+            Item item = MapLoader.createItem(cell, Tiles.tileTypeMap.get(itemsTileId));
             items.add(item);
         }
         return items;
