@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.model.ItemModel;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDaoJdbc implements ItemDao {
@@ -41,7 +42,26 @@ public class ItemDaoJdbc implements ItemDao {
 
     @Override
     public List<ItemModel> getAllByGameStateId(int gameStateId) {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT * FROM item WHERE game_state_id = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, gameStateId);
+
+            ResultSet rs = st.executeQuery();
+            List<ItemModel> itemModels = new ArrayList<>();
+            while (rs.next()) {
+                ItemModel itemModel = new ItemModel(
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5)
+                );
+                itemModel.setId(rs.getInt(1));
+                itemModels.add(itemModel);
+            }
+            return itemModels;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
