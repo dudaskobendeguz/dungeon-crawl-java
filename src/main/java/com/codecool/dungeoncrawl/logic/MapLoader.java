@@ -30,7 +30,16 @@ public class MapLoader {
         setPlayerModel(gameMap, playerModel);
         setCellModels(gameMap, cellModels);
         setMonsterModels(gameMap, monsterModels);
+        setItemModels(gameMap, itemModels);
         return gameMap;
+    }
+
+    private static void setItemModels(GameMap gameMap, List<ItemModel> itemModels) {
+        for (ItemModel itemModel : itemModels) {
+            TileType tileType = Tiles.tileTypeMap.get(itemModel.getTileId());
+            Cell itemCell = gameMap.getCell(itemModel.getX(), itemModel.getY());
+            itemCell.setItem(createItem(itemCell, tileType));
+        }
     }
 
     private static void setMonsterModels(GameMap gameMap, List<MonsterModel> monsterModels) {
