@@ -26,13 +26,26 @@ public class MapLoader {
 
     public static GameMap getGameMap(String filePath, PlayerModel playerModel, List<CellModel> cellModels, List<MonsterModel> monsters, List<Item> items) {
         GameMap gameMap = createGameMap(filePath, null, true);
+        setPlayerModel(gameMap, playerModel);
+        setCellModels(gameMap, cellModels);
+        return gameMap;
+    }
+
+    private static void setCellModels(GameMap gameMap, List<CellModel> cellModels) {
+        for (CellModel cellModel : cellModels) {
+            CellType cellType = getCellType(cellModel.getTypeId());
+            Cell cell = gameMap.getCell(cellModel.getX(), cellModel.getY());
+            cell.setType(cellType);
+        }
+    }
+
+    private static void setPlayerModel(GameMap gameMap, PlayerModel playerModel) {
         Cell playerCell = gameMap.getCell(playerModel.getX(), playerModel.getY());
         Player player = createNewPlayer(playerModel, playerCell);
         playerCell.setActor(player);
         player.setCell(playerCell);
         playerCell.setActor(player);
         gameMap.setPlayer(player);
-        return gameMap;
     }
 
     private static Player createNewPlayer(PlayerModel playerModel, Cell playerCell) {
@@ -101,6 +114,8 @@ public class MapLoader {
                 if (isLoading) {
                     if (tileCategory == TileCategory.CELL) {
                         cell.setType((CellType) tileType);
+                    } else {
+                        cell.setType(DEFAULT_CELL);
                     }
                 } else {
                     switch (tileCategory) {
@@ -144,7 +159,7 @@ public class MapLoader {
         return firstLineChars.length;
     }
 
-    private  static int getMapHeight(Scanner scanner) {
+    private static int getMapHeight(Scanner scanner) {
         int height = 1;
         while (scanner.hasNextLine()) {
             scanner.nextLine();
@@ -196,9 +211,11 @@ public class MapLoader {
         // TODO Think about ItemType
         if (tileType instanceof ConsumableType) {
             return new Consumable(cell, (ConsumableType) tileType);
-        } if (tileType instanceof KeyType) {
+        }
+        if (tileType instanceof KeyType) {
             return new Key(cell, (KeyType) tileType);
-        } if (tileType instanceof WeaponType) {
+        }
+        if (tileType instanceof WeaponType) {
             return new Weapon(cell, (WeaponType) tileType);
         }
         throw new RuntimeException("Cannot create item. TileType: " + tileType);
