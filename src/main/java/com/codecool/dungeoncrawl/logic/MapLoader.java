@@ -52,7 +52,7 @@ public class MapLoader {
 
     private static void setCellModels(GameMap gameMap, List<CellModel> cellModels) {
         for (CellModel cellModel : cellModels) {
-            CellType cellType = getCellType(cellModel.getTypeId());
+            CellType cellType = (CellType) Tiles.tileTypeMap.get(cellModel.getTypeId());
             Cell cell = gameMap.getCell(cellModel.getX(), cellModel.getY());
             cell.setType(cellType);
         }
@@ -61,10 +61,7 @@ public class MapLoader {
     private static void setPlayerModel(GameMap gameMap, PlayerModel playerModel) {
         Cell playerCell = gameMap.getCell(playerModel.getX(), playerModel.getY());
         Player player = createNewPlayer(playerModel, playerCell);
-        playerCell.setActor(player);
-        player.setCell(playerCell);
-        playerCell.setActor(player);
-        gameMap.setPlayer(player);
+        createPlayer(player, playerCell, gameMap);
     }
 
     private static Player createNewPlayer(PlayerModel playerModel, Cell playerCell) {
@@ -82,22 +79,8 @@ public class MapLoader {
     }
 
     private static Weapon createWeaponFromData(int weaponTypeId) {
-        WeaponType weaponType = getWeaponType(weaponTypeId);
+        WeaponType weaponType = (WeaponType) Tiles.tileTypeMap.get(weaponTypeId);
         return new Weapon(null, weaponType);
-    }
-
-    private static WeaponType getWeaponType(int weaponTypeId) {
-        return Arrays.stream(WeaponType.values())
-                .filter(weaponType -> weaponType.getTileId() == weaponTypeId)
-                .findFirst()
-                .orElseThrow(RuntimeException::new);
-    }
-
-    private static CellType getCellType(int cellTypeId) {
-        return Arrays.stream(CellType.values())
-                .filter(cellType -> cellType.getTileId() == cellTypeId)
-                .findFirst()
-                .orElseThrow(RuntimeException::new);
     }
 
     public static List<Item> createItemsFromData(List<Integer> itemsTileIds, Cell cell) {
@@ -206,8 +189,12 @@ public class MapLoader {
     }
 
     private static void setPlayer(Player player, GameMap map, Cell cell) {
-        player.setCell(cell);
         cell.setType(DEFAULT_CELL);
+        createPlayer(player, cell, map);
+    }
+
+    private static void createPlayer(Player player, Cell cell, GameMap map) {
+        player.setCell(cell);
         cell.setActor(player);
         map.setPlayer(player);
     }
