@@ -99,11 +99,17 @@ public class GameDatabaseManager {
 
     public GameMap loadGame(int gameStateId) {
         Level loadedLevel = loadGameState(gameStateId);
+        String filePath = loadedLevel.getMAP_FILE_PATH();
         PlayerModel playerModel = loadPlayer(gameStateId);
         List<CellModel> cellModels = loadCells(gameStateId);
         List<MonsterModel> monsterModels = loadMonsters(gameStateId);
-        GameMap map = MapLoader.getGameMap(loadedLevel.getMAP_FILE_PATH(), playerModel, cellModels, monsterModels, null);
+        List<ItemModel> itemModels = loadItems(gameStateId);
+        GameMap map = MapLoader.getGameMap(filePath, playerModel, cellModels, monsterModels, itemModels);
         return null;
+    }
+
+    private List<ItemModel> loadItems(int gameStateId) {
+        return itemDao.getAllByGameStateId(gameStateId);
     }
 
     private List<MonsterModel> loadMonsters(int gameStateId) {

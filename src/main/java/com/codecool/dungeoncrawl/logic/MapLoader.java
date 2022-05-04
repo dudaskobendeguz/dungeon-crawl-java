@@ -7,6 +7,7 @@ import com.codecool.dungeoncrawl.logic.actor.monsters.*;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.*;
 import com.codecool.dungeoncrawl.model.CellModel;
+import com.codecool.dungeoncrawl.model.ItemModel;
 import com.codecool.dungeoncrawl.model.MonsterModel;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 
@@ -24,7 +25,7 @@ public class MapLoader {
         return createGameMap(filePath, player, false);
     }
 
-    public static GameMap getGameMap(String filePath, PlayerModel playerModel, List<CellModel> cellModels, List<MonsterModel> monsters, List<Item> items) {
+    public static GameMap getGameMap(String filePath, PlayerModel playerModel, List<CellModel> cellModels, List<MonsterModel> monsterModels, List<ItemModel> itemModels) {
         GameMap gameMap = createGameMap(filePath, null, true);
         setPlayerModel(gameMap, playerModel);
         setCellModels(gameMap, cellModels);
