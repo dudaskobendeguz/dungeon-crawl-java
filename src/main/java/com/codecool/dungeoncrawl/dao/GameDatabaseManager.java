@@ -40,6 +40,7 @@ public class GameDatabaseManager {
         savePlayer(map.getPlayer(), gameStateId);
         saveCells(map, gameStateId);
         saveMonsters(map, gameStateId);
+        saveItems(map, gameStateId);
     }
 
     private int saveGameState(Level currentLevel) {
