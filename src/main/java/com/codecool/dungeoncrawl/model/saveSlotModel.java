@@ -2,11 +2,11 @@ package com.codecool.dungeoncrawl.model;
 
 import java.sql.Date;
 
-public class GameState extends BaseModel {
+public class saveSlotModel extends BaseModel {
     private Date savedAt;
     private int levelId;
 
-    public GameState(int levelId) {
+    public saveSlotModel(int levelId) {
         this.levelId = levelId;
     }
 

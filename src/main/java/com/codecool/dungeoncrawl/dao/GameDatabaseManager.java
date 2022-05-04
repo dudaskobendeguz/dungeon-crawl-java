@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GameDatabaseManager {
-    private GameStateDao gameStateDao;
+    private SaveSlotDao saveSlotDao;
     private PlayerDao playerDao;
     private CellDao cellDao;
     private MonsterDao monsterDao;
@@ -24,7 +24,7 @@ public class GameDatabaseManager {
 
     public void setup() throws SQLException {
         DataSource dataSource = connect();
-        gameStateDao = new GameStateDaoJdbc(dataSource);
+        saveSlotDao = new SaveSlotDaoJdbc(dataSource);
         playerDao = new PlayerDaoJdbc(dataSource);
         cellDao = new CellDaoJdbc(dataSource);
         monsterDao = new MonsterDaoJdbc(dataSource);
@@ -32,36 +32,36 @@ public class GameDatabaseManager {
     }
 
     public void saveGame(GameMap map, Level currentLevel) {
-        int gameStateId = saveGameState(currentLevel);
-        savePlayer(map.getPlayer(), gameStateId);
-        saveCells(map, gameStateId);
-        saveMonsters(map, gameStateId);
-        saveItems(map, gameStateId);
+        int saveSlotId = saveGameState(currentLevel);
+        savePlayer(map.getPlayer(), saveSlotId);
+        saveCells(map, saveSlotId);
+        saveMonsters(map, saveSlotId);
+        saveItems(map, saveSlotId);
     }
 
     private int saveGameState(Level currentLevel) {
-        GameState gameState = new GameState(currentLevel.getID());
-        return gameStateDao.add(gameState);
+        saveSlotModel saveSlotModel = new saveSlotModel(currentLevel.getID());
+        return saveSlotDao.add(saveSlotModel);
 
     }
 
-    public void savePlayer(Player player, int gameStateId) {
+    public void savePlayer(Player player, int saveSlotId) {
         PlayerModel model = new PlayerModel(player);
-        playerDao.add(model, gameStateId);
+        playerDao.add(model, saveSlotId);
     }
 
-    private void saveCells(GameMap map, int gameStateId) {
+    private void saveCells(GameMap map, int saveSlotId) {
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 if (map.getCell(x, y).getType().isChanged()) {
                     CellModel cellModel = new CellModel(map.getCell(x, y).getTileId(), x, y);
-                    cellDao.add(cellModel, gameStateId);
+                    cellDao.add(cellModel, saveSlotId);
                 }
             }
         }
     }
 
-    private void saveMonsters(GameMap map, int gameStateId) {
+    private void saveMonsters(GameMap map, int saveSlotId) {
         for (Monster monster : map.getMonsters()) {
             MonsterModel monsterModel = new MonsterModel(
                     monster.getTileId(),
@@ -77,55 +77,55 @@ public class GameDatabaseManager {
                 int directionId = ((MoveDirection) monster).getMoveDirection().getID();
                 monsterModel.setDirectionId(directionId);
             }
-            monsterDao.add(monsterModel, gameStateId);
+            monsterDao.add(monsterModel, saveSlotId);
         }
     }
 
-    private void saveItems(GameMap map, int gameStateId) {
+    private void saveItems(GameMap map, int saveSlotId) {
         for (Item item : map.getItems()) {
             ItemModel itemModel = new ItemModel(
                     item.getTileId(),
                     item.getX(),
                     item.getY()
             );
-            itemDao.add(itemModel, gameStateId);
+            itemDao.add(itemModel, saveSlotId);
         }
     }
 
 
-    public GameMap loadGame(int gameStateId) {
-        Level loadedLevel = loadGameState(gameStateId);
+    public GameMap loadGame(int saveSlotId) {
+        Level loadedLevel = loadGameState(saveSlotId);
         String filePath = loadedLevel.getMAP_FILE_PATH();
-        PlayerModel playerModel = loadPlayer(gameStateId);
-        List<CellModel> cellModels = loadCells(gameStateId);
-        List<MonsterModel> monsterModels = loadMonsters(gameStateId);
-        List<ItemModel> itemModels = loadItems(gameStateId);
+        PlayerModel playerModel = loadPlayer(saveSlotId);
+        List<CellModel> cellModels = loadCells(saveSlotId);
+        List<MonsterModel> monsterModels = loadMonsters(saveSlotId);
+        List<ItemModel> itemModels = loadItems(saveSlotId);
         return MapLoader.getGameMap(filePath, playerModel, cellModels, monsterModels, itemModels);
     }
 
-    private List<ItemModel> loadItems(int gameStateId) {
-        return itemDao.getAllByGameStateId(gameStateId);
+    private List<ItemModel> loadItems(int saveSlotId) {
+        return itemDao.getAllBySaveSlotId(saveSlotId);
     }
 
-    private List<MonsterModel> loadMonsters(int gameStateId) {
-        return monsterDao.getAllByGameStateId(gameStateId);
+    private List<MonsterModel> loadMonsters(int saveSlotId) {
+        return monsterDao.getAllBySaveSlotId(saveSlotId);
     }
 
 
-    private List<CellModel> loadCells(int gameStateId) {
-        return cellDao.getAllByGameStateId(gameStateId);
+    private List<CellModel> loadCells(int saveSlotId) {
+        return cellDao.getAllBySaveSlotId(saveSlotId);
     }
 
-    private Level loadGameState(int gameStateId) {
-        GameState gameState = gameStateDao.get(gameStateId);
+    private Level loadGameState(int saveSlotId) {
+        saveSlotModel saveSlotModel = saveSlotDao.get(saveSlotId);
         return Arrays.stream(Level.values())
-                .filter(level -> level.getID() == gameState.getLevelId())
+                .filter(level -> level.getID() == saveSlotModel.getLevelId())
                 .findFirst()
                 .orElseThrow();
     }
 
-    public PlayerModel loadPlayer(int gameStateId) {
-        return playerDao.get(gameStateId);
+    public PlayerModel loadPlayer(int saveSlotId) {
+        return playerDao.get(saveSlotId);
     }
 
     public List<CellModel> loadMap() {

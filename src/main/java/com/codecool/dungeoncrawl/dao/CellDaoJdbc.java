@@ -15,11 +15,11 @@ public class CellDaoJdbc implements CellDao {
     }
 
     @Override
-    public void add(CellModel cellModel, int gameStateId) {
+    public void add(CellModel cellModel, int saveSlotId) {
         try (Connection connection = dataSource.getConnection()) {
-            String sqlQuery = "INSERT INTO cell (game_state_id, tile_id, x, y) VALUES (?, ?, ?, ?)";
+            String sqlQuery = "INSERT INTO cell (save_slot_id, tile_id, x, y) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, gameStateId);
+            preparedStatement.setInt(1, saveSlotId);
             preparedStatement.setInt(2, cellModel.getTypeId());
             preparedStatement.setInt(3, cellModel.getX());
             preparedStatement.setInt(4, cellModel.getY());
@@ -38,11 +38,11 @@ public class CellDaoJdbc implements CellDao {
     }
 
     @Override
-    public List<CellModel> getAllByGameStateId(int gameStateId) {
+    public List<CellModel> getAllBySaveSlotId(int saveSlotId) {
         try (Connection connection = dataSource.getConnection()) {
-            String sqlQuery = "SELECT * FROM cell WHERE game_state_id = ?";
+            String sqlQuery = "SELECT * FROM cell WHERE save_slot_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setInt(1, gameStateId);
+            preparedStatement.setInt(1, saveSlotId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             List<CellModel> cellModels = new ArrayList<>();

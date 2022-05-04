@@ -16,11 +16,11 @@ public class ItemDaoJdbc implements ItemDao {
     }
 
     @Override
-    public void add(ItemModel itemModel, int gameStateId) {
+    public void add(ItemModel itemModel, int saveSlotId) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO item (game_state_id, type_id, x, y) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO item (save_slot_id, type_id, x, y) VALUES (?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            st.setInt(1, gameStateId);
+            st.setInt(1, saveSlotId);
             st.setInt(2, itemModel.getTileId());
             st.setInt(3, itemModel.getX());
             st.setInt(4, itemModel.getY());
@@ -41,11 +41,11 @@ public class ItemDaoJdbc implements ItemDao {
     }
 
     @Override
-    public List<ItemModel> getAllByGameStateId(int gameStateId) {
+    public List<ItemModel> getAllBySaveSlotId(int saveSlotId) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT * FROM item WHERE game_state_id = ?";
+            String sql = "SELECT * FROM item WHERE save_slot_id = ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, gameStateId);
+            st.setInt(1, saveSlotId);
 
             ResultSet rs = st.executeQuery();
             List<ItemModel> itemModels = new ArrayList<>();

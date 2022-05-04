@@ -16,13 +16,13 @@ public class MonsterDaoJdbc implements MonsterDao {
     }
 
     @Override
-    public void add(MonsterModel monsterModel, int gameStateId) {
+    public void add(MonsterModel monsterModel, int saveSlotId) {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "INSERT INTO monster" +
-                    "(game_state_id, type_id, x, y, hp, timer, direction) " +
+                    "(save_slot_id, type_id, x, y, hp, timer, direction) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            st.setInt(1, gameStateId);
+            st.setInt(1, saveSlotId);
             st.setInt(2, monsterModel.getTypeId());
             st.setInt(3, monsterModel.getX());
             st.setInt(4, monsterModel.getY());
@@ -45,11 +45,11 @@ public class MonsterDaoJdbc implements MonsterDao {
     }
 
     @Override
-    public List<MonsterModel> getAllByGameStateId(int gameStateId) {
+    public List<MonsterModel> getAllBySaveSlotId(int saveSlotId) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT * FROM monster WHERE game_state_id = ?";
+            String sql = "SELECT * FROM monster WHERE save_slot_id = ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, gameStateId);
+            st.setInt(1, saveSlotId);
 
             ResultSet rs = st.executeQuery();
             List<MonsterModel> monsterModels = new ArrayList<>();

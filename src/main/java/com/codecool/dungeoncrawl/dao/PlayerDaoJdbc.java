@@ -15,11 +15,11 @@ public class PlayerDaoJdbc implements PlayerDao {
     }
 
     @Override
-    public void add(PlayerModel player, int gameStateId) {
+    public void add(PlayerModel player, int saveSlotId) {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "INSERT INTO " +
                     "player (" +
-                    "game_state_id," +
+                    "save_slot_id," +
                     "player_name," +
                     "hp, " +
                     "fireball_timer, " +
@@ -30,7 +30,7 @@ public class PlayerDaoJdbc implements PlayerDao {
                     "y ) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, gameStateId);
+            statement.setInt(1, saveSlotId);
             statement.setString(2, player.getPlayerName());
             statement.setInt(3, player.getHp());
             statement.setInt(4, player.getFireballTimer());
@@ -55,11 +55,11 @@ public class PlayerDaoJdbc implements PlayerDao {
     }
 
     @Override
-    public PlayerModel get(int gameStateId) {
+    public PlayerModel get(int saveSlotId) {
         try (Connection connection = dataSource.getConnection()) {
-            String sqlQuery = "SELECT * FROM player WHERE game_state_id = ?";
+            String sqlQuery = "SELECT * FROM player WHERE save_slot_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setInt(1, gameStateId);
+            preparedStatement.setInt(1, saveSlotId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) { // first row was not found == no data was returned by the query
                 return null;

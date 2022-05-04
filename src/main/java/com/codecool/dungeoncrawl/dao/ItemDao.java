@@ -5,8 +5,8 @@ import com.codecool.dungeoncrawl.model.ItemModel;
 import java.util.List;
 
 public interface ItemDao {
-    void add(ItemModel itemModel, int gameStateId);
+    void add(ItemModel itemModel, int saveSlotId);
     void update(ItemModel itemModel);
-    List<ItemModel> getAllByGameStateId(int gameStateId);
+    List<ItemModel> getAllBySaveSlotId(int saveSlotId);
     List<ItemModel> getAll();
 }
