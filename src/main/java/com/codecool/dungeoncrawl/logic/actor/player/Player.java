@@ -82,7 +82,7 @@ public class Player extends Actor {
     }
 
     /**
-        This constructor loads player from inventory
+        This constructor loads player from save
      */
     public Player(PlayerModel playerModel, Cell cell, Direction direction, Weapon weapon, List<Item> items) {
         super(cell, playerModel.getHp(), weapon.getDamage());
