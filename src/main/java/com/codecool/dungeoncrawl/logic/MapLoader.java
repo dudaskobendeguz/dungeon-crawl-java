@@ -29,7 +29,16 @@ public class MapLoader {
         GameMap gameMap = createGameMap(filePath, null, true);
         setPlayerModel(gameMap, playerModel);
         setCellModels(gameMap, cellModels);
+        setMonsterModels(gameMap, monsterModels);
         return gameMap;
+    }
+
+    private static void setMonsterModels(GameMap gameMap, List<MonsterModel> monsterModels) {
+        for (MonsterModel monsterModel : monsterModels) {
+            TileType tileType = Tiles.tileTypeMap.get(monsterModel.getTypeId());
+            Cell monsterCell = gameMap.getCell(monsterModel.getX(), monsterModel.getY());
+            createMonster(monsterCell, gameMap, (MonsterType) tileType);
+        }
     }
 
     private static void setCellModels(GameMap gameMap, List<CellModel> cellModels) {
@@ -196,6 +205,10 @@ public class MapLoader {
 
     private static void setMonster(Cell cell, GameMap map, MonsterType monsterType) {
         cell.setType(DEFAULT_CELL);
+        createMonster(cell, map, monsterType);
+    }
+
+    private static void createMonster(Cell cell, GameMap map, MonsterType monsterType) {
         Monster monster = MonsterType.getMonsterByMonsterType(monsterType, cell);
         if (monster instanceof TimeMage) {
             cell.setType(CellType.TIME_MAGE_FLOOR);
