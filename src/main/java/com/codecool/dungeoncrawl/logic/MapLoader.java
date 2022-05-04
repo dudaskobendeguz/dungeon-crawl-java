@@ -61,11 +61,6 @@ public class MapLoader {
                 .orElseThrow(RuntimeException::new);
     }
 
-    private static Cell createCellFromData(int x, int y, int cellTypeId) {
-        CellType cellType = getCellType(cellTypeId);
-        return new Cell(x, y, cellType);
-    }
-
     private static CellType getCellType(int cellTypeId) {
         return Arrays.stream(CellType.values())
                 .filter(cellType -> cellType.getTileId() == cellTypeId)
