@@ -10,10 +10,7 @@ import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.Weapon;
 import com.codecool.dungeoncrawl.logic.items.WeaponType;
-import com.codecool.dungeoncrawl.model.GameState;
-import com.codecool.dungeoncrawl.model.MonsterModel;
-import com.codecool.dungeoncrawl.model.PlayerModel;
-import com.codecool.dungeoncrawl.model.CellModel;
+import com.codecool.dungeoncrawl.model.*;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
@@ -27,6 +24,7 @@ public class GameDatabaseManager {
     private PlayerDao playerDao;
     private CellDao cellDao;
     private MonsterDao monsterDao;
+    private ItemDao itemDao;
 
     public void setup() throws SQLException {
         DataSource dataSource = connect();
@@ -34,6 +32,7 @@ public class GameDatabaseManager {
         playerDao = new PlayerDaoJdbc(dataSource);
         cellDao = new CellDaoJdbc(dataSource);
         monsterDao = new MonsterDaoJdbc(dataSource);
+        itemDao = new ItemDaoJdbc(dataSource);
     }
 
     public void saveGame(GameMap map, Level currentLevel) {
@@ -84,6 +83,18 @@ public class GameDatabaseManager {
             monsterDao.add(monsterModel, gameStateId);
         }
     }
+
+    private void saveItems(GameMap map, int gameStateId) {
+        for (Item item : map.getItems()) {
+            ItemModel itemModel = new ItemModel(
+                    item.getTileId(),
+                    item.getX(),
+                    item.getY()
+            );
+            itemDao.add(itemModel, gameStateId);
+        }
+    }
+
 
     public GameMap loadGame(int gameStateId) {
         Level loadedLevel = loadGameState(gameStateId);
