@@ -24,24 +24,22 @@ public class PlayerDaoJdbc implements PlayerDao {
                     "hp, " +
                     "fireball_timer, " +
                     "direction_type, " +
-                    "cell_type, " +
                     "weapon_type, " +
                     "items, " +
                     "x, " +
                     "y ) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, gameStateId);
             statement.setString(2, player.getPlayerName());
             statement.setInt(3, player.getHp());
             statement.setInt(4, player.getFireballTimer());
             statement.setInt(5, player.getDirectionTypeId());
-            statement.setInt(6, player.getCellTypeId());
-            statement.setInt(7, player.getWeaponTypeId());
+            statement.setInt(6, player.getWeaponTypeId());
             Array items = conn.createArrayOf("INTEGER", player.getItems().toArray(new Integer[0]));
-            statement.setArray(8, items);
-            statement.setInt(9, player.getX());
-            statement.setInt(10, player.getY());
+            statement.setArray(7, items);
+            statement.setInt(8, player.getX());
+            statement.setInt(9, player.getY());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
@@ -66,18 +64,17 @@ public class PlayerDaoJdbc implements PlayerDao {
             if (!resultSet.next()) { // first row was not found == no data was returned by the query
                 return null;
             }
-            Array itemsPgArray = resultSet.getArray(9);
+            Array itemsPgArray = resultSet.getArray(8);
             List<Integer> itemsIds = new ArrayList<>(List.of((Integer[])itemsPgArray.getArray()));
             return new PlayerModel(
                     resultSet.getString(3), // playerName
                     resultSet.getInt(4),    // hp
                     resultSet.getInt(5),    // fireballTimer
                     resultSet.getInt(6),    // directionType
-                    resultSet.getInt(7),    // cellType
-                    resultSet.getInt(8),    // weaponType
+                    resultSet.getInt(7),    // weaponType
                     itemsIds,                          // items
-                    resultSet.getInt(10),    // x
-                    resultSet.getInt(11)    // y
+                    resultSet.getInt(9),    // x
+                    resultSet.getInt(10)    // y
             );
         } catch (SQLException throwables) {
             throw new RuntimeException(throwables);

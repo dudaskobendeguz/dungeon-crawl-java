@@ -11,7 +11,6 @@ public class PlayerModel extends BaseModel {
     private int hp;
     private int fireballTimer;
     private int directionTypeId;
-    private int cellTypeId;
     private int weaponTypeId;
     private List<Integer> items;
 
@@ -26,7 +25,6 @@ public class PlayerModel extends BaseModel {
             int hp,
             int fireballTimer,
             int directionTypeId,
-            int cellTypeId,
             int weaponTypeId,
             List<Integer> items,
             int x,
@@ -36,7 +34,6 @@ public class PlayerModel extends BaseModel {
         this.hp = hp;
         this.fireballTimer = fireballTimer;
         this.directionTypeId = directionTypeId;
-        this.cellTypeId = cellTypeId;
         this.weaponTypeId = weaponTypeId;
         this.items = items;
         this.x = x;
@@ -50,7 +47,6 @@ public class PlayerModel extends BaseModel {
         this.hp = player.getHealth();
         this.fireballTimer = player.getFireballTimer();
         this.directionTypeId = player.getDirection().getID();
-        this.cellTypeId = player.getCellTitleId();
         this.weaponTypeId = player.getWeaponTitleId();
         items = player.getItems().stream()
                 .map(Drawable::getTileId)
@@ -61,48 +57,20 @@ public class PlayerModel extends BaseModel {
         return playerName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
     public int getHp() {
         return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
     }
 
     public int getFireballTimer() {
         return fireballTimer;
     }
 
-    public void setFireballTimer(int fireballTimer) {
-        this.fireballTimer = fireballTimer;
-    }
-
     public int getDirectionTypeId() {
         return directionTypeId;
     }
 
-    public void setDirectionTypeId(int directionTypeId) {
-        this.directionTypeId = directionTypeId;
-    }
-
-    public int getCellTypeId() {
-        return cellTypeId;
-    }
-
-    public void setCellTypeId(int cellTypeId) {
-        this.cellTypeId = cellTypeId;
-    }
-
     public int getWeaponTypeId() {
         return weaponTypeId;
-    }
-
-    public void setWeaponTypeId(int weaponTypeId) {
-        this.weaponTypeId = weaponTypeId;
     }
 
     public List<Integer> getItems() {
