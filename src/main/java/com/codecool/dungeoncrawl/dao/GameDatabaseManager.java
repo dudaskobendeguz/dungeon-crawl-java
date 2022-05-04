@@ -88,59 +88,13 @@ public class GameDatabaseManager {
     public GameMap loadGame(int gameStateId) {
         Level loadedLevel = loadGameState(gameStateId);
         PlayerModel playerModel = loadPlayer(gameStateId);
-        Player player = createNewPlayer(playerModel);
         List<CellModel> cellModels = loadCells(gameStateId);
-//        GameMap map = MapLoader.getGameMap(loadedLevel.getMAP_FILE_PATH(),)
+        GameMap map = MapLoader.getGameMap(loadedLevel.getMAP_FILE_PATH(), playerModel, cellModels, null, null);
         return null;
     }
 
-    private Player createNewPlayer(PlayerModel playerModel) {
-        List<Item> items = createItemsFromData(playerModel.getItems());
-        Cell cell = createCellFromData(playerModel.getX(), playerModel.getY(), playerModel.getCellTypeId());
-        Weapon weapon = createWeaponFromData(playerModel.getWeaponTypeId());
-        Direction direction = createDirectionFromData(playerModel.getDirectionTypeId());
-        return new Player(playerModel, cell, direction, weapon, items);
-    }
 
-    private Direction createDirectionFromData(int directionTypeId) {
-        return Arrays.stream(Direction.values())
-                .filter(direction -> direction.getID() == directionTypeId)
-                .findFirst()
-                .orElseThrow(RuntimeException::new);
-    }
 
-    private Weapon createWeaponFromData(int weaponTypeId) {
-        WeaponType weaponType = getWeaponType(weaponTypeId);
-        return new Weapon(null, weaponType);
-    }
-
-    private WeaponType getWeaponType(int weaponTypeId) {
-        return Arrays.stream(WeaponType.values())
-                .filter(weaponType -> weaponType.getTileId() == weaponTypeId)
-                .findFirst()
-                .orElseThrow(RuntimeException::new);
-    }
-
-    private Cell createCellFromData(int x, int y, int cellTypeId) {
-        CellType cellType = getCellType(cellTypeId);
-        return new Cell(x, y, cellType);
-    }
-
-    private CellType getCellType(int cellTypeId) {
-        return Arrays.stream(CellType.values())
-                .filter(cellType -> cellType.getTileId() == cellTypeId)
-                .findFirst()
-                .orElseThrow(RuntimeException::new);
-    }
-
-    private List<Item> createItemsFromData(List<Integer> itemsTileIds) {
-        List<Item> items = new ArrayList<>();
-        for (Integer itemsTileId : itemsTileIds) {
-            Item item = MapLoader.createItem(null, Tiles.tileTypeMap.get(itemsTileId));
-            items.add(item);
-        }
-        return items;
-    }
 
 
     private List<CellModel> loadCells(int gameStateId) {

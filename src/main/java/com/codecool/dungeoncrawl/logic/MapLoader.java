@@ -6,9 +6,13 @@ import com.codecool.dungeoncrawl.Tiles;
 import com.codecool.dungeoncrawl.logic.actor.monsters.*;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.*;
+import com.codecool.dungeoncrawl.model.CellModel;
+import com.codecool.dungeoncrawl.model.MonsterModel;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,8 +24,57 @@ public class MapLoader {
         return createGameMap(filePath, player, false);
     }
 
-    public static GameMap getGameMap(String filePath, Player player, List<Monster> monsters, List<Item> items) {
+    public static GameMap getGameMap(String filePath, PlayerModel playerModel, List<CellModel> cellModels, List<MonsterModel> monsters, List<Item> items) {
+        Player player = createNewPlayer(playerModel);
         return createGameMap(filePath, player, true);
+    }
+
+    private static Player createNewPlayer(PlayerModel playerModel) {
+        List<Item> items = createItemsFromData(playerModel.getItems());
+        Cell cell = createCellFromData(playerModel.getX(), playerModel.getY(), playerModel.getCellTypeId());
+        Weapon weapon = createWeaponFromData(playerModel.getWeaponTypeId());
+        Direction direction = createDirectionFromData(playerModel.getDirectionTypeId());
+        return new Player(playerModel, cell, direction, weapon, items);
+    }
+
+    private static Direction createDirectionFromData(int directionTypeId) {
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.getID() == directionTypeId)
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
+    }
+
+    private static Weapon createWeaponFromData(int weaponTypeId) {
+        WeaponType weaponType = getWeaponType(weaponTypeId);
+        return new Weapon(null, weaponType);
+    }
+
+    private static WeaponType getWeaponType(int weaponTypeId) {
+        return Arrays.stream(WeaponType.values())
+                .filter(weaponType -> weaponType.getTileId() == weaponTypeId)
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
+    }
+
+    private static Cell createCellFromData(int x, int y, int cellTypeId) {
+        CellType cellType = getCellType(cellTypeId);
+        return new Cell(x, y, cellType);
+    }
+
+    private static CellType getCellType(int cellTypeId) {
+        return Arrays.stream(CellType.values())
+                .filter(cellType -> cellType.getTileId() == cellTypeId)
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
+    }
+
+    private static List<Item> createItemsFromData(List<Integer> itemsTileIds) {
+        List<Item> items = new ArrayList<>();
+        for (Integer itemsTileId : itemsTileIds) {
+            Item item = MapLoader.createItem(null, Tiles.tileTypeMap.get(itemsTileId));
+            items.add(item);
+        }
+        return items;
     }
 
     private static GameMap createGameMap(String filePath, Player player, boolean isLoading) {
