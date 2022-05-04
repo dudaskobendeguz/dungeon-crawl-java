@@ -25,16 +25,21 @@ public class MapLoader {
     }
 
     public static GameMap getGameMap(String filePath, PlayerModel playerModel, List<CellModel> cellModels, List<MonsterModel> monsters, List<Item> items) {
-        Player player = createNewPlayer(playerModel);
-        return createGameMap(filePath, player, true);
+        GameMap gameMap = createGameMap(filePath, null, true);
+        Cell playerCell = gameMap.getCell(playerModel.getX(), playerModel.getY());
+        Player player = createNewPlayer(playerModel, playerCell);
+        playerCell.setActor(player);
+        player.setCell(playerCell);
+        playerCell.setActor(player);
+        gameMap.setPlayer(player);
+        return gameMap;
     }
 
-    private static Player createNewPlayer(PlayerModel playerModel) {
+    private static Player createNewPlayer(PlayerModel playerModel, Cell playerCell) {
         List<Item> items = createItemsFromData(playerModel.getItems(), null);
-        Cell cell = createCellFromData(playerModel.getX(), playerModel.getY(), playerModel.getCellTypeId());
         Weapon weapon = createWeaponFromData(playerModel.getWeaponTypeId());
         Direction direction = createDirectionFromData(playerModel.getDirectionTypeId());
-        return new Player(playerModel, cell, direction, weapon, items);
+        return new Player(playerModel, playerCell, direction, weapon, items);
     }
 
     private static Direction createDirectionFromData(int directionTypeId) {
