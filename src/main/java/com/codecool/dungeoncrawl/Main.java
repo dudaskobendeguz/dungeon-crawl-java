@@ -133,7 +133,7 @@ public class Main extends Application {
                 dbManager.saveGame(map, currentLevel);
                 break;
             case D:
-//                map = dbManager.loadGame(2);
+                map = dbManager.loadGame(2);
                 break;
         }
     }

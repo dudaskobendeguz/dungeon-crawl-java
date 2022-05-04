@@ -104,8 +104,7 @@ public class GameDatabaseManager {
         List<CellModel> cellModels = loadCells(gameStateId);
         List<MonsterModel> monsterModels = loadMonsters(gameStateId);
         List<ItemModel> itemModels = loadItems(gameStateId);
-        GameMap map = MapLoader.getGameMap(filePath, playerModel, cellModels, monsterModels, itemModels);
-        return null;
+        return MapLoader.getGameMap(filePath, playerModel, cellModels, monsterModels, itemModels);
     }
 
     private List<ItemModel> loadItems(int gameStateId) {
