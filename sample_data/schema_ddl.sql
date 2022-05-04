@@ -1,10 +1,10 @@
-ALTER TABLE IF EXISTS player DROP CONSTRAINT IF EXISTS fk_game_state_id;
-ALTER TABLE IF EXISTS cell DROP CONSTRAINT IF EXISTS fk_game_state_id;
-ALTER TABLE IF EXISTS monster DROP CONSTRAINT IF EXISTS fk_game_state_id;
-ALTER TABLE IF EXISTS item DROP CONSTRAINT IF EXISTS fk_game_state_id;
+ALTER TABLE IF EXISTS player DROP CONSTRAINT IF EXISTS fk_save_slot_id;
+ALTER TABLE IF EXISTS cell DROP CONSTRAINT IF EXISTS fk_save_slot_id;
+ALTER TABLE IF EXISTS monster DROP CONSTRAINT IF EXISTS fk_save_slot_id;
+ALTER TABLE IF EXISTS item DROP CONSTRAINT IF EXISTS fk_save_slot_id;
 ALTER TABLE IF EXISTS player DROP CONSTRAINT IF EXISTS player_pkey;
 ALTER TABLE IF EXISTS cell DROP CONSTRAINT IF EXISTS cell_pkey;
-ALTER TABLE IF EXISTS save_slot DROP CONSTRAINT IF EXISTS game_state_pkey;
+ALTER TABLE IF EXISTS save_slot DROP CONSTRAINT IF EXISTS save_slot_pkey;
 
 
 DROP TABLE IF EXISTS save_slot;
@@ -59,13 +59,13 @@ CREATE TABLE item (
 );
 
 ALTER TABLE ONLY item
-    ADD CONSTRAINT fk_game_state_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
+    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
 
 ALTER TABLE ONLY monster
-    ADD CONSTRAINT fk_game_state_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
+    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
 
 ALTER TABLE ONLY cell
-    ADD CONSTRAINT fk_game_state_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
+    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
 
 ALTER TABLE ONLY player
-    ADD CONSTRAINT fk_game_state_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
+    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
