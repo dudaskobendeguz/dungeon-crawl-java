@@ -1,21 +1,17 @@
 package com.codecool.dungeoncrawl.dao;
 
 import com.codecool.dungeoncrawl.Level;
-import com.codecool.dungeoncrawl.Tiles;
 import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.actor.monsters.MoveDirection;
 import com.codecool.dungeoncrawl.logic.actor.monsters.MoveTimer;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.Weapon;
-import com.codecool.dungeoncrawl.logic.items.WeaponType;
 import com.codecool.dungeoncrawl.model.*;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
