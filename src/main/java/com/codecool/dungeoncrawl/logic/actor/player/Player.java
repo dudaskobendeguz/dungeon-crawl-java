@@ -5,13 +5,13 @@ import com.codecool.dungeoncrawl.logic.actor.Actor;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Fireball;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.items.*;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Player extends Actor {
-
     private static class Inventory {
         private final List<Item> items = new ArrayList<>();
 
@@ -81,6 +81,19 @@ public class Player extends Actor {
         name = playerName;
     }
 
+    /**
+        This constructor loads player from save
+     */
+    public Player(PlayerModel playerModel, Cell cell, Direction direction, Weapon weapon, List<Item> items) {
+        super(cell, playerModel.getHp(), weapon.getDamage());
+        items.forEach(inventory::setItem);
+        this.maxHealth = 10;
+        this.name = playerModel.getPlayerName();
+        this.weapon = weapon;
+        this.direction = direction;
+        this.fireballTimer = playerModel.getFireballTimer();
+    }
+
     public Fireball getFireball() {
         Cell nextCell = cell.getNeighbor(direction);
         if (GameMap.isStepValid(nextCell)) {
@@ -102,6 +115,7 @@ public class Player extends Actor {
 
     private void pickUpItem() {
         Item item = getCell().getItem();
+        item.setCell(null);
         setItem(item);
         getCell().setItem(null);
     }
@@ -199,7 +213,23 @@ public class Player extends Actor {
     }
 
     public String getWeaponName() {
-        return weapon.getNam();
+        return weapon.getName();
+    }
+
+    public int getWeaponTitleId() {
+        return weapon.getTileId();
+    }
+
+    public int getFireballTimer() {
+        return fireballTimer;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public List<Item> getItems() {
+        return new ArrayList<>(inventory.items);
     }
 
     @Override

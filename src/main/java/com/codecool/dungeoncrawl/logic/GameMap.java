@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
+import com.codecool.dungeoncrawl.logic.items.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public class GameMap {
     private final int width;
     private final int height;
-    private final Cell[][] cells;
+    private final Cell[][] cellsMatrix;
 
     private Player player;
     private final List<Monster> monsters = new ArrayList<>();
@@ -17,10 +18,10 @@ public class GameMap {
     public GameMap(int width, int height, CellType defaultCell) {
         this.width = width;
         this.height = height;
-        cells = new Cell[width][height];
+        cellsMatrix = new Cell[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                cells[x][y] = new Cell(this, x, y, defaultCell);
+                cellsMatrix[x][y] = new Cell(this, x, y, defaultCell);
             }
         }
     }
@@ -30,12 +31,12 @@ public class GameMap {
     }
 
     public Cell getCell(int x, int y) {
-        return (x >= 0 && x < cells.length && y >= 0 && y < cells[x].length) ? cells[x][y] : null;
+        return (x >= 0 && x < cellsMatrix.length && y >= 0 && y < cellsMatrix[x].length) ? cellsMatrix[x][y] : null;
     }
 
     public void setChest(int x, int y) {
         if (getCell(x,y) != null) {
-            cells[x][y] = new Chest(this, x,y, CellType.CHEST_CLOSED);
+            cellsMatrix[x][y] = new Chest(this, x,y, CellType.CHEST_CLOSED);
         }
     }
 
@@ -65,6 +66,19 @@ public class GameMap {
 
     public List<Monster> getMonsters() {
         return monsters;
+    }
+
+    public List<Item> getItems() {
+        List<Item> items = new ArrayList<>();
+        for (Cell[] cells : cellsMatrix) {
+            for (Cell cell : cells) {
+                Item item = cell.getItem();
+                if (item != null) {
+                    items.add(item);
+                }
+            }
+        }
+        return items;
     }
 
     public void addMonster(Monster monster) {

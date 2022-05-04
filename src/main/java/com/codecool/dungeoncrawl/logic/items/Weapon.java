@@ -28,7 +28,7 @@ public class Weapon extends Item {
     }
 
 
-    public String getNam() {
+    public String getName() {
         return weaponType.getName();
     }
 }

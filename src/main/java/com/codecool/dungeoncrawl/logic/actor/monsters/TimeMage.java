@@ -7,7 +7,7 @@ import com.codecool.dungeoncrawl.logic.items.KeyType;
 
 import java.util.List;
 
-public class TimeMage extends Monster implements Movable {
+public class TimeMage extends Monster implements Movable, MoveTimer {
     private int moveTimer = 0;
     private static final int MOVE_TIMER_CEILING = 20;
     List<Cell> timeCells;
@@ -66,5 +66,10 @@ public class TimeMage extends Monster implements Movable {
         Cell nextCell = cell.getNeighbor(Direction.UP);
         nextCell.setItem(new Key(nextCell, KeyType.LEVEL_KEY));
         super.die();
+    }
+
+    @Override
+    public int getMoveTimer() {
+        return moveTimer;
     }
 }
