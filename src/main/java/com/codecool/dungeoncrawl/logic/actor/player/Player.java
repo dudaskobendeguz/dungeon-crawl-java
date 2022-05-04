@@ -5,13 +5,13 @@ import com.codecool.dungeoncrawl.logic.actor.Actor;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Fireball;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.items.*;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Player extends Actor {
-
     private static class Inventory {
         private final List<Item> items = new ArrayList<>();
 
@@ -79,6 +79,19 @@ public class Player extends Actor {
         super(10, WeaponType.FIST.getDamage());
         this.maxHealth = 10;
         name = playerName;
+    }
+
+    /**
+        This constructor loads player from inventory
+     */
+    public Player(PlayerModel playerModel, Cell cell, Direction direction, Weapon weapon, List<Item> items) {
+        super(cell, playerModel.getHp(), weapon.getDamage());
+        items.forEach(inventory::setItem);
+        this.maxHealth = 10;
+        this.name = playerModel.getPlayerName();
+        this.weapon = weapon;
+        this.direction = direction;
+        this.fireballTimer = playerModel.getFireballTimer();
     }
 
     public Fireball getFireball() {
