@@ -1,13 +1,14 @@
 package com.codecool.dungeoncrawl.dao;
 
 import com.codecool.dungeoncrawl.Level;
+import com.codecool.dungeoncrawl.Tiles;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.actor.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.actor.monsters.MoveDirection;
 import com.codecool.dungeoncrawl.logic.actor.monsters.MoveTimer;
-import com.codecool.dungeoncrawl.logic.actor.monsters.Robot;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.MonsterModel;
 import com.codecool.dungeoncrawl.model.PlayerModel;
@@ -16,6 +17,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -85,11 +87,22 @@ public class GameDatabaseManager {
     public GameMap loadGame(int gameStateId) {
         Level loadedLevel = loadGameState(gameStateId);
         PlayerModel playerModel = loadPlayer(gameStateId);
+        List<Item> inventoryItems = createItemsFromDbData(playerModel.getItems());
         createNewPlayer(playerModel);
         List<CellModel> cellModels = loadCells(gameStateId);
 //        GameMap map = MapLoader.getGameMap(loadedLevel.getMAP_FILE_PATH(),)
         return null;
     }
+
+    private List<Item> createItemsFromDbData(List<Integer> itemsTileIds) {
+        List<Item> items = new ArrayList<>();
+        for (Integer itemsTileId : itemsTileIds) {
+            Item item = MapLoader.createItem(null, Tiles.tileTypeMap.get(itemsTileId));
+            items.add(item);
+        }
+        return items;
+    }
+
 
     private List<CellModel> loadCells(int gameStateId) {
         return cellDao.getAllByGameStateId(gameStateId);
