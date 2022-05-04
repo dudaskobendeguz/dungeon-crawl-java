@@ -135,15 +135,20 @@ public class MapLoader {
     }
 
     private static void setItem(Cell cell, TileType tileType) {
-        // TODO Think about ItemType
         cell.setType(DEFAULT_CELL);
+        cell.setItem(createItem(cell, tileType));
+    }
+
+    public static Item createItem(Cell cell, TileType tileType) {
+        // TODO Think about ItemType
         if (tileType instanceof ConsumableType) {
-            cell.setItem(new Consumable(cell, (ConsumableType) tileType));
-        } else if (tileType instanceof KeyType) {
-            cell.setItem(new Key(cell, (KeyType) tileType));
-        } else if (tileType instanceof WeaponType) {
-            cell.setItem(new Weapon(cell, (WeaponType) tileType));
+            return new Consumable(cell, (ConsumableType) tileType);
+        } if (tileType instanceof KeyType) {
+            return new Key(cell, (KeyType) tileType);
+        } if (tileType instanceof WeaponType) {
+            return new Weapon(cell, (WeaponType) tileType);
         }
+        throw new RuntimeException("Cannot create item. TileType: " + tileType);
     }
 
     private static void setTimeMageCells(GameMap map, List<Cell> timeCells) {
