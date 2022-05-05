@@ -49,6 +49,7 @@ public class Fireball extends Monster implements Movable, MoveDirection {
         return moveDirection;
     }
 
+    @Override
     public void setMoveDirection(Direction moveDirection) {
         if (this.moveDirection == null) {
             this.moveDirection = moveDirection;
