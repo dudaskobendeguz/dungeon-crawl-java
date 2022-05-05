@@ -47,4 +47,8 @@ public class GameStateModel {
     public String getMapFilePath() {
         return saveSlotModel.getMapFilePath();
     }
+
+    public int getSaveSlotId() {
+        return saveSlotModel.getId();
+    }
 }
