@@ -13,6 +13,10 @@ public class SaveSlotModel extends BaseModel {
         this.levelId = levelId;
     }
 
+    private Integer generateId() {
+        return Math.abs(java.time.LocalTime.now().hashCode());
+    }
+
     public Date getSavedAt() {
         return savedAt;
     }
