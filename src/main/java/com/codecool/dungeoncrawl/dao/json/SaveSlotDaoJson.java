@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl.json;
 
 import com.codecool.dungeoncrawl.model.GameStateModel;
-import com.codecool.dungeoncrawl.model.*;
 import com.google.gson.Gson;
 
 import java.io.*;
@@ -26,12 +25,6 @@ public class SaveSlotDaoJson {
         }
     }
 
-
-    public void update(SaveSlotModel state) {
-
-    }
-
-
     public GameStateModel importJson(String filename){
         try {
             Gson gson = new Gson();
@@ -45,6 +38,9 @@ public class SaveSlotDaoJson {
         return null;
     }
 
+    public void update(GameStateModel gameStateModel, String filename) {
+        exportToJson(gameStateModel, filename);
+    }
 
     public List<GameStateModel> getAll() {
         String loaderDir = getSaveFolderPath();
@@ -54,7 +50,6 @@ public class SaveSlotDaoJson {
                         .filter(Files::isRegularFile)
                         .filter(path -> path.getFileName().toString().contains(FILE_TYPE))
                         .map(path -> importJson(path.getFileName().toString().split(FILE_TYPE)[0]))
-
                         .collect(Collectors.toList());
             }
         } catch (IOException e) {
@@ -68,7 +63,6 @@ public class SaveSlotDaoJson {
         String loaderDir = getSaveFolderPath();
         try {
             try (Stream<Path> paths = Files.walk(Paths.get(loaderDir))) {
-
                 return paths
                         .filter(Files::isRegularFile)
                         .filter(path -> path.getFileName().toString().contains(FILE_TYPE))
@@ -80,6 +74,7 @@ public class SaveSlotDaoJson {
         }
         return null;
     }
+
     private String getTargetSaveFolderPath() {
         URL urlLoader = SaveSlotDaoJson.class.getProtectionDomain().getCodeSource().getLocation();
         System.out.println(urlLoader.getPath());
