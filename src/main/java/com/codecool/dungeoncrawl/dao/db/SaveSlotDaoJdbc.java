@@ -107,8 +107,34 @@ public class SaveSlotDaoJdbc implements SaveSlotDao {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setInt(1, saveSlotId);
             preparedStatement.executeUpdate();
+//            vacuum();
+//            reindex();
         } catch (SQLException throwables) {
             throw new RuntimeException("Error under delete save slot from database: + " + throwables, throwables);
+        }
+    }
+
+    private void vacuum() {
+        try (Connection connection = dataSource.getConnection()) {
+            String sqlQuery = "VACUUM(FULL, ANALYZE, VERBOSE) save_slot;" +
+                    "VACUUM(FULL, ANALYZE, VERBOSE) player;" +
+                    "VACUUM(FULL, ANALYZE, VERBOSE) monster;" +
+                    "VACUUM(FULL, ANALYZE, VERBOSE) item;" +
+                    "VACUUM(FULL, ANALYZE, VERBOSE) cell;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throw new RuntimeException("Error under vacuuming database", throwables);
+        }
+    }
+
+    private void reindex() {
+        try (Connection connection = dataSource.getConnection()) {
+            String sqlQuery = "REINDEX DATABASE crunchy_little_traktor";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throw new RuntimeException("Error under reindexing database", throwables);
         }
     }
 }
