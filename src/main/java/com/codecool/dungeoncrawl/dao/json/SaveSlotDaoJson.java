@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.json;
+package com.codecool.dungeoncrawl.dao.json;
 
 import com.codecool.dungeoncrawl.model.GameStateModel;
 import com.google.gson.Gson;

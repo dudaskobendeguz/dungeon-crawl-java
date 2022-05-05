@@ -1,7 +1,9 @@
 package com.codecool.dungeoncrawl;
 
 
-import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
+import com.codecool.dungeoncrawl.dao.db.GameDatabaseManager;
+import com.codecool.dungeoncrawl.dao.db.SaveSlotDao;
+import com.codecool.dungeoncrawl.dao.json.GameJsonManager;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.GameMap;

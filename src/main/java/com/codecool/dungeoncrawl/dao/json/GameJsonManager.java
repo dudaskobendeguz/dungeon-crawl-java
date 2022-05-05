@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.json;
+package com.codecool.dungeoncrawl.dao.json;
 
 import com.codecool.dungeoncrawl.Level;
 import com.codecool.dungeoncrawl.logic.MapLoader;
