@@ -17,13 +17,12 @@ import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.model.SaveSlotModel;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -68,9 +67,21 @@ public class Main extends Application {
         Button saveButton = display.getSaveButton();
         Button saveCancelButton = display.getSaveCancelButton();
         TextField saveInput = display.getSaveInput();
+        Alert overwriteSaveModal = display.getOverwriteSaveModal();
+
         saveButton.setOnAction((event) -> {
-            dbManager.saveGame(map, currentLevel, saveInput.getText());
-            closeModal(saveModal);
+            String name = saveInput.getText();
+            SaveSlotModel saveSlot = dbManager.getSaveSlotByName(name);
+            if (saveSlot != null) {
+                Optional<ButtonType> result = overwriteSaveModal.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    // TODO Overwrite save slot
+                    closeModal(saveModal);
+                }
+            } else {
+                dbManager.saveGame(map, currentLevel, name);
+                closeModal(saveModal);
+            }
         });
         saveCancelButton.setOnAction((event) -> closeModal(saveModal));
         saveModal.setOnCloseRequest((windowEvent) -> closeModal(saveModal));
