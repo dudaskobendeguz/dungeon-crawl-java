@@ -145,18 +145,19 @@ public class Main extends Application {
 
     private void saveFile() {
         FileChooser fileChooser = display.getImportModal();
-        fileChooser.showSaveDialog(display.primaryStage);
-        // TODO export game
+        File file = fileChooser.showSaveDialog(display.primaryStage);
+        if (file != null) {
+            System.out.println(file.getAbsolutePath());
+            exportGame(file.getAbsolutePath());
+        }
     }
 
     private void importGame(String filename) {
         map = jsonManager.importGame(filename);
     }
 
-    private void exportGame() {
-        List<String> filenames = jsonManager.getAllSaveFileName();
-        filenames.forEach(System.out::println);
-        jsonManager.exportGame(map, currentLevel, "test");
+    private void exportGame(String filename) {
+        jsonManager.exportGame(map, currentLevel, filename);
     }
 
     void stopTimer() {

@@ -17,7 +17,7 @@ public class SaveSlotDaoJson {
 
     public void exportToJson(GameStateModel gameStateModel, String filename) {
         try {
-            Writer writer = new FileWriter(String.format("%s/%s%s", getSaveFolderPath(), filename, FILE_TYPE));
+            Writer writer = new FileWriter(filename);
             new Gson().toJson(gameStateModel, writer);
             writer.close();
         } catch (IOException e) {
