@@ -74,9 +74,14 @@ public class Main extends Application {
         saveModal.setOnCloseRequest((windowEvent) -> closeModal(saveModal));
     }
 
-    private void closeModal(Stage saveModal) {
-        saveModal.close();
+    private void closeModal(Stage modal) {
+        modal.close();
         startTimer();
+    }
+
+    private void openModal(Stage modal) {
+        stopTimer();
+        modal.showAndWait();
     }
 
     private void setLoadModalAction() {
@@ -184,12 +189,10 @@ public class Main extends Application {
             case ESCAPE:
                 System.exit(0);
                 break;
-            case S: // new line
+            case S:
                 if (keyEvent.isControlDown()) {
-                    stopTimer();
-                    display.showSaveModal();
+                    openModal(display.getSaveModal());
                 }
-//                dbManager.saveGame(map, currentLevel);
                 break;
             case D:
                 map = dbManager.loadGame(2);

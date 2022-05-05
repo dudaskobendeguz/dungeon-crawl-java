@@ -114,10 +114,6 @@ public class Display {
         saveModal.setScene(scene);
     }
 
-    public void showSaveModal() {
-        saveModal.showAndWait();
-    }
-
     private void setupUi() {
         ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
