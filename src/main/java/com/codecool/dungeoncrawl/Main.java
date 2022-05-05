@@ -32,7 +32,7 @@ public class Main extends Application {
     private boolean isTimeMageAlive = true;
     GameMap map = MapLoader.getGameMap(currentLevel.getMAP_FILE_PATH(), new Player(playerName));
     Display display;
-    Timer timer = new Timer();
+    Timer timer;
     GameDatabaseManager dbManager;
     GameJsonManager jsonManager;
 
@@ -48,16 +48,30 @@ public class Main extends Application {
         display = new Display(MAP_SIZE, primaryStage);
         display.scene.setOnKeyPressed(this::onKeyPressed);
         display.refresh(map);
+        startTimer();
+    }
+
+    void stopTimer() {
+        timer.cancel();
+        timer.purge();
+    }
+
+    void startTimer() {
+        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                Player player = map.getPlayer();
-                moveMonsters(false);
-                player.tryToAttack(false);
-                player.setFireballTimer();
-                Platform.runLater(() -> display.refresh(map));
+                runTimer();
             }
-        }, 1000, 100);
+        }, 50, 100);
+    }
+
+    private void runTimer() {
+        Player player = map.getPlayer();
+        moveMonsters(false);
+        player.tryToAttack(false);
+        player.setFireballTimer();
+        Platform.runLater(() -> display.refresh(map));
     }
 
     private void setupDbManager() {
@@ -121,10 +135,14 @@ public class Main extends Application {
             case ESCAPE:
                 System.exit(0);
                 break;
-            case S:
+            case S: // new line
                 if (keyEvent.isControlDown()) {
-                    dbManager.saveGame(map, currentLevel);
+                    stopTimer();
+                    display.showSaveModal();
+                } else if (keyEvent.isAltDown()) {
+                    startTimer();
                 }
+//                dbManager.saveGame(map, currentLevel);
                 break;
             case D:
                 map = dbManager.loadGame(2);
