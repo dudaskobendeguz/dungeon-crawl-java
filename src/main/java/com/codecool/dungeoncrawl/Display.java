@@ -134,9 +134,9 @@ public class Display {
     }
 
     private void setupOverwriteSaveModal() {
-        overwriteSaveModal.setTitle("Override save slot");
-        overwriteSaveModal.setHeaderText("Override save slot");
-        overwriteSaveModal.setContentText("Would you like to overwrite the already existing state?");
+        overwriteSaveModal.setTitle("Overwrite save slot");
+        overwriteSaveModal.setHeaderText("Overwrite save slot");
+        overwriteSaveModal.setContentText("Would you like to overwrite the save slot?");
     }
 
     private void setupExportModal() {
