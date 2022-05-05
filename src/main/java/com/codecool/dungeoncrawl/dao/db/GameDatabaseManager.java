@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.dao;
+package com.codecool.dungeoncrawl.dao.db;
 
 import com.codecool.dungeoncrawl.Level;
 import com.codecool.dungeoncrawl.logic.*;
@@ -8,11 +8,10 @@ import com.codecool.dungeoncrawl.logic.actor.monsters.MoveTimer;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.model.*;
-import org.postgresql.ds.PGSimpleDataSource;
 
+import org.postgresql.ds.PGSimpleDataSource;
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameDatabaseManager {
@@ -40,7 +39,7 @@ public class GameDatabaseManager {
     }
 
     private int saveGameState(Level currentLevel) {
-        saveSlotModel saveSlotModel = new saveSlotModel(currentLevel.getID());
+        SaveSlotModel saveSlotModel = new SaveSlotModel(currentLevel.getID());
         return saveSlotDao.add(saveSlotModel);
 
     }
@@ -94,13 +93,13 @@ public class GameDatabaseManager {
 
 
     public GameMap loadGame(int saveSlotId) {
-        Level loadedLevel = loadGameState(saveSlotId);
-        String filePath = loadedLevel.getMAP_FILE_PATH();
+        SaveSlotModel saveSlotModel = loadSaveSlot(saveSlotId);
         PlayerModel playerModel = loadPlayer(saveSlotId);
         List<CellModel> cellModels = loadCells(saveSlotId);
         List<MonsterModel> monsterModels = loadMonsters(saveSlotId);
         List<ItemModel> itemModels = loadItems(saveSlotId);
-        return MapLoader.getGameMap(filePath, playerModel, cellModels, monsterModels, itemModels);
+        GameStateModel gameStateModel = new GameStateModel(saveSlotModel, playerModel, cellModels, monsterModels, itemModels);
+        return MapLoader.getGameMap(gameStateModel);
     }
 
     private List<ItemModel> loadItems(int saveSlotId) {
@@ -116,20 +115,12 @@ public class GameDatabaseManager {
         return cellDao.getAllBySaveSlotId(saveSlotId);
     }
 
-    private Level loadGameState(int saveSlotId) {
-        saveSlotModel saveSlotModel = saveSlotDao.get(saveSlotId);
-        return Arrays.stream(Level.values())
-                .filter(level -> level.getID() == saveSlotModel.getLevelId())
-                .findFirst()
-                .orElseThrow();
+    private SaveSlotModel loadSaveSlot(int saveSlotId) {
+        return saveSlotDao.get(saveSlotId);
     }
 
     public PlayerModel loadPlayer(int saveSlotId) {
         return playerDao.get(saveSlotId);
-    }
-
-    public List<CellModel> loadMap() {
-        return null;
     }
 
     /**
