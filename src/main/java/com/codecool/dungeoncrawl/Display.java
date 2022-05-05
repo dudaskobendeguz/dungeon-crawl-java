@@ -110,13 +110,18 @@ public class Display {
         loadModal.initModality(Modality.APPLICATION_MODAL);
         loadModal.setTitle("Load Game from Database");
 
+        Label select = new Label("Select a save slot to load:");
+
+        loadButton.setMaxWidth(120);
+        loadCancelButton.setMaxWidth(120);
+
         ListView<Object> listView = new ListView<>();
         for (int i = 0; i < 100; i++) {
             listView.getItems().add("Test " + i);
         }
 
-        VBox vBox = new VBox(listView, loadButton);
-        vBox.setSpacing(20);
+        VBox vBox = new VBox(select, listView, loadButton, loadCancelButton);
+        vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER);
         vBox.setPadding(new Insets(10));
 
