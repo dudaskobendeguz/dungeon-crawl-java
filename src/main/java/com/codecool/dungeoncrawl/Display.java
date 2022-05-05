@@ -145,6 +145,9 @@ public class Display {
 
     private void setupImportModal() {
         importModal.setTitle("Import JSON file");
+        importModal.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("JSON", "*.json")
+        );
     }
 
     private void setupExportModal() {
