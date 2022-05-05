@@ -78,6 +78,39 @@ public class Display {
 
     private void setupModals() {
         setupSaveModal();
+        setupLoadModal();
+        setupImportModal();
+        setupExportModal();
+    }
+
+    private void setupSaveModal() {
+        saveModal.initModality(Modality.APPLICATION_MODAL);
+        saveModal.setTitle("Save Game to Database");
+
+        Label name = new Label("Name:");
+
+        saveInput.setMaxWidth(200);
+        saveButton.setMaxWidth(120);
+        saveCancelButton.setMaxWidth(120);
+
+        VBox layout = new VBox(20);
+        layout.getChildren().addAll(name, saveInput, saveButton, saveCancelButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 300, 250);
+        saveModal.setScene(scene);
+    }
+
+    private void setupExportModal() {
+
+    }
+
+    private void setupImportModal() {
+
+    }
+
+    private void setupLoadModal() {
+
     }
 
     public Button getSaveButton() {
@@ -94,24 +127,6 @@ public class Display {
 
     public Button getSaveCancelButton() {
         return saveCancelButton;
-    }
-
-    void setupSaveModal() {
-        saveModal.initModality(Modality.APPLICATION_MODAL);
-        saveModal.setTitle("Save Game to Database");
-
-        Label name = new Label("Name:");
-
-        saveInput.setMaxWidth(200);
-        saveButton.setMaxWidth(120);
-        saveCancelButton.setMaxWidth(120);
-
-        VBox layout = new VBox(20);
-        layout.getChildren().addAll(name, saveInput, saveButton, saveCancelButton);
-        layout.setAlignment(Pos.CENTER);
-
-        Scene scene = new Scene(layout, 300, 250);
-        saveModal.setScene(scene);
     }
 
     private void setupUi() {
