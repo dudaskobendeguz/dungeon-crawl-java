@@ -55,6 +55,29 @@ public class SaveSlotDaoJdbc implements SaveSlotDao {
     }
 
     @Override
+    public SaveSlotModel getByName(String name) {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, name, level_id, saved_at FROM save_slot WHERE name = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, name);
+
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            SaveSlotModel saveSlotModel = new SaveSlotModel(
+                    rs.getInt(3),
+                    rs.getString(2)
+            );
+            saveSlotModel.setId(rs.getInt(1));
+            saveSlotModel.setSavedAt(rs.getTimestamp(4));
+            return saveSlotModel;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<SaveSlotModel> getAll() {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT id, name, level_id, saved_at FROM save_slot";
