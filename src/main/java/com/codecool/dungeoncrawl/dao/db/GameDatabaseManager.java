@@ -131,6 +131,10 @@ public class GameDatabaseManager {
         return saveSlotDao.getAll();
     }
 
+    public SaveSlotModel getSaveSlotByName(String name) {
+        return saveSlotDao.getByName(name);
+    }
+
     /**
      * Trying to make connection with the database.
      * The connection needs environment variables:
