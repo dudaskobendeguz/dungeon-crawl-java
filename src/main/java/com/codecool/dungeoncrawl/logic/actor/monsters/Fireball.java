@@ -8,10 +8,14 @@ import java.util.List;
 
 public class Fireball extends Monster implements Movable, MoveDirection {
 
-    private final Direction moveDirection;
+    private Direction moveDirection;
+
+    public Fireball(Cell cell) {
+        super(MonsterType.FIREBALL, cell, 1, 100, false);
+    }
 
     public Fireball(Cell cell, Direction moveDirection) {
-        super(MonsterType.FIREBALL, cell, 1, 100, false);
+        this(cell);
         this.moveDirection = moveDirection;
     }
 
@@ -43,5 +47,11 @@ public class Fireball extends Monster implements Movable, MoveDirection {
     @Override
     public Direction getMoveDirection() {
         return moveDirection;
+    }
+
+    public void setMoveDirection(Direction moveDirection) {
+        if (this.moveDirection == null) {
+            this.moveDirection = moveDirection;
+        }
     }
 }
