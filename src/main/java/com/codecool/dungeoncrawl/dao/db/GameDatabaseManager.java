@@ -123,6 +123,14 @@ public class GameDatabaseManager {
         return playerDao.get(saveSlotId);
     }
 
+    public List<CellModel> loadMap() {
+        return null;
+    }
+
+    public List<SaveSlotModel> getSaveSlots() {
+        return saveSlotDao.getAll();
+    }
+
     /**
      * Trying to make connection with the database.
      * The connection needs environment variables:
