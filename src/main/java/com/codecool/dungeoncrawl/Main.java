@@ -121,14 +121,31 @@ public class Main extends Application {
             case ESCAPE:
                 System.exit(0);
                 break;
-            case S: // new line
-
-                dbManager.saveGame(map, currentLevel);
+            case S:
+                if (keyEvent.isControlDown()) {
+                    dbManager.saveGame(map, currentLevel);
+                }
                 break;
             case D:
                 map = dbManager.loadGame(2);
                 break;
+            case F4:
+                importGame();
+                break;
+            case F5:
+                exportGame();
+                break;
         }
+    }
+
+    private void importGame() {
+        map = jsonManager.importGame("test");
+    }
+
+    private void exportGame() {
+        List<String> filenames = jsonManager.getAllSaveFileName();
+        filenames.forEach(System.out::println);
+        jsonManager.exportGame(map, currentLevel, "test");
     }
 
     public void moveActors(Direction direction) {
