@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.model;
 
+import com.codecool.dungeoncrawl.logic.Direction;
+
 public class MonsterModel extends BaseModel {
     private int typeId;
     private int x;
@@ -61,5 +63,9 @@ public class MonsterModel extends BaseModel {
 
     public void setMoveTimer(int moveTimer) {
         this.moveTimer = moveTimer;
+    }
+
+    public Direction getDirection() {
+        return Direction.getDirectionById(directionId);
     }
 }
