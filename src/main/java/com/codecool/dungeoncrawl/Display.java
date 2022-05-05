@@ -16,7 +16,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -40,6 +39,8 @@ public class Display {
     private final Button saveButton;
     private final TextField saveInput;
     private final Button saveCancelButton;
+
+    private final Alert overwriteSaveModal;
 
     private final Stage loadModal;
     private final Button loadButton;
@@ -65,6 +66,8 @@ public class Display {
         saveInput = new TextField();
         saveCancelButton = new Button("Cancel");
 
+        overwriteSaveModal = new Alert(Alert.AlertType.CONFIRMATION);
+
         loadModal = new Stage();
         loadButton = new Button("Load Game");
         loadCancelButton = new Button("Cancel");
@@ -88,6 +91,7 @@ public class Display {
     private void setupModals() {
         setupSaveModal();
         setupLoadModal();
+        setupOverwriteSaveModal();
         setupImportModal();
         setupExportModal();
     }
@@ -129,6 +133,12 @@ public class Display {
         loadModal.setScene(scene);
     }
 
+    private void setupOverwriteSaveModal() {
+        overwriteSaveModal.setTitle("Override save slot");
+        overwriteSaveModal.setHeaderText("Override save slot");
+        overwriteSaveModal.setContentText("Would you like to overwrite the already existing state?");
+    }
+
     private void setupExportModal() {
 
     }
@@ -167,6 +177,10 @@ public class Display {
 
     public ListView<SaveSlotModel> getLoadItems() {
         return loadItems;
+    }
+
+    public Alert getOverwriteSaveModal() {
+        return overwriteSaveModal;
     }
 
     private void setupUi() {
