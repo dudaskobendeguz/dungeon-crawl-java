@@ -111,7 +111,7 @@ public class MapLoader {
                 TileType tileType = Tiles.tileTypeMap.get(tileId);
                 TileCategory tileCategory = getTileCategory(tileId, tileType);
                 if (isLoading) {
-                    if (tileCategory == TileCategory.CELL) {
+                    if (tileCategory.isReloadAble()) {
                         cell.setType((CellType) tileType);
                     } else {
                         cell.setType(DEFAULT_CELL);
