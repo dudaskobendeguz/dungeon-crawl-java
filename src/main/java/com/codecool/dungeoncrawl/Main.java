@@ -82,9 +82,16 @@ public class Main extends Application {
         Button loadCancelButton = display.getLoadCancelButton();
         ListView<SaveSlotModel> loadItems = display.getLoadItems();
 
-        loadButton.setOnAction((event -> {
-            System.out.println(loadItems.getSelectionModel().getSelectedItem());
+        loadModal.setOnShown((windowEvent -> {
+            loadItems.getItems().clear();
+            List<SaveSlotModel> saveSlots = dbManager.getSaveSlots();
+            saveSlots.forEach((saveSlot) -> loadItems.getItems().add(saveSlot));
         }));
+        loadModal.setOnCloseRequest((windowEvent) -> closeModal(loadModal));
+        loadButton.setOnAction((event -> {
+            System.out.println(loadItems.getSelectionModel().getSelectedItem().getId());
+        }));
+        loadCancelButton.setOnAction((event -> closeModal(loadModal)));
     }
 
     private void setExportModalAction() {
