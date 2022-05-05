@@ -38,6 +38,7 @@ public class TimeMage extends Monster implements Movable, MoveTimer {
                     case ROBOT:
                         Robot robot = new Robot(randomNonDiagonalNeighbor);
                         randomNonDiagonalNeighbor.setActor(robot);
+                        robot.setMoveDirection(Direction.RIGHT);
                         return robot;
 
                     case SLIME:

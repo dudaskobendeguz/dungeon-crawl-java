@@ -16,6 +16,7 @@ public class GameMap {
 
     private Player player;
     private final List<Monster> monsters = new ArrayList<>();
+    private List<Cell> timeCells;
 
     public GameMap(int width, int height, CellType defaultCell, Level level) {
         this.width = width;
@@ -90,5 +91,15 @@ public class GameMap {
 
     public void addMonster(Monster monster) {
         monsters.add(monster);
+    }
+
+    public void setTimeCells(List<Cell> timeCells) {
+        if (this.timeCells == null) {
+            this.timeCells = timeCells;
+        }
+    }
+
+    public List<Cell> getTimeCells() {
+        return timeCells;
     }
 }
