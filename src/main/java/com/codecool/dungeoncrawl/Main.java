@@ -14,9 +14,11 @@ import com.codecool.dungeoncrawl.logic.actor.monsters.TimeMage;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 
+import com.codecool.dungeoncrawl.model.SaveSlotModel;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -74,17 +76,15 @@ public class Main extends Application {
         saveModal.setOnCloseRequest((windowEvent) -> closeModal(saveModal));
     }
 
-    private void closeModal(Stage modal) {
-        modal.close();
-        startTimer();
-    }
-
-    private void openModal(Stage modal) {
-        stopTimer();
-        modal.showAndWait();
-    }
-
     private void setLoadModalAction() {
+        Stage loadModal = display.getLoadModal();
+        Button loadButton = display.getLoadButton();
+        Button loadCancelButton = display.getLoadCancelButton();
+        ListView<SaveSlotModel> loadItems = display.getLoadItems();
+
+        loadButton.setOnAction((event -> {
+            System.out.println(loadItems.getSelectionModel().getSelectedItem());
+        }));
     }
 
     private void setExportModalAction() {
@@ -93,6 +93,16 @@ public class Main extends Application {
 
     private void setImportModalAction() {
 
+    }
+
+    private void closeModal(Stage modal) {
+        modal.close();
+        startTimer();
+    }
+
+    private void openModal(Stage modal) {
+        stopTimer();
+        modal.showAndWait();
     }
 
     void stopTimer() {

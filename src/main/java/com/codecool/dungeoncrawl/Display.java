@@ -7,6 +7,7 @@ import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 
+import com.codecool.dungeoncrawl.model.SaveSlotModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -34,14 +35,16 @@ public class Display {
     private final Label weaponLabel;
     Scene scene;
     private int uiRowIndex = 0;
+
     private final Stage saveModal;
     private final Button saveButton;
     private final TextField saveInput;
     private final Button saveCancelButton;
+
     private final Stage loadModal;
     private final Button loadButton;
     private final Button loadCancelButton;
-
+    private final ListView<SaveSlotModel> loadItems;
 
     public Display(int mapSize, Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -65,6 +68,7 @@ public class Display {
         loadModal = new Stage();
         loadButton = new Button("Load Game");
         loadCancelButton = new Button("Cancel");
+        loadItems = new ListView<>();
 
 
         setupUi();
@@ -115,12 +119,8 @@ public class Display {
         loadButton.setMaxWidth(120);
         loadCancelButton.setMaxWidth(120);
 
-        ListView<Object> listView = new ListView<>();
-        for (int i = 0; i < 100; i++) {
-            listView.getItems().add("Test " + i);
-        }
 
-        VBox vBox = new VBox(select, listView, loadButton, loadCancelButton);
+        VBox vBox = new VBox(select, loadItems, loadButton, loadCancelButton);
         vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER);
         vBox.setPadding(new Insets(10));
@@ -163,6 +163,10 @@ public class Display {
 
     public Button getLoadCancelButton() {
         return loadCancelButton;
+    }
+
+    public ListView<SaveSlotModel> getLoadItems() {
+        return loadItems;
     }
 
     private void setupUi() {
