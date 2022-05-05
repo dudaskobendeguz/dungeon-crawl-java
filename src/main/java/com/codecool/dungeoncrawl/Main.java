@@ -130,10 +130,10 @@ public class Main extends Application {
                 map = dbManager.loadGame(2);
                 break;
             case F4:
-                importGame();
+                exportGame();
                 break;
             case F5:
-                exportGame();
+                importGame();
                 break;
         }
     }
