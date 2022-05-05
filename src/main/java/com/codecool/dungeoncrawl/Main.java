@@ -138,8 +138,9 @@ public class Main extends Application {
         FileChooser fileChooser = display.getImportModal();
         File file = fileChooser.showOpenDialog(display.primaryStage);
         if (file != null) {
-            // TODO import game
-//            importGame(file.getAbsolutePath());
+            if (file.exists()) {
+                importGame(file.getAbsolutePath());
+            }
         }
     }
 
@@ -147,7 +148,6 @@ public class Main extends Application {
         FileChooser fileChooser = display.getImportModal();
         File file = fileChooser.showSaveDialog(display.primaryStage);
         if (file != null) {
-            System.out.println(file.getAbsolutePath());
             exportGame(file.getAbsolutePath());
         }
     }

@@ -28,7 +28,7 @@ public class SaveSlotDaoJson {
     public GameStateModel importJson(String filename){
         try {
             Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get(String.format("%s/%s%s", getSaveFolderPath(), filename, FILE_TYPE)));
+            Reader reader = Files.newBufferedReader(Paths.get(filename));
             GameStateModel gameStateModel = gson.fromJson(reader, GameStateModel.class);
             reader.close();
             return gameStateModel;
