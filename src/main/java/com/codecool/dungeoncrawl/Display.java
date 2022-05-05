@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -47,6 +48,8 @@ public class Display {
     private final Button loadCancelButton;
     private final ListView<SaveSlotModel> loadItems;
 
+    private final FileChooser importModal;
+
     public Display(int mapSize, Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.MAP_SIZE = mapSize;
@@ -73,6 +76,7 @@ public class Display {
         loadCancelButton = new Button("Cancel");
         loadItems = new ListView<>();
 
+        importModal = new FileChooser();
 
         setupUi();
 
@@ -139,11 +143,11 @@ public class Display {
         overwriteSaveModal.setContentText("Would you like to overwrite the save slot?");
     }
 
-    private void setupExportModal() {
-
+    private void setupImportModal() {
+        importModal.setTitle("Import JSON file");
     }
 
-    private void setupImportModal() {
+    private void setupExportModal() {
 
     }
 
@@ -181,6 +185,10 @@ public class Display {
 
     public Alert getOverwriteSaveModal() {
         return overwriteSaveModal;
+    }
+
+    public FileChooser getImportModal() {
+        return importModal;
     }
 
     private void setupUi() {
