@@ -33,7 +33,7 @@ public class Main extends Application {
     private final static int MAP_SIZE = 15;
     private Level currentLevel = Level.MAIN_MENU;
     private boolean isTimeMageAlive = true;
-    GameMap map = MapLoader.getGameMap(currentLevel.getMAP_FILE_PATH(), new Player(playerName));
+    GameMap map = MapLoader.getGameMap(currentLevel, new Player(playerName));
     Display display;
     Timer timer;
     GameDatabaseManager dbManager;
@@ -111,6 +111,7 @@ public class Main extends Application {
 
     private void loadGame(SaveSlotModel saveSlot) {
         map = dbManager.loadGame(saveSlot.getId());
+        currentLevel = map.getLevel();
     }
 
     private void setExportModalAction() {
@@ -305,7 +306,7 @@ public class Main extends Application {
                 break;
             }
         }
-        map = MapLoader.getGameMap(currentLevel.getMAP_FILE_PATH(), map.getPlayer());
+        map = MapLoader.getGameMap(currentLevel, map.getPlayer());
         display.refresh(map);
     }
 

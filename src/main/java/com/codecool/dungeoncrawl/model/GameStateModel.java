@@ -1,5 +1,8 @@
 package com.codecool.dungeoncrawl.model;
 
+import com.codecool.dungeoncrawl.Level;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class GameStateModel {
@@ -44,11 +47,14 @@ public class GameStateModel {
         return itemModels;
     }
 
-    public String getMapFilePath() {
-        return saveSlotModel.getMapFilePath();
-    }
-
     public int getSaveSlotId() {
         return saveSlotModel.getId();
+    }
+
+    public Level getLevel() {
+        return Arrays.stream(Level.values())
+                .filter(level -> level.getID() == saveSlotModel.getLevelId())
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
     }
 }

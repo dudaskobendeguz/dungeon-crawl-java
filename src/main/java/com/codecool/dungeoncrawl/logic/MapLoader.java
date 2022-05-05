@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.Level;
 import com.codecool.dungeoncrawl.TileType;
 import com.codecool.dungeoncrawl.TileCategory;
 import com.codecool.dungeoncrawl.Tiles;
@@ -18,12 +19,13 @@ public class MapLoader {
     private static final String DELIMITER = ",";
     private static final CellType DEFAULT_CELL = CellType.FLOOR_1;
 
-    public static GameMap getGameMap(String filePath, Player player) {
-        return createGameMap(filePath, player, false);
+    public static GameMap getGameMap(Level level, Player player) {
+        return createGameMap(level, player, false);
     }
 
     public static GameMap getGameMap(GameStateModel gameStateModel) {
-        GameMap gameMap = createGameMap(gameStateModel.getMapFilePath(), null, true);
+        Level level = gameStateModel.getLevel();
+        GameMap gameMap = createGameMap(level, null, true);
         setPlayerModel(gameMap, gameStateModel.getPlayerModel());
         setCellModels(gameMap, gameStateModel.getCellModels());
         setMonsterModels(gameMap, gameStateModel.getMonsterModels());
@@ -89,13 +91,13 @@ public class MapLoader {
         return items;
     }
 
-    private static GameMap createGameMap(String filePath, Player player, boolean isLoading) {
-        Scanner mapSizeScanner = loadMapFile(filePath);
+    private static GameMap createGameMap(Level level, Player player, boolean isLoading) {
+        Scanner mapSizeScanner = loadMapFile(level.getMAP_FILE_PATH());
         int width = getMapWidth(mapSizeScanner);
         int height = getMapHeight(mapSizeScanner);
 
-        GameMap map = new GameMap(width, height, CellType.EMPTY);
-        Scanner mapScanner = loadMapFile(filePath);
+        GameMap map = new GameMap(width, height, CellType.EMPTY, level);
+        Scanner mapScanner = loadMapFile(level.getMAP_FILE_PATH());
         loadTiles(map, mapScanner, player, width, height, isLoading);
         return map;
     }
