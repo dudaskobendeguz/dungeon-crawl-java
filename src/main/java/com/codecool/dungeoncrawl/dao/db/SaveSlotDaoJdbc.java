@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.model.*;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SaveSlotDaoJdbc implements SaveSlotDao {
@@ -55,6 +56,24 @@ public class SaveSlotDaoJdbc implements SaveSlotDao {
 
     @Override
     public List<SaveSlotModel> getAll() {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, name, level_id, saved_at FROM save_slot";
+            PreparedStatement st = conn.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+            List<SaveSlotModel> saveSlotModels = new ArrayList<>();
+            while (rs.next()) {
+                SaveSlotModel saveSlotModel = new SaveSlotModel(
+                        rs.getInt(3),
+                        rs.getString(2)
+                );
+                saveSlotModel.setId(rs.getInt(1));
+                saveSlotModel.setSavedAt(rs.getDate(4));
+                saveSlotModels.add(saveSlotModel);
+            }
+            return  saveSlotModels;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
