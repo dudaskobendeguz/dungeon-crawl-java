@@ -91,6 +91,11 @@ public class GameDatabaseManager {
         }
     }
 
+    public void updateGame(GameMap map, SaveSlotModel saveSlotModel, String name) {
+        saveSlotDao.delete(saveSlotModel.getId());
+        saveGame(map, map.getLevel(), name);
+    }
+
 
     public GameMap loadGame(int saveSlotId) {
         SaveSlotModel saveSlotModel = loadSaveSlot(saveSlotId);
@@ -166,6 +171,4 @@ public class GameDatabaseManager {
 
         return dataSource;
     }
-
-
 }

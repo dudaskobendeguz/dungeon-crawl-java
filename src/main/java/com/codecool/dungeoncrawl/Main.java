@@ -75,7 +75,7 @@ public class Main extends Application {
             if (saveSlot != null) {
                 Optional<ButtonType> result = overwriteSaveModal.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    // TODO Overwrite save slot
+                    dbManager.updateGame(map, saveSlot, name);
                     closeModal(saveModal);
                 }
             } else {

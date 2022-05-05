@@ -10,4 +10,5 @@ public interface SaveSlotDao {
     SaveSlotModel get(int saveSlotId);
     SaveSlotModel getByName(String name);
     List<SaveSlotModel> getAll();
+    void delete(int saveSlotId);
 }

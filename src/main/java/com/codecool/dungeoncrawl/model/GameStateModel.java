@@ -52,9 +52,6 @@ public class GameStateModel {
     }
 
     public Level getLevel() {
-        return Arrays.stream(Level.values())
-                .filter(level -> level.getID() == saveSlotModel.getLevelId())
-                .findFirst()
-                .orElseThrow(RuntimeException::new);
+        return saveSlotModel.getLevel();
     }
 }
