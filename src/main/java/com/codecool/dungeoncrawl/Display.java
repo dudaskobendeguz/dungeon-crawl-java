@@ -8,13 +8,17 @@ import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -30,6 +34,7 @@ public class Display {
     private final Label weaponLabel;
     Scene scene;
     private int uiRowIndex = 0;
+    private final Stage popUpWindow;
 
     public Display(int mapSize, Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -44,6 +49,7 @@ public class Display {
         damageLabel = new Label();
         itemsLabel = new Label();
         weaponLabel = new Label();
+        popUpWindow = new Stage();
 
         setupUi();
 
@@ -55,6 +61,33 @@ public class Display {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+
+        setupModals();
+    }
+
+    private void setupModals() {
+        popUpWindow.initModality(Modality.APPLICATION_MODAL);
+        popUpWindow.setTitle("Save Game to Database");
+
+        Label label1= new Label("Pop up window now displayed");
+
+        Button button1= new Button("Close this pop up window");
+
+        button1.setOnAction(e -> popUpWindow.close());
+
+        VBox layout= new VBox(10);
+
+        layout.getChildren().addAll(label1, button1);
+
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene1= new Scene(layout, 300, 250);
+
+        popUpWindow.setScene(scene1);
+    }
+
+    public void showSaveModal() {
+        popUpWindow.showAndWait();
     }
 
     private void setupUi() {
@@ -87,6 +120,8 @@ public class Display {
         addUiLabel(new Label("Eat apple: 1"), 0);
         addUiLabel(new Label("Eat bread: 2"), 0);
         addUiLabel(new Label("Eat meat: 3"), 0);
+
+
     }
 
     void refresh(GameMap map) {
@@ -150,7 +185,6 @@ public class Display {
         }
         return consumables.toString();
     }
-
 
     private void addUiLabel(Label label, int colIndex) {
         ui.add(label, colIndex, uiRowIndex++);
