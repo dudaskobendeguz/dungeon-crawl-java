@@ -1,14 +1,16 @@
 package com.codecool.dungeoncrawl.model;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import com.codecool.dungeoncrawl.Level;
 
 import java.sql.Date;
 import java.util.Arrays;
 
 public class SaveSlotModel extends BaseModel {
-    private Date savedAt;
-    private int levelId;
     private String name;
+    private Timestamp savedAt;
+    private int levelId;
 
     public SaveSlotModel(int levelId) {
         this.levelId = levelId;
@@ -19,15 +21,11 @@ public class SaveSlotModel extends BaseModel {
         this.name = name;
     }
 
-    private Integer generateId() {
-        return Math.abs(java.time.LocalTime.now().hashCode());
-    }
-
-    public Date getSavedAt() {
+    public Timestamp getSavedAt() {
         return savedAt;
     }
 
-    public void setSavedAt(Date savedAt) {
+    public void setSavedAt(Timestamp savedAt) {
         this.savedAt = savedAt;
     }
 
@@ -44,5 +42,14 @@ public class SaveSlotModel extends BaseModel {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d: %s - %s", id, name, new SimpleDateFormat("yyyy/MM/dd - hh:mm:ss").format(savedAt));
     }
 }

@@ -68,7 +68,7 @@ public class SaveSlotDaoJdbc implements SaveSlotDao {
                         rs.getString(2)
                 );
                 saveSlotModel.setId(rs.getInt(1));
-                saveSlotModel.setSavedAt(rs.getDate(4));
+                saveSlotModel.setSavedAt(rs.getTimestamp(4));
                 saveSlotModels.add(saveSlotModel);
             }
             return  saveSlotModels;
