@@ -49,7 +49,6 @@ public class Display {
     private final ListView<SaveSlotModel> loadItems;
 
     private final FileChooser importModal;
-    private final Alert importErrorModal;
 
     public Display(int mapSize, Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -78,7 +77,6 @@ public class Display {
         loadItems = new ListView<>();
 
         importModal = new FileChooser();
-        importErrorModal = new Alert(Alert.AlertType.ERROR);
 
         setupUi();
 
@@ -99,8 +97,6 @@ public class Display {
         setupLoadModal();
         setupOverwriteSaveModal();
         setupImportModal();
-        setupImportErrorModal();
-        setupExportModal();
     }
 
     private void setupSaveModal() {
@@ -153,16 +149,6 @@ public class Display {
         );
     }
 
-    private void setupImportErrorModal() {
-        importErrorModal.setTitle("Import Error!");
-        importErrorModal.setHeaderText("Import Error!");
-        importErrorModal.setContentText("File is in wrong format. Please try another one!");
-    }
-
-    private void setupExportModal() {
-
-    }
-
     public Button getSaveButton() {
         return saveButton;
     }
@@ -201,10 +187,6 @@ public class Display {
 
     public FileChooser getImportModal() {
         return importModal;
-    }
-
-    public Alert getImportErrorModal() {
-        return importErrorModal;
     }
 
     private void setupUi() {
