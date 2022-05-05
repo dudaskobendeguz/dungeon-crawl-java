@@ -137,10 +137,16 @@ public class Main extends Application {
     private void openFile() {
         FileChooser fileChooser = display.getImportModal();
         File file = fileChooser.showOpenDialog(display.primaryStage);
-        if (file.exists()) {
+        if (file != null) {
             // TODO import game
 //            importGame(file.getAbsolutePath());
         }
+    }
+
+    private void saveFile() {
+        FileChooser fileChooser = display.getImportModal();
+        fileChooser.showSaveDialog(display.primaryStage);
+        // TODO export game
     }
 
     private void importGame(String filename) {
@@ -258,10 +264,10 @@ public class Main extends Application {
                 }
                 break;
             case F4:
-                openFile();
+                saveFile();
                 break;
             case F5:
-//                importGame();
+                openFile();
                 break;
         }
     }
