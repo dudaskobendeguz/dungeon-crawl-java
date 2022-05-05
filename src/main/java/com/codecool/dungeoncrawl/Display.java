@@ -42,6 +42,9 @@ public class Display {
     private final Button saveButton;
     private final TextField saveInput;
     private final Button saveCancelButton;
+    private final Stage loadModal;
+    private final Button loadButton;
+    private final Button loadCancelButton;
 
 
     public Display(int mapSize, Stage primaryStage) {
@@ -57,10 +60,16 @@ public class Display {
         damageLabel = new Label();
         itemsLabel = new Label();
         weaponLabel = new Label();
+
         saveModal = new Stage();
         saveButton = new Button("Save");
         saveInput = new TextField();
         saveCancelButton = new Button("Cancel");
+
+        loadModal = new Stage();
+        loadButton = new Button("Load Game");
+        loadCancelButton = new Button("Cancel");
+
 
         setupUi();
 
@@ -101,15 +110,15 @@ public class Display {
         saveModal.setScene(scene);
     }
 
+    private void setupLoadModal() {
+
+    }
+
     private void setupExportModal() {
 
     }
 
     private void setupImportModal() {
-
-    }
-
-    private void setupLoadModal() {
 
     }
 
