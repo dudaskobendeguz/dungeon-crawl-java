@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
@@ -14,12 +15,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 
 public class Display {
@@ -35,6 +39,8 @@ public class Display {
     Scene scene;
     private int uiRowIndex = 0;
     private final Stage saveModal;
+    private final Button saveButton;
+    private final TextField saveInput;
 
     public Display(int mapSize, Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -50,6 +56,8 @@ public class Display {
         itemsLabel = new Label();
         weaponLabel = new Label();
         saveModal = new Stage();
+        saveButton = new Button("Save");
+        saveInput = new TextField();
 
         setupUi();
 
@@ -69,16 +77,33 @@ public class Display {
         setupSaveModal();
     }
 
-    private void setupSaveModal() {
+    public Button getSaveButton() {
+        return saveButton;
+    }
+
+    public Stage getSaveModal() {
+        return saveModal;
+    }
+
+    public TextField getSaveInput() {
+        return saveInput;
+    }
+
+    void setupSaveModal() {
         saveModal.initModality(Modality.APPLICATION_MODAL);
         saveModal.setTitle("Save Game to Database");
 
-        Label title = new Label("Pop up window now displayed");
-        Button cancel = new Button("Close this pop up window");
-        cancel.setOnAction(e -> saveModal.close());
+        Label name = new Label("Name:");
 
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(title, cancel);
+        saveInput.setMaxWidth(200);
+        saveButton.setMaxWidth(120);
+
+        Button cancel = new Button("Cancel");
+        cancel.setOnAction(e -> saveModal.close());
+        cancel.setMaxWidth(120);
+
+        VBox layout = new VBox(20);
+        layout.getChildren().addAll(name, saveInput, saveButton, cancel);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout, 300, 250);

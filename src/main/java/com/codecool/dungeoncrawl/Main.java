@@ -16,6 +16,8 @@ import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -83,6 +85,16 @@ public class Main extends Application {
         }
     }
 
+    private void setSaveButton() {
+        Button saveButton = display.getSaveButton();
+        TextField saveInput = display.getSaveInput();
+        saveButton.setOnAction((event) -> {
+            dbManager.saveGame(map, currentLevel, saveInput.getText());
+            display.getSaveModal().close();
+            startTimer();
+        });
+    }
+
     private void setupJsonManager() {
         jsonManager = new GameJsonManager();
         jsonManager.setup();
@@ -137,6 +149,8 @@ public class Main extends Application {
                 break;
             case S: // new line
                 if (keyEvent.isControlDown()) {
+                    stopTimer();
+                    setSaveButton();
                     display.showSaveModal();
                 }
 //                dbManager.saveGame(map, currentLevel);
