@@ -60,13 +60,13 @@ CREATE TABLE item (
 );
 
 ALTER TABLE ONLY item
-    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
+    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY monster
-    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
+    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY cell
-    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
+    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY player
-    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id);
+    ADD CONSTRAINT fk_save_slot_id FOREIGN KEY (save_slot_id) REFERENCES save_slot (id) ON DELETE CASCADE;
