@@ -8,5 +8,6 @@ public interface SaveSlotDao {
     int add(SaveSlotModel SaveSlotModel);
     void update(SaveSlotModel state);
     SaveSlotModel get(int saveSlotId);
+    SaveSlotModel getByName(String name);
     List<SaveSlotModel> getAll();
 }

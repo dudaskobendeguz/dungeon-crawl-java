@@ -14,12 +14,15 @@ import com.codecool.dungeoncrawl.logic.actor.monsters.TimeMage;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 
+import com.codecool.dungeoncrawl.model.SaveSlotModel;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,9 +33,9 @@ public class Main extends Application {
     private final static int MAP_SIZE = 15;
     private Level currentLevel = Level.MAIN_MENU;
     private boolean isTimeMageAlive = true;
-    GameMap map = MapLoader.getGameMap(currentLevel.getMAP_FILE_PATH(), new Player(playerName));
+    GameMap map = MapLoader.getGameMap(currentLevel, new Player(playerName));
     Display display;
-    Timer timer = new Timer();
+    Timer timer;
     GameDatabaseManager dbManager;
     GameJsonManager jsonManager;
 
@@ -48,16 +51,108 @@ public class Main extends Application {
         display = new Display(MAP_SIZE, primaryStage);
         display.scene.setOnKeyPressed(this::onKeyPressed);
         display.refresh(map);
+        startTimer();
+        setModalActions();
+    }
+
+    private void setModalActions() {
+        setSaveModalAction();
+        setLoadModalAction();
+        setImportModalAction();
+        setExportModalAction();
+    }
+
+    private void setSaveModalAction() {
+        Stage saveModal = display.getSaveModal();
+        Button saveButton = display.getSaveButton();
+        Button saveCancelButton = display.getSaveCancelButton();
+        TextField saveInput = display.getSaveInput();
+        Alert overwriteSaveModal = display.getOverwriteSaveModal();
+
+        saveButton.setOnAction((event) -> {
+            String name = saveInput.getText();
+            SaveSlotModel saveSlot = dbManager.getSaveSlotByName(name);
+            if (saveSlot != null) {
+                Optional<ButtonType> result = overwriteSaveModal.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    // TODO Overwrite save slot
+                    closeModal(saveModal);
+                }
+            } else {
+                dbManager.saveGame(map, currentLevel, name);
+                closeModal(saveModal);
+            }
+        });
+        saveCancelButton.setOnAction((event) -> closeModal(saveModal));
+        saveModal.setOnCloseRequest((windowEvent) -> closeModal(saveModal));
+    }
+
+    private void setLoadModalAction() {
+        Stage loadModal = display.getLoadModal();
+        Button loadButton = display.getLoadButton();
+        Button loadCancelButton = display.getLoadCancelButton();
+        ListView<SaveSlotModel> loadItems = display.getLoadItems();
+
+        loadModal.setOnCloseRequest((windowEvent) -> closeModal(loadModal));
+        loadCancelButton.setOnAction((event -> closeModal(loadModal)));
+        loadModal.setOnShown((windowEvent -> {
+            loadItems.getItems().clear();
+            List<SaveSlotModel> saveSlots = dbManager.getSaveSlots();
+            saveSlots.forEach((saveSlot) -> loadItems.getItems().add(saveSlot));
+        }));
+        loadButton.setOnAction((event -> {
+            SaveSlotModel saveSlot = loadItems.getSelectionModel().getSelectedItem();
+            if (saveSlot != null) {
+                loadGame(saveSlot);
+            }
+            closeModal(loadModal);
+        }));
+    }
+
+    private void loadGame(SaveSlotModel saveSlot) {
+        map = dbManager.loadGame(saveSlot.getId());
+        currentLevel = map.getLevel();
+    }
+
+    private void setExportModalAction() {
+
+    }
+
+    private void setImportModalAction() {
+
+    }
+
+    private void closeModal(Stage modal) {
+        modal.close();
+        startTimer();
+    }
+
+    private void openModal(Stage modal) {
+        stopTimer();
+        modal.showAndWait();
+    }
+
+    void stopTimer() {
+        timer.cancel();
+        timer.purge();
+    }
+
+    void startTimer() {
+        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                Player player = map.getPlayer();
-                moveMonsters(false);
-                player.tryToAttack(false);
-                player.setFireballTimer();
-                Platform.runLater(() -> display.refresh(map));
+                runTimer();
             }
-        }, 1000, 100);
+        }, 50, 100);
+    }
+
+    private void runTimer() {
+        Player player = map.getPlayer();
+        moveMonsters(false);
+        player.tryToAttack(false);
+        player.setFireballTimer();
+        Platform.runLater(() -> display.refresh(map));
     }
 
     private void setupDbManager() {
@@ -67,6 +162,16 @@ public class Main extends Application {
         } catch (SQLException ex) {
             System.out.println("Cannot connect to database.");
         }
+    }
+
+    private void setSaveButton() {
+        Button saveButton = display.getSaveButton();
+        TextField saveInput = display.getSaveInput();
+        saveButton.setOnAction((event) -> {
+            dbManager.saveGame(map, currentLevel, saveInput.getText());
+            display.getSaveModal().close();
+            startTimer();
+        });
     }
 
     private void setupJsonManager() {
@@ -123,11 +228,13 @@ public class Main extends Application {
                 break;
             case S:
                 if (keyEvent.isControlDown()) {
-                    dbManager.saveGame(map, currentLevel);
+                    openModal(display.getSaveModal());
                 }
                 break;
             case D:
-                map = dbManager.loadGame(2);
+                if (keyEvent.isControlDown()) {
+                    openModal(display.getLoadModal());
+                }
                 break;
             case F4:
                 exportGame();
@@ -199,7 +306,7 @@ public class Main extends Application {
                 break;
             }
         }
-        map = MapLoader.getGameMap(currentLevel.getMAP_FILE_PATH(), map.getPlayer());
+        map = MapLoader.getGameMap(currentLevel, map.getPlayer());
         display.refresh(map);
     }
 

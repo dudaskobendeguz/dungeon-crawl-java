@@ -10,6 +10,7 @@ ALTER TABLE IF EXISTS save_slot DROP CONSTRAINT IF EXISTS save_slot_pkey;
 DROP TABLE IF EXISTS save_slot;
 CREATE TABLE save_slot (
     id                  serial          NOT NULL PRIMARY KEY,
+    name                varchar(20)     NOT NULL,
     level_id            integer         NOT NULL,
     saved_at            timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );

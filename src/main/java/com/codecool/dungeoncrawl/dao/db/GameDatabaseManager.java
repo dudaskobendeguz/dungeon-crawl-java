@@ -30,16 +30,16 @@ public class GameDatabaseManager {
         itemDao = new ItemDaoJdbc(dataSource);
     }
 
-    public void saveGame(GameMap map, Level currentLevel) {
-        int saveSlotId = saveGameState(currentLevel);
+    public void saveGame(GameMap map, Level currentLevel, String name) {
+        int saveSlotId = saveGameState(currentLevel, name);
         savePlayer(map.getPlayer(), saveSlotId);
         saveCells(map, saveSlotId);
         saveMonsters(map, saveSlotId);
         saveItems(map, saveSlotId);
     }
 
-    private int saveGameState(Level currentLevel) {
-        SaveSlotModel saveSlotModel = new SaveSlotModel(currentLevel.getID());
+    private int saveGameState(Level currentLevel, String name) {
+        SaveSlotModel saveSlotModel = new SaveSlotModel(currentLevel.getID(), name);
         return saveSlotDao.add(saveSlotModel);
 
     }
@@ -121,6 +121,18 @@ public class GameDatabaseManager {
 
     public PlayerModel loadPlayer(int saveSlotId) {
         return playerDao.get(saveSlotId);
+    }
+
+    public List<CellModel> loadMap() {
+        return null;
+    }
+
+    public List<SaveSlotModel> getSaveSlots() {
+        return saveSlotDao.getAll();
+    }
+
+    public SaveSlotModel getSaveSlotByName(String name) {
+        return saveSlotDao.getByName(name);
     }
 
     /**

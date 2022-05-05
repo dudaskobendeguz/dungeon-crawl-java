@@ -1,27 +1,27 @@
 package com.codecool.dungeoncrawl.model;
 
-import com.codecool.dungeoncrawl.Level;
-
-import java.sql.Date;
-import java.util.Arrays;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class SaveSlotModel extends BaseModel {
-    private Date savedAt;
+    private String name;
+    private Timestamp savedAt;
     private int levelId;
 
     public SaveSlotModel(int levelId) {
         this.levelId = levelId;
     }
 
-    private Integer generateId() {
-        return Math.abs(java.time.LocalTime.now().hashCode());
+    public SaveSlotModel(int levelId, String name) {
+        this.levelId = levelId;
+        this.name = name;
     }
 
-    public Date getSavedAt() {
+    public Timestamp getSavedAt() {
         return savedAt;
     }
 
-    public void setSavedAt(Date savedAt) {
+    public void setSavedAt(Timestamp savedAt) {
         this.savedAt = savedAt;
     }
 
@@ -29,10 +29,16 @@ public class SaveSlotModel extends BaseModel {
         return levelId;
     }
 
-    public String getMapFilePath() {
-        return Arrays.stream(Level.values())
-                .filter(level -> level.getID() == levelId)
-                .findFirst()
-                .orElseThrow().getMAP_FILE_PATH();
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d: %s - %s", id, name, new SimpleDateFormat("yyyy/MM/dd - hh:mm:ss").format(savedAt));
     }
 }

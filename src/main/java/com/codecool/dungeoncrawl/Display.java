@@ -7,14 +7,18 @@ import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.ConsumableType;
 import com.codecool.dungeoncrawl.logic.items.KeyType;
 
+import com.codecool.dungeoncrawl.model.SaveSlotModel;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -31,6 +35,18 @@ public class Display {
     Scene scene;
     private int uiRowIndex = 0;
 
+    private final Stage saveModal;
+    private final Button saveButton;
+    private final TextField saveInput;
+    private final Button saveCancelButton;
+
+    private final Alert overwriteSaveModal;
+
+    private final Stage loadModal;
+    private final Button loadButton;
+    private final Button loadCancelButton;
+    private final ListView<SaveSlotModel> loadItems;
+
     public Display(int mapSize, Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.MAP_SIZE = mapSize;
@@ -45,6 +61,19 @@ public class Display {
         itemsLabel = new Label();
         weaponLabel = new Label();
 
+        saveModal = new Stage();
+        saveButton = new Button("Save");
+        saveInput = new TextField();
+        saveCancelButton = new Button("Cancel");
+
+        overwriteSaveModal = new Alert(Alert.AlertType.CONFIRMATION);
+
+        loadModal = new Stage();
+        loadButton = new Button("Load Game");
+        loadCancelButton = new Button("Cancel");
+        loadItems = new ListView<>();
+
+
         setupUi();
 
         BorderPane borderPane = new BorderPane();
@@ -55,6 +84,103 @@ public class Display {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+
+        setupModals();
+    }
+
+    private void setupModals() {
+        setupSaveModal();
+        setupLoadModal();
+        setupOverwriteSaveModal();
+        setupImportModal();
+        setupExportModal();
+    }
+
+    private void setupSaveModal() {
+        saveModal.initModality(Modality.APPLICATION_MODAL);
+        saveModal.setTitle("Save Game to Database");
+
+        Label name = new Label("Name:");
+
+        saveInput.setMaxWidth(200);
+        saveButton.setMaxWidth(120);
+        saveCancelButton.setMaxWidth(120);
+
+        VBox layout = new VBox(20);
+        layout.getChildren().addAll(name, saveInput, saveButton, saveCancelButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 300, 250);
+        saveModal.setScene(scene);
+    }
+
+    private void setupLoadModal() {
+        loadModal.initModality(Modality.APPLICATION_MODAL);
+        loadModal.setTitle("Load Game from Database");
+
+        Label select = new Label("Select a save slot to load:");
+
+        loadButton.setMaxWidth(120);
+        loadCancelButton.setMaxWidth(120);
+
+
+        VBox vBox = new VBox(select, loadItems, loadButton, loadCancelButton);
+        vBox.setSpacing(10);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setPadding(new Insets(10));
+
+        Scene scene = new Scene(vBox, 300, 300);
+        loadModal.setScene(scene);
+    }
+
+    private void setupOverwriteSaveModal() {
+        overwriteSaveModal.setTitle("Overwrite save slot");
+        overwriteSaveModal.setHeaderText("Overwrite save slot");
+        overwriteSaveModal.setContentText("Would you like to overwrite the save slot?");
+    }
+
+    private void setupExportModal() {
+
+    }
+
+    private void setupImportModal() {
+
+    }
+
+    public Button getSaveButton() {
+        return saveButton;
+    }
+
+    public Stage getSaveModal() {
+        return saveModal;
+    }
+
+    public TextField getSaveInput() {
+        return saveInput;
+    }
+
+    public Button getSaveCancelButton() {
+        return saveCancelButton;
+    }
+
+    public Stage getLoadModal() {
+        return loadModal;
+    }
+
+    public Button getLoadButton() {
+        return loadButton;
+    }
+
+    public Button getLoadCancelButton() {
+        return loadCancelButton;
+    }
+
+    public ListView<SaveSlotModel> getLoadItems() {
+        return loadItems;
+    }
+
+    public Alert getOverwriteSaveModal() {
+        return overwriteSaveModal;
     }
 
     private void setupUi() {
@@ -87,6 +213,8 @@ public class Display {
         addUiLabel(new Label("Eat apple: 1"), 0);
         addUiLabel(new Label("Eat bread: 2"), 0);
         addUiLabel(new Label("Eat meat: 3"), 0);
+
+
     }
 
     void refresh(GameMap map) {
@@ -150,7 +278,6 @@ public class Display {
         }
         return consumables.toString();
     }
-
 
     private void addUiLabel(Label label, int colIndex) {
         ui.add(label, colIndex, uiRowIndex++);
