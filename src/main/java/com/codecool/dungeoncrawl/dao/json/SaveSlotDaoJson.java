@@ -17,7 +17,7 @@ public class SaveSlotDaoJson {
 
     public void exportToJson(GameStateModel gameStateModel, String filename) {
         try {
-            Writer writer = new FileWriter(String.format("%s/%s%s", getSaveFolderPath(), filename, FILE_TYPE));
+            Writer writer = new FileWriter(filename);
             new Gson().toJson(gameStateModel, writer);
             writer.close();
         } catch (IOException e) {
@@ -28,7 +28,7 @@ public class SaveSlotDaoJson {
     public GameStateModel importJson(String filename){
         try {
             Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get(String.format("%s/%s%s", getSaveFolderPath(), filename, FILE_TYPE)));
+            Reader reader = Files.newBufferedReader(Paths.get(filename));
             GameStateModel gameStateModel = gson.fromJson(reader, GameStateModel.class);
             reader.close();
             return gameStateModel;

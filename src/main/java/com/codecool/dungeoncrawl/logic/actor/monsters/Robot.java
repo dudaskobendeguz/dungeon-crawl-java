@@ -6,7 +6,7 @@ import com.codecool.dungeoncrawl.logic.Direction;
 
 public class Robot extends Monster implements Movable, MoveDirection {
 
-    Direction moveDirection = Direction.RIGHT;
+    Direction moveDirection;
 
     public Robot(Cell cell) {
         super(MonsterType.ROBOT, cell, 10, 2, false);
@@ -26,5 +26,12 @@ public class Robot extends Monster implements Movable, MoveDirection {
     @Override
     public Direction getMoveDirection() {
         return moveDirection;
+    }
+
+    @Override
+    public void setMoveDirection(Direction moveDirection) {
+        if (this.moveDirection == null) {
+            this.moveDirection = moveDirection;
+        }
     }
 }

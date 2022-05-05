@@ -39,6 +39,8 @@ public enum MonsterType implements TileType {
                 return new Robot(cell);
             case TIME_MAGE:
                 return new TimeMage(cell);
+            case FIREBALL:
+                return new Fireball(cell);
             default:
                 throw new RuntimeException("Unrecognized MonsterType: " + monsterType);
         }

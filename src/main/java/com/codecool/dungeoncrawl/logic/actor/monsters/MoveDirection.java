@@ -4,4 +4,5 @@ import com.codecool.dungeoncrawl.logic.Direction;
 
 public interface MoveDirection {
     Direction getMoveDirection();
+    void setMoveDirection(Direction moveDirection);
 }

@@ -19,8 +19,10 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
@@ -31,7 +33,7 @@ import java.sql.SQLException;
 public class Main extends Application {
     private static String playerName = "Player_1";
     private final static int MAP_SIZE = 15;
-    private Level currentLevel = Level.MAIN_MENU;
+    private Level currentLevel = Level.LEVEL_3;
     private boolean isTimeMageAlive = true;
     GameMap map = MapLoader.getGameMap(currentLevel, new Player(playerName));
     Display display;
@@ -58,8 +60,6 @@ public class Main extends Application {
     private void setModalActions() {
         setSaveModalAction();
         setLoadModalAction();
-        setImportModalAction();
-        setExportModalAction();
     }
 
     private void setSaveModalAction() {
@@ -114,14 +114,6 @@ public class Main extends Application {
         currentLevel = map.getLevel();
     }
 
-    private void setExportModalAction() {
-
-    }
-
-    private void setImportModalAction() {
-
-    }
-
     private void closeModal(Stage modal) {
         modal.close();
         startTimer();
@@ -130,6 +122,36 @@ public class Main extends Application {
     private void openModal(Stage modal) {
         stopTimer();
         modal.showAndWait();
+    }
+
+    private void openFile() {
+        stopTimer();
+        FileChooser fileChooser = display.getImportModal();
+        File file = fileChooser.showOpenDialog(display.primaryStage);
+        if (file != null) {
+            if (file.exists()) {
+                importGame(file.getAbsolutePath());
+            }
+        }
+        startTimer();
+    }
+
+    private void saveFile() {
+        stopTimer();
+        FileChooser fileChooser = display.getImportModal();
+        File file = fileChooser.showSaveDialog(display.primaryStage);
+        if (file != null) {
+            exportGame(file.getAbsolutePath());
+        }
+        startTimer();
+    }
+
+    private void importGame(String filename) {
+        map = jsonManager.importGame(filename);
+    }
+
+    private void exportGame(String filename) {
+        jsonManager.exportGame(map, currentLevel, filename);
     }
 
     void stopTimer() {
@@ -162,16 +184,6 @@ public class Main extends Application {
         } catch (SQLException ex) {
             System.out.println("Cannot connect to database.");
         }
-    }
-
-    private void setSaveButton() {
-        Button saveButton = display.getSaveButton();
-        TextField saveInput = display.getSaveInput();
-        saveButton.setOnAction((event) -> {
-            dbManager.saveGame(map, currentLevel, saveInput.getText());
-            display.getSaveModal().close();
-            startTimer();
-        });
     }
 
     private void setupJsonManager() {
@@ -237,22 +249,12 @@ public class Main extends Application {
                 }
                 break;
             case F4:
-                exportGame();
+                saveFile();
                 break;
             case F5:
-                importGame();
+                openFile();
                 break;
         }
-    }
-
-    private void importGame() {
-        map = jsonManager.importGame("test");
-    }
-
-    private void exportGame() {
-        List<String> filenames = jsonManager.getAllSaveFileName();
-        filenames.forEach(System.out::println);
-        jsonManager.exportGame(map, currentLevel, "test");
     }
 
     public void moveActors(Direction direction) {

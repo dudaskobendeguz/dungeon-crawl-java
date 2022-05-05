@@ -49,7 +49,7 @@ public class SaveSlotModel extends BaseModel {
 
     @Override
     public String toString() {
-        return String.format("%d: %s - %s", id, name, new SimpleDateFormat("yyyy/MM/dd - hh:mm:ss").format(savedAt));
+        return String.format("%s - %s", name, new SimpleDateFormat("yyyy/MM/dd - hh:mm:ss").format(savedAt));
     }
 
     public Level getLevel() {
