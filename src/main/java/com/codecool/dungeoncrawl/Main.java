@@ -51,6 +51,36 @@ public class Main extends Application {
         display.scene.setOnKeyPressed(this::onKeyPressed);
         display.refresh(map);
         startTimer();
+        setModalActions();
+    }
+
+    private void setModalActions() {
+        setSaveModalAction();
+        setLoadModalAction();
+        setImportModalAction();
+        setExportModalAction();
+    }
+
+    private void setSaveModalAction() {
+        Stage saveModal = display.getSaveModal();
+        Button saveButton = display.getSaveButton();
+        TextField saveInput = display.getSaveInput();
+        saveButton.setOnAction((event) -> {
+            dbManager.saveGame(map, currentLevel, saveInput.getText());
+            saveModal.close();
+            startTimer();
+        });
+    }
+
+    private void setLoadModalAction() {
+    }
+
+    private void setExportModalAction() {
+
+    }
+
+    private void setImportModalAction() {
+
     }
 
     void stopTimer() {
@@ -150,7 +180,6 @@ public class Main extends Application {
             case S: // new line
                 if (keyEvent.isControlDown()) {
                     stopTimer();
-                    setSaveButton();
                     display.showSaveModal();
                 }
 //                dbManager.saveGame(map, currentLevel);

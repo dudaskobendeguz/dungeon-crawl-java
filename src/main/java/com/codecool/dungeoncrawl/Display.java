@@ -41,6 +41,8 @@ public class Display {
     private final Stage saveModal;
     private final Button saveButton;
     private final TextField saveInput;
+    private final Button cancelButton;
+
 
     public Display(int mapSize, Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -58,6 +60,7 @@ public class Display {
         saveModal = new Stage();
         saveButton = new Button("Save");
         saveInput = new TextField();
+        cancelButton = new Button("Cancel");
 
         setupUi();
 
