@@ -195,7 +195,9 @@ public class Main extends Application {
                 }
                 break;
             case D:
-                map = dbManager.loadGame(2);
+                if (keyEvent.isControlDown()) {
+                    openModal(display.getLoadModal());
+                }
                 break;
             case F4:
                 exportGame();

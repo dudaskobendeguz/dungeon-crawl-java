@@ -1,6 +1,5 @@
 package com.codecool.dungeoncrawl;
 
-import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
@@ -15,6 +14,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -23,7 +23,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
 
 public class Display {
@@ -111,7 +110,16 @@ public class Display {
     }
 
     private void setupLoadModal() {
+        loadModal.initModality(Modality.APPLICATION_MODAL);
+        loadModal.setTitle("Load Game from Database");
 
+        ListView<Object> listView = new ListView<>();
+        for (int i = 0; i < 10; i++) {
+            listView.getItems().add("Test " + i);
+        }
+
+        Scene scene = new Scene(listView, 300, 250);
+        loadModal.setScene(scene);
     }
 
     private void setupExportModal() {
@@ -136,6 +144,18 @@ public class Display {
 
     public Button getSaveCancelButton() {
         return saveCancelButton;
+    }
+
+    public Stage getLoadModal() {
+        return loadModal;
+    }
+
+    public Button getLoadButton() {
+        return loadButton;
+    }
+
+    public Button getLoadCancelButton() {
+        return loadCancelButton;
     }
 
     private void setupUi() {
