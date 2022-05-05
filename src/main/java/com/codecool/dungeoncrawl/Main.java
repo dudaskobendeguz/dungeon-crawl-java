@@ -33,7 +33,7 @@ import java.sql.SQLException;
 public class Main extends Application {
     private static String playerName = "Player_1";
     private final static int MAP_SIZE = 15;
-    private Level currentLevel = Level.MAIN_MENU;
+    private Level currentLevel = Level.LEVEL_3;
     private boolean isTimeMageAlive = true;
     GameMap map = MapLoader.getGameMap(currentLevel, new Player(playerName));
     Display display;
@@ -135,6 +135,7 @@ public class Main extends Application {
     }
 
     private void openFile() {
+        stopTimer();
         FileChooser fileChooser = display.getImportModal();
         File file = fileChooser.showOpenDialog(display.primaryStage);
         if (file != null) {
@@ -142,14 +143,17 @@ public class Main extends Application {
                 importGame(file.getAbsolutePath());
             }
         }
+        startTimer();
     }
 
     private void saveFile() {
+        stopTimer();
         FileChooser fileChooser = display.getImportModal();
         File file = fileChooser.showSaveDialog(display.primaryStage);
         if (file != null) {
             exportGame(file.getAbsolutePath());
         }
+        startTimer();
     }
 
     private void importGame(String filename) {
