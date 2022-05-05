@@ -6,10 +6,7 @@ import com.codecool.dungeoncrawl.Tiles;
 import com.codecool.dungeoncrawl.logic.actor.monsters.*;
 import com.codecool.dungeoncrawl.logic.actor.player.Player;
 import com.codecool.dungeoncrawl.logic.items.*;
-import com.codecool.dungeoncrawl.model.CellModel;
-import com.codecool.dungeoncrawl.model.ItemModel;
-import com.codecool.dungeoncrawl.model.MonsterModel;
-import com.codecool.dungeoncrawl.model.PlayerModel;
+import com.codecool.dungeoncrawl.model.*;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,12 +22,12 @@ public class MapLoader {
         return createGameMap(filePath, player, false);
     }
 
-    public static GameMap getGameMap(String filePath, PlayerModel playerModel, List<CellModel> cellModels, List<MonsterModel> monsterModels, List<ItemModel> itemModels) {
-        GameMap gameMap = createGameMap(filePath, null, true);
-        setPlayerModel(gameMap, playerModel);
-        setCellModels(gameMap, cellModels);
-        setMonsterModels(gameMap, monsterModels);
-        setItemModels(gameMap, itemModels);
+    public static GameMap getGameMap(GameStateModel gameStateModel) {
+        GameMap gameMap = createGameMap(gameStateModel.getMapFilePath(), null, true);
+        setPlayerModel(gameMap, gameStateModel.getPlayerModel());
+        setCellModels(gameMap, gameStateModel.getCellModels());
+        setMonsterModels(gameMap, gameStateModel.getMonsterModels());
+        setItemModels(gameMap, gameStateModel.getItemModels());
         return gameMap;
     }
 
@@ -240,4 +237,6 @@ public class MapLoader {
             }
         }
     }
+
+
 }
