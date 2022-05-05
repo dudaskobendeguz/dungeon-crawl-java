@@ -2,7 +2,6 @@ package com.codecool.dungeoncrawl;
 
 
 import com.codecool.dungeoncrawl.dao.db.GameDatabaseManager;
-import com.codecool.dungeoncrawl.dao.db.SaveSlotDao;
 import com.codecool.dungeoncrawl.dao.json.GameJsonManager;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Direction;
@@ -35,6 +34,7 @@ public class Main extends Application {
     Display display;
     Timer timer = new Timer();
     GameDatabaseManager dbManager;
+    GameJsonManager jsonManager;
 
     public static void main(String[] args) {
         playerName = args[0];
@@ -44,6 +44,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         setupDbManager();
+        setupJsonManager();
         display = new Display(MAP_SIZE, primaryStage);
         display.scene.setOnKeyPressed(this::onKeyPressed);
         display.refresh(map);
@@ -66,6 +67,11 @@ public class Main extends Application {
         } catch (SQLException ex) {
             System.out.println("Cannot connect to database.");
         }
+    }
+
+    private void setupJsonManager() {
+        jsonManager = new GameJsonManager();
+        jsonManager.setup();
     }
 
     void onKeyPressed(KeyEvent keyEvent) {
@@ -148,7 +154,7 @@ public class Main extends Application {
                 } else if (map.getPlayer().getCell().getType().equals(CellType.FLOPPY)) {
                     // TODO Implement load level
                     System.out.println("Implement load level");
-                }else if (map.getPlayer().getCell().getType().equals(CellType.EXIT)) {
+                } else if (map.getPlayer().getCell().getType().equals(CellType.EXIT)) {
                     System.exit(0);
                 }
                 break;
@@ -182,7 +188,9 @@ public class Main extends Application {
 
     public void moveMonsters(boolean isTurnBased) {
         List<Monster> monsters = map.getMonsters();
-        if (isTimeMageAlive) {setIsTimeMageAlive(monsters);}
+        if (isTimeMageAlive) {
+            setIsTimeMageAlive(monsters);
+        }
         clearDeadMonsters(monsters);
 
         Monster teleportedMonster = null;
