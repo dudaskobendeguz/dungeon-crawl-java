@@ -1,6 +1,9 @@
 package com.codecool.dungeoncrawl.model;
 
+import com.codecool.dungeoncrawl.Level;
+
 import java.sql.Date;
+import java.util.Arrays;
 
 public class SaveSlotModel extends BaseModel {
     private Date savedAt;
@@ -20,5 +23,12 @@ public class SaveSlotModel extends BaseModel {
 
     public int getLevelId() {
         return levelId;
+    }
+
+    public String getMapFilePath() {
+        return Arrays.stream(Level.values())
+                .filter(level -> level.getID() == levelId)
+                .findFirst()
+                .orElseThrow().getMAP_FILE_PATH();
     }
 }
