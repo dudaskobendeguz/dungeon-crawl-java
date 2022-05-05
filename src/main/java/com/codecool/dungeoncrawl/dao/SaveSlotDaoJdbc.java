@@ -1,6 +1,6 @@
 package com.codecool.dungeoncrawl.dao;
 
-import com.codecool.dungeoncrawl.model.saveSlotModel;
+import com.codecool.dungeoncrawl.model.*;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -15,7 +15,7 @@ public class SaveSlotDaoJdbc implements SaveSlotDao {
     }
 
     @Override
-    public int add(saveSlotModel state) {
+    public int add(SaveSlotModel state) {
         try (Connection connection = dataSource.getConnection()) {
             String sqlQuery = "INSERT INTO save_slot (level_id) VALUES (?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery,Statement.RETURN_GENERATED_KEYS);
@@ -31,12 +31,12 @@ public class SaveSlotDaoJdbc implements SaveSlotDao {
     }
 
     @Override
-    public void update(saveSlotModel state) {
+    public void update(SaveSlotModel state) {
 
     }
 
     @Override
-    public saveSlotModel get(int saveSlotId) {
+    public SaveSlotModel get(int saveSlotId) {
         try (Connection connection = dataSource.getConnection()) {
             String sqlQuery = "SELECT level_id FROM save_slot WHERE id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -45,14 +45,14 @@ public class SaveSlotDaoJdbc implements SaveSlotDao {
             if (!resultSet.next()) { // first row was not found == no data was returned by the query
                 return null;
             }
-            return new saveSlotModel(resultSet.getInt(1));
+            return new SaveSlotModel(resultSet.getInt(1));
         } catch (SQLException throwables) {
             throw new RuntimeException("Error under get save slot from database", throwables);
         }
     }
 
     @Override
-    public List<saveSlotModel> getAll() {
+    public List<SaveSlotModel> getAll() {
         return null;
     }
 }
