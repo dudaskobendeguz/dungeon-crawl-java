@@ -12,10 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -114,11 +111,16 @@ public class Display {
         loadModal.setTitle("Load Game from Database");
 
         ListView<Object> listView = new ListView<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             listView.getItems().add("Test " + i);
         }
 
-        Scene scene = new Scene(listView, 300, 250);
+        VBox vBox = new VBox(listView, loadButton);
+        vBox.setSpacing(20);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setPadding(new Insets(10));
+
+        Scene scene = new Scene(vBox, 300, 300);
         loadModal.setScene(scene);
     }
 
