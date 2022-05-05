@@ -8,9 +8,15 @@ import java.util.Arrays;
 public class SaveSlotModel extends BaseModel {
     private Date savedAt;
     private int levelId;
+    private String name;
 
     public SaveSlotModel(int levelId) {
         this.levelId = levelId;
+    }
+
+    public SaveSlotModel(int levelId, String name) {
+        this.levelId = levelId;
+        this.name = name;
     }
 
     private Integer generateId() {
@@ -34,5 +40,9 @@ public class SaveSlotModel extends BaseModel {
                 .filter(level -> level.getID() == levelId)
                 .findFirst()
                 .orElseThrow().getMAP_FILE_PATH();
+    }
+
+    public String getName() {
+        return name;
     }
 }
