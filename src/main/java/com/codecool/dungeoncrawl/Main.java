@@ -19,8 +19,10 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
@@ -119,7 +121,7 @@ public class Main extends Application {
     }
 
     private void setImportModalAction() {
-
+        FileChooser importModal = display.getImportModal();
     }
 
     private void closeModal(Stage modal) {
@@ -130,6 +132,25 @@ public class Main extends Application {
     private void openModal(Stage modal) {
         stopTimer();
         modal.showAndWait();
+    }
+
+    private void openFile() {
+        FileChooser fileChooser = display.getImportModal();
+        File file = fileChooser.showOpenDialog(display.primaryStage);
+        if (file.exists()) {
+            // TODO import game
+//            importGame(file.getAbsolutePath());
+        }
+    }
+
+    private void importGame(String filename) {
+        map = jsonManager.importGame(filename);
+    }
+
+    private void exportGame() {
+        List<String> filenames = jsonManager.getAllSaveFileName();
+        filenames.forEach(System.out::println);
+        jsonManager.exportGame(map, currentLevel, "test");
     }
 
     void stopTimer() {
@@ -237,22 +258,12 @@ public class Main extends Application {
                 }
                 break;
             case F4:
-                exportGame();
+                openFile();
                 break;
             case F5:
-                importGame();
+//                importGame();
                 break;
         }
-    }
-
-    private void importGame() {
-        map = jsonManager.importGame("test");
-    }
-
-    private void exportGame() {
-        List<String> filenames = jsonManager.getAllSaveFileName();
-        filenames.forEach(System.out::println);
-        jsonManager.exportGame(map, currentLevel, "test");
     }
 
     public void moveActors(Direction direction) {
