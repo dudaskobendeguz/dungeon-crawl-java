@@ -43,9 +43,7 @@ public class MapLoader {
 
     private static void setMonsterModels(GameMap gameMap, List<MonsterModel> monsterModels) {
         for (MonsterModel monsterModel : monsterModels) {
-            TileType tileType = Tiles.tileTypeMap.get(monsterModel.getTypeId());
-            Cell monsterCell = gameMap.getCell(monsterModel.getX(), monsterModel.getY());
-            createMonster(monsterCell, gameMap, (MonsterType) tileType);
+            createMonster(gameMap, monsterModel);
         }
     }
 
@@ -205,10 +203,31 @@ public class MapLoader {
 
     private static void createMonster(Cell cell, GameMap map, MonsterType monsterType) {
         Monster monster = MonsterType.getMonsterByMonsterType(monsterType, cell);
+        if (monster instanceof Robot) {
+            ((Robot) monster).setMoveDirection(Direction.RIGHT);
+        }
+        addMonsterToGameMap(cell, map, monster);
+    }
+
+    private static void createMonster(GameMap map, MonsterModel monsterModel) {
+        TileType tileType = Tiles.tileTypeMap.get(monsterModel.getTypeId());
+        Cell monsterCell = map.getCell(monsterModel.getX(), monsterModel.getY());
+        Monster monster = MonsterType.getMonsterByMonsterType((MonsterType) tileType, monsterCell);
+        if (monster instanceof MoveDirection) {
+            ((MoveDirection) monster).setMoveDirection(monsterModel.getDirection());
+        }
+        addMonsterToGameMap(monsterCell, map, monster);
+    }
+
+    private static void addMonsterToGameMap(Cell cell, GameMap map, Monster monster) {
+        setTimeMageFloor(cell, monster);
+        map.addMonster(monster);
+    }
+
+    private static void setTimeMageFloor(Cell cell, Monster monster) {
         if (monster instanceof TimeMage) {
             cell.setType(CellType.TIME_MAGE_FLOOR);
         }
-        map.addMonster(monster);
     }
 
     private static void setItem(Cell cell, TileType tileType) {
