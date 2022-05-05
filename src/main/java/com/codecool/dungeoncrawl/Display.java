@@ -41,7 +41,7 @@ public class Display {
     private final Stage saveModal;
     private final Button saveButton;
     private final TextField saveInput;
-    private final Button cancelButton;
+    private final Button saveCancelButton;
 
 
     public Display(int mapSize, Stage primaryStage) {
@@ -60,7 +60,7 @@ public class Display {
         saveModal = new Stage();
         saveButton = new Button("Save");
         saveInput = new TextField();
-        cancelButton = new Button("Cancel");
+        saveCancelButton = new Button("Cancel");
 
         setupUi();
 
@@ -92,6 +92,10 @@ public class Display {
         return saveInput;
     }
 
+    public Button getSaveCancelButton() {
+        return saveCancelButton;
+    }
+
     void setupSaveModal() {
         saveModal.initModality(Modality.APPLICATION_MODAL);
         saveModal.setTitle("Save Game to Database");
@@ -100,13 +104,10 @@ public class Display {
 
         saveInput.setMaxWidth(200);
         saveButton.setMaxWidth(120);
-
-        Button cancel = new Button("Cancel");
-        cancel.setOnAction(e -> saveModal.close());
-        cancel.setMaxWidth(120);
+        saveCancelButton.setMaxWidth(120);
 
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(name, saveInput, saveButton, cancel);
+        layout.getChildren().addAll(name, saveInput, saveButton, saveCancelButton);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout, 300, 250);

@@ -64,12 +64,19 @@ public class Main extends Application {
     private void setSaveModalAction() {
         Stage saveModal = display.getSaveModal();
         Button saveButton = display.getSaveButton();
+        Button saveCancelButton = display.getSaveCancelButton();
         TextField saveInput = display.getSaveInput();
         saveButton.setOnAction((event) -> {
             dbManager.saveGame(map, currentLevel, saveInput.getText());
-            saveModal.close();
-            startTimer();
+            closeModal(saveModal);
         });
+        saveCancelButton.setOnAction((event) -> closeModal(saveModal));
+        saveModal.setOnCloseRequest((windowEvent) -> closeModal(saveModal));
+    }
+
+    private void closeModal(Stage saveModal) {
+        saveModal.close();
+        startTimer();
     }
 
     private void setLoadModalAction() {
