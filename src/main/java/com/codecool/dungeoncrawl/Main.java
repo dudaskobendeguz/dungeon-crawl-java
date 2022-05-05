@@ -60,8 +60,6 @@ public class Main extends Application {
     private void setModalActions() {
         setSaveModalAction();
         setLoadModalAction();
-        setImportModalAction();
-        setExportModalAction();
     }
 
     private void setSaveModalAction() {
@@ -114,14 +112,6 @@ public class Main extends Application {
     private void loadGame(SaveSlotModel saveSlot) {
         map = dbManager.loadGame(saveSlot.getId());
         currentLevel = map.getLevel();
-    }
-
-    private void setExportModalAction() {
-
-    }
-
-    private void setImportModalAction() {
-        FileChooser importModal = display.getImportModal();
     }
 
     private void closeModal(Stage modal) {
@@ -194,16 +184,6 @@ public class Main extends Application {
         } catch (SQLException ex) {
             System.out.println("Cannot connect to database.");
         }
-    }
-
-    private void setSaveButton() {
-        Button saveButton = display.getSaveButton();
-        TextField saveInput = display.getSaveInput();
-        saveButton.setOnAction((event) -> {
-            dbManager.saveGame(map, currentLevel, saveInput.getText());
-            display.getSaveModal().close();
-            startTimer();
-        });
     }
 
     private void setupJsonManager() {
