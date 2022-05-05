@@ -137,10 +137,7 @@ public class Main extends Application {
                 break;
             case S: // new line
                 if (keyEvent.isControlDown()) {
-                    stopTimer();
                     display.showSaveModal();
-                } else if (keyEvent.isAltDown()) {
-                    startTimer();
                 }
 //                dbManager.saveGame(map, currentLevel);
                 break;

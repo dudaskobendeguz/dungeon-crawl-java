@@ -34,7 +34,7 @@ public class Display {
     private final Label weaponLabel;
     Scene scene;
     private int uiRowIndex = 0;
-    private final Stage popUpWindow;
+    private final Stage saveModal;
 
     public Display(int mapSize, Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -49,7 +49,7 @@ public class Display {
         damageLabel = new Label();
         itemsLabel = new Label();
         weaponLabel = new Label();
-        popUpWindow = new Stage();
+        saveModal = new Stage();
 
         setupUi();
 
@@ -66,28 +66,27 @@ public class Display {
     }
 
     private void setupModals() {
-        popUpWindow.initModality(Modality.APPLICATION_MODAL);
-        popUpWindow.setTitle("Save Game to Database");
+        setupSaveModal();
+    }
 
-        Label label1= new Label("Pop up window now displayed");
+    private void setupSaveModal() {
+        saveModal.initModality(Modality.APPLICATION_MODAL);
+        saveModal.setTitle("Save Game to Database");
 
-        Button button1= new Button("Close this pop up window");
+        Label title = new Label("Pop up window now displayed");
+        Button cancel = new Button("Close this pop up window");
+        cancel.setOnAction(e -> saveModal.close());
 
-        button1.setOnAction(e -> popUpWindow.close());
-
-        VBox layout= new VBox(10);
-
-        layout.getChildren().addAll(label1, button1);
-
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(title, cancel);
         layout.setAlignment(Pos.CENTER);
 
-        Scene scene1= new Scene(layout, 300, 250);
-
-        popUpWindow.setScene(scene1);
+        Scene scene = new Scene(layout, 300, 250);
+        saveModal.setScene(scene);
     }
 
     public void showSaveModal() {
-        popUpWindow.showAndWait();
+        saveModal.showAndWait();
     }
 
     private void setupUi() {
