@@ -99,4 +99,16 @@ public class SaveSlotDaoJdbc implements SaveSlotDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void delete(int saveSlotId) {
+        try (Connection connection = dataSource.getConnection()) {
+            String sqlQuery = "DELETE FROM save_slot WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, saveSlotId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throw new RuntimeException("Error under delete save slot from database: + " + throwables, throwables);
+        }
+    }
 }
