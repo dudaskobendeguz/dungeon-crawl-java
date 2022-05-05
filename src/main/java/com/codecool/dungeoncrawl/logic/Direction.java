@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
+import java.util.Arrays;
+
 public enum Direction {
     UP(0, -1, 1),
     DOWN(0, 1, 2),
@@ -14,6 +16,15 @@ public enum Direction {
         this.x = x;
         this.y = y;
         ID = id;
+    }
+
+    public static Direction getDirectionById(int id) {
+        for (Direction direction : values()) {
+            if (direction.ID == id) {
+                return direction;
+            }
+        }
+        throw new RuntimeException("There is no Direction with id: " + id);
     }
 
     public int getX() {
