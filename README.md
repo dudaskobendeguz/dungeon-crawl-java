@@ -21,6 +21,13 @@ pick the stories your team can finish in this sprint.
 
 Continue this entertaining project and make our players happier!
 
+## Usage
+
+The application respects the `PSQL_USER_NAME`, `PSQL_PASSWORD`, and `PSQL_DB_NAME` environment variables.
+
+Entry point is in `src.main.java.com.codecool.dungeoncrawl.App`
+
+
 ## What are you going to learn?
 
 - Serialize objects.
